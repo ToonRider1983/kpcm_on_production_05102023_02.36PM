@@ -772,9 +772,30 @@ class CustomerMasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-public function enduser_delete() {
-    return view('pages.dashboards.enduser.enduser_delete');
-}
+public function enduser_delete($id)
+    {
+        $customer = DB::table('customers');
+        $country = DB::table('countries')->get();
+        $province = DB::table('provinces')->get();
+        $industrialzone = DB::table('industrialzones')->get();
+        $customer = $customer
+            ->select('customers.*', 'countries.country_name as ct_name', 'provinces.province_name as pv_name' , 'industrialzones.industrialzone_name as indust','users.user_name as created_by','users.user_name as updated_by')
+            ->where('customers.id', $id)
+            ->whereNull('customers.deleted_at') 
+            ->leftjoin('countries', 'customers.country_id', '=', 'countries.id')
+          //->leftjoin('countries', 'provinces.country_id', '=', 'countries.id')
+            ->leftjoin('provinces', 'customers.province_id', '=', 'provinces.id')  
+            ->leftjoin('industrialzones', 'customers.industrialzone_id', '=', 'industrialzones.id')  
+            ->leftjoin('users','customers.created_by','=','users.id')
+            ->leftjoin('users as users2','customers.updated_by','=','users.id')
+            ->first();    
+        //return view('companies.show')->with('company', $company );
+        return view('pages.dashboards.enduser.enduser_delete', ['customer' => $customer, 'country' => $country, 'province' => $province , 'industrialzone' => $industrialzone]);
+    }
+
+// public function enduser_delete() {
+//     return view('pages.dashboards.enduser.enduser_delete');
+// }
 
 // public function enduser_result() {
 //     return view('pages.dashboards.enduser.result');

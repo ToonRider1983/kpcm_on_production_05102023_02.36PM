@@ -72,7 +72,7 @@ Route::get('/machinetype/{id}/show', 'Machinetype1MasterController@show')->name(
 Route::get('/machinetype/{id}/edit', 'Machinetype1MasterController@edit')-> name ('pages.dashboards.machinetype.edit');
 Route::put('/machinetype/{id}', 'Machinetype1MasterController@update')-> name ('pages.dashboards.machinetype.update');
 Route::get('/exporttype/csv', [Machinetype1MasterController::class, 'exportCSV'])->name('machinetype.export');
-Route::get('/machinetype_delete', [Machinetype1MasterController::class, 'machinetype_delete'])->name('machinetype_delete');
+Route::get('/machinetype/{id}/delete', [Machinetype1MasterController::class, 'machinetype_delete'])->name('machinetype_delete');
 Route::get('/machinetype_result', [Machinetype1MasterController::class, 'machinetype_result'])->name('machinetype_result');
 
 Route::resource('/industrialzone', IndustrialzoneMasterController::class);
@@ -83,7 +83,7 @@ Route::get('/industrialzone/{id}/show', 'IndustrialzoneMasterController@show')->
 Route::get('/industrialzone/{id}/edit', 'IndustrialzoneMasterController@edit')-> name ('pages.dashboards.industrialzone.edit');
 Route::put('/industrialzone/{id}', 'IndustrialzoneMasterController@update')-> name ('pages.dashboards.industrialzone.update');
 Route::get('/exportIndust/csv', [IndustrialzoneMasterController::class, 'exportCSV'])->name('industrialzone.export');
-Route::get('/industrialzone_delete', [IndustrialzoneMasterController::class, 'industrialzone_delete'])->name('industrialzone_delete');
+Route::get('/industrialzone/{id}/delete', [IndustrialzoneMasterController::class, 'industrialzone_delete'])->name('industrialzone_delete');
 Route::get('/industrialzone_resulte', [IndustrialzoneMasterController::class, 'industrialzone_resulte'])->name('industrialzone_resulte');
 
 Route::resource('/emails', EmailMasterController::class);
@@ -91,7 +91,7 @@ Route::get('/emails/create', [EmailMasterController::class, 'createNew'])->name(
 Route::get('/emails/{id}/show', 'EmailMasterController@show')->name('pages.dashboards.emails.show');
 Route::get('/emails/{id}/edit', 'EmailMasterController@edit')-> name ('pages.emails.edit');
 Route::put('/emails/{id}', 'EmailMasterController@update')-> name ('pages.dashboards.emails.update');
-Route::get('/emails_delete', [EmailMasterController::class, 'email_delete'])->name('email_delete');
+Route::get('/emails/{id}/delete', [EmailMasterController::class, 'email_delete'])->name('email_delete');
 Route::get('/emails_result', [EmailMasterController::class, 'email_result'])->name('emails_result');
 
 Route::resource('/user', UserMasterController::class);
@@ -100,7 +100,7 @@ Route::get('/user/{id}/show', 'UserMasterController@show')->name('pages.dashboar
 Route::get('/user/{id}/edit', 'UserMasterController@edit')-> name ('pages.user.edit');
 Route::put('/user/{id}', 'UserMasterController@update')-> name ('pages.dashboards.user.update');
 Route::get('/exportuser/csv', [UserMasterController::class, 'exportCSV'])->name('user.export');
-Route::get('/user_delete', [UserMasterController::class, 'user_delete'])->name('user_delete');
+Route::get('/user/{id}/delete', [UserMasterController::class, 'user_delete'])->name('user_delete');
 Route::get('/user_result', [UserMasterController::class, 'user_result'])->name('user_result');
 
 Route::resource('/machinemodels', MachinemodelMasterController::class);
@@ -108,7 +108,7 @@ Route::get('/machinemodels/create', [MachinemodelMasterController::class, 'creat
 Route::get('/machinemodels/{id}/show', 'MachinemodelMasterController@show')->name('pages.dashboards.machinemodels.show');
 Route::get('/machinemodels/{id}/edit', 'MachinemodelMasterController@edit')->name ('pages.machinemodels.edit');
 Route::put('/machinemodels/{id}', 'MachinemodelMasterController@update')->name ('pages.dashboards.machinemodels.update');
-Route::get('/machinemodel_delete', [MachinemodelMasterController::class, 'machinemodel_delete'])->name('machinemodel_delete');
+Route::get('/machinemodels/{id}/delete', [MachinemodelMasterController::class, 'machinemodel_delete'])->name('machinemodel_delete');
 Route::get('/expormodels/csv', [MachinemodelMasterController::class, 'exportCSV'])->name('machinemodels.export');
 Route::get('/machinemodel_result', [MachinemodelMasterController::class, 'machinemodel_result'])->name('machinemodel_result');
 
@@ -132,7 +132,7 @@ Route::get('/exportenduser/csv', [CustomerMasterController::class, 'exportCSV'])
 
 Route::get('/enduser/show', [CustomerMasterController::class, 'show'])->name('enduser.show');
 Route::get('/enduser/edit', [CustomerMasterController::class, 'edit'])->name('enduser.edit');
-Route::get('/enduser_delete', [CustomerMasterController::class, 'enduser_delete'])->name('enduser_delete');
+Route::get('/enduser/{id}/delete', [CustomerMasterController::class, 'enduser_delete'])->name('enduser_delete');
 Route::get('/enduser_result', [CustomerMasterController::class, 'enduser_result'])->name('enduser_result');
 
 

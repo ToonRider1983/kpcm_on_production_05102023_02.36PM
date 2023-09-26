@@ -304,9 +304,30 @@ class UserMasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-public function user_delete() {
-    return view('pages.dashboards.user.user_delete');    
-}
+// public function user_delete() {
+//     return view('pages.dashboards.user.user_delete');    
+// }
+
+public function user_delete($id)
+    {
+        $company = DB::table('companies')->get();
+        $user = DB::table('users') ->orderBy('id');
+        $user = $user 
+            ->select(
+                'users.*',
+                 'companies.company_name as companyname',
+                  'users.user_scope as typename',
+                  'create_user_by.user_name as created_by',
+                  'update_user_by.user_name as updated_by')
+            ->where('users.id', $id)
+            ->leftjoin('companies', 'users.company_id', '=', 'companies.id')
+            ->leftjoin('users as create_user_by','users.created_by','=','create_user_by.id' )
+            ->leftjoin('users as update_user_by','users.updated_by','=','update_user_by.id' )
+            ->first();
+
+        //return view('companies.show')->with('company', $company );
+        return view('pages.dashboards.user.user_delete', ['user' => $user, 'company' => $company,]);
+    }
 
 public function mypage_result() {
     $users = Auth::user(); // ดึงข้อมูลผู้ล็อกอินที่กำลังเข้าสู่ระบบ

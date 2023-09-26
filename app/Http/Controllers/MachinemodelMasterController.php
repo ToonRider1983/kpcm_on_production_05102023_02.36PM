@@ -337,9 +337,42 @@ class MachinemodelMasterController extends Controller
         //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
     }
 
-    public function machinemodel_delete() {
-        return view('pages.dashboards.machinemodels.machinemodel_delete');
-    }
+    // public function machinemodel_delete() {
+    //     return view('pages.dashboards.machinemodels.machinemodel_delete');
+    // }
+
+    public function machinemodel_delete($id)
+        {
+            $machinemodels = DB::table('machinemodels as m');
+            $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
+            $machinemodels = $machinemodels
+            ->select(
+                'm.id',
+                'm.machinetype1_id',
+                'm.machinemodel_name',
+                'machinetype1s.machinetype1_name as mtypename',
+                
+                'm.updated_at',
+                'm.created_at',
+                'm.remarks',
+                'm.power',
+
+                'm.origin_country_id as origin_country_name',
+                'm.oil_type as oil_type_name',
+                'm.cooler_type as cooler_type_name',
+                'm.inverter_flg as inverter_flg_name',
+                'm.latest_flg as latest_flg_name',
+                'users.user_name as created_by',
+                'users2.user_name as updated_by'
+                )
+            ->where('m.id', $id)
+            ->whereNull('m.deleted_at')
+            ->leftJoin('machinetype1s', 'm.machinetype1_id', '=', 'machinetype1s.id')
+            ->leftjoin('users','m.created_by','=','users.id')
+            ->leftjoin('users as users2' ,'m.updated_by','=','users2.id')
+            ->first();
+            return view('pages.dashboards.machinemodels.machinemodel_delete', ['machinemodels' => $machinemodels, 'machinetype' => $machinetype,]);    
+        }
 
     // public function machinemodel_result() {
     //     return view('pages.dashboards.machinemodels.result');

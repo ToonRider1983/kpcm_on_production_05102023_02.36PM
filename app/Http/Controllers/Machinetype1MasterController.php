@@ -139,9 +139,18 @@ class Machinetype1MasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-public function machinetype_delete() {
-    return view('pages.dashboards.machinetype.machinetype_delete');
-}
+public function machinetype_delete($id)
+    {
+        $machinetype = DB::table('machinetype1s')
+            ->select('machinetype1s.*','users.user_name as created_by','users2.user_name as updated_by')
+            ->leftJoin('users','machinetype1s.created_by','=' , 'users.id')
+            ->leftJoin('users as users2','machinetype1s.updated_by','=' , 'users2.id')
+            ->where('machinetype1s.id', $id) 
+            ->first();
+
+            
+        return view('pages.dashboards.machinetype.machinetype_delete', ['machinetype' => $machinetype , 'id'=>$id ]);
+    }
 
 // public function machinetype_result() {
 //     return view('pages.dashboards.machinetype.result');
