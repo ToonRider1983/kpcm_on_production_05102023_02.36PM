@@ -105,7 +105,9 @@
                                 'Serial' => $data->serial,
                                 'Type' => $data->machine_cd,
                                 'Service_cus' => $data->customer_name1,
-                                'Service_com' => $data->company_name
+                                'Service_com' => $data->company_name,
+                                'machines_id' => $data->id,
+                                'url' => 'History'
                                     ]) }}" title="add company"><button type="button" class="btn btn-primary mb-2 container"><i
                                 class="fa-solid fa-plus"></i>&nbsp;ADD</button></a>
                                
@@ -116,7 +118,9 @@
                                     'Serial' => $data->serial,
                                     'Type' => $data->machine_cd,
                                     'Service_cus' => $data->customer_name1,
-                                    'Service_com' => $data->company_name
+                                    'Service_com' => $data->company_name,
+                                    'machines_id' => $data->id,
+                                    'url' => 'History'
                                         ]) }}" title=""><button type="button" class="btn btn-primary mb-2 container"><i
                                 class="fa-solid fa-plus"></i>&nbsp;ADD</button></a>
                             @endif
@@ -191,7 +195,7 @@
                           
 
                             <tr>
-                                <td><a href="{{ route('show_history', ['Id' => $val->id]) }}">{{ $val->service_idx }}</a></td>
+                                <td><a href="{{ route('browse_history', ['id' => $val->id ,'machine_id' => $val->machine_id  ]) }}">{{ $val->service_idx }}</a></td>
                                 <td>{{ $val->service_dt}}</td>
                                 <td>{{ $txt}}</td>
                                 <td>{{ $val->running_hours }}</td>

@@ -304,8 +304,8 @@ class ServiceController extends Controller
         $Oil_tpye = $data->first()->compressor_type;  //Address
         $Comm_Date = $data->first()->testrun_dt;  //Address
         $panel_version = $data->first()->panel_version;  //Address
-     
-
+        $Machines        = $data->first()->id; 
+    
         return view('pages.dashboards.service.add',[
 
             'Id'            => $Id, 
@@ -318,13 +318,16 @@ class ServiceController extends Controller
             'Address'       => $Address,
             'Oil_tpye'      => $Oil_tpye,
             'Comm_Date'     => $Comm_Date,
-            'panel_version'     => $panel_version
+            'panel_version'     => $panel_version,
+            'machines_id'   => $Machines
             
            
         ]);
     }
     function add_oil_flood(Request $request) {
 
+
+    
         
    
         //simple
@@ -340,23 +343,23 @@ class ServiceController extends Controller
         $data = Machine::select('machines.*' , 'customers.address1', 'services.*' )
         ->join('services', 'machines.id', '=', 'services.id')
         ->join('customers', 'machines.customer_id', '=', 'customers.id')
-        // ->join('enumeration', 'machines.compressor_type', '=', 'enumeration.code')
         ->where('machines.serial', '=', $Serial)
-     
         ->distinct()
         ->get();
 
 
-        $DataN_O = $data->first()->ksl_order_cd;  //O.No.
-        $DataN_MC = $data->first()->customer_machine_no;  //Customer MC No.
-        $Address = $data->first()->address1; 
-        $Oil_tpye = $data->first()->compressor_type;  
-        $Comm_Date = $data->first()->testrun_dt;  
-        $panel_version = $data->first()->panel_version;  
+        $DataN_O        = $data->first()->ksl_order_cd;  
+        $DataN_MC       = $data->first()->customer_machine_no; 
+        $Address        = $data->first()->address1; 
+        $Oil_tpye       = $data->first()->compressor_type;  
+        $Comm_Date      = $data->first()->testrun_dt;  
+        $panel_version  = $data->first()->panel_version;  
+        $Machines        = $data->first()->id;  
+
+
 
         return view('pages.dashboards.service.add_oil_flood',[
 
-           
             'Id'            => $Id, 
             'TypeCode'      => $TypeCode, 
             'Serial'        => $Serial, 
@@ -367,9 +370,9 @@ class ServiceController extends Controller
             'Address'       => $Address,
             'Oil_tpye'      => $Oil_tpye,
             'Comm_Date'     => $Comm_Date,
-            'panel_version'     => $panel_version
+            'panel_version' => $panel_version,
+            'machines_id'   => $Machines
             
-           
         ]);
         
     }
@@ -1062,6 +1065,8 @@ class ServiceController extends Controller
 
     function history(Request $request) {
 
+
+
       
         $id =$request->machine_id;
 
@@ -1156,6 +1161,66 @@ class ServiceController extends Controller
         return view('pages.dashboards.service.edit_oil_free',['key' => $dateshow])->with('success', 'User created successfully.');
     }
 
+
+    public function browse_history($Id , $Machineid) {
+        $keyValue = $Machineid;
+        
+        $ServicedetailsId =  $keyValue;
+        $result =  DB::table('machines')
+        ->select(
+            'machines.*',
+            'servicedetails.*',
+            'services.*',
+            'services.service_id AS service_content',
+            'services.service_dt AS service_dt',
+            'services.service_idx AS service_idx',
+            'customers.customer_name1 AS customer_name1',
+            'customers.address1 AS address1',
+            'companies.company_name AS company_name',
+            'companies.company_short_name AS company_short_name',
+            'companies.company_name AS company_name'
+
+        )
+        ->leftJoin('services', 'machines.id', '=', 'services.machine_id')
+        ->leftJoin('servicedetails', 'services.id', '=', 'servicedetails.service_id')
+        ->leftJoin('customers', 'machines.customer_id', '=', 'customers.id')
+        ->leftJoin('companies', 'machines.service_factory_id', '=', 'companies.id')
+
+        ->where('services.id',$ServicedetailsId)
+        ->get(); // ระบุคอลัมน์ที่ต้องกา
+       
+        $dateshow = $result[0];
+        // dd($dateshow);
+
+    
+
+        if ($dateshow->compressor_type == 1) {
+          
+            return $this->browse_history_ofl($dateshow);
+        } 
+        
+        elseif ($dateshow->compressor_type == 2) {
+       
+            return $this->browse_history_of($dateshow);
+            
+        } 
+      
+    
+        // return view('pages.dashboards.service.history_browse_of',['key' => $dateshow]);
+    
+      
+    }
+   
+    public function browse_history_of($dateshow)
+    {
+
+        return view('pages.dashboards.service.history_browse_of',['key' => $dateshow]);
+    }
+
+    public function browse_history_ofl($dateshow)
+    {
+        return view('pages.dashboards.service.history_browse_ofl',['key' => $dateshow]);
+    }
     
 
 }
