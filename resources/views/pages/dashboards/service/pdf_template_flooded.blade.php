@@ -59,10 +59,10 @@
 
 
 <?php
-     $checkbox = '<img src="http://localhost/KobelcoPdf9/public/assets/media/logos/images/CheckOn.png" alt="ss" width="10px" height="10px">';
-      $uncheckbox = '<img src="http://localhost/KobelcoPdf9/public/assets/media/logos/images/CheckOff.png" alt="ss" width="10px" height="10px">';
-      $radio = '<img src="http://localhost/KobelcoPdf9/public/assets/media/logos/images/RadioOn.png" alt="ss" width="10px" height="10px">';
-      $unradio = '<img src="http://localhost/KobelcoPdf9/public/assets/media/logos/images/RadioOff.png" alt="ss" width="10px" height="10px">';
+     $checkbox = '<img src="http://localhost/kpcm/public/assets/media/logos/images/CheckOn.png" alt="ss" width="10px" height="10px">';
+      $uncheckbox = '<img src="http://localhost/kpcm/public/assets/media/logos/images/CheckOff.png" alt="ss" width="10px" height="10px">';
+      $radio = '<img src="http://localhost/kpcm/public/assets/media/logos/images/RadioOn.png" alt="ss" width="10px" height="10px">';
+      $unradio = '<img src="http://localhost/kpcm/public/assets/media/logos/images/RadioOff.png" alt="ss" width="10px" height="10px">';
 
 
 ?>
@@ -78,7 +78,7 @@
   <body>
     <div class="container">
       <div class="logo">
-          <img src="http://localhost/KobelcoPdf9/public/assets/media/logos/images/kobelco_100x21_blue.png" alt="ss">
+          <img src="http://localhost/kpcm/public/assets/media/logos/images/kobelco_100x21_blue.png" alt="ss">
           {{-- <img src=../public/assets/media/logos/images/kobelco_100x21_blue.png" alt="ss"> --}}
       </div>
       <div class="text centered-text" >

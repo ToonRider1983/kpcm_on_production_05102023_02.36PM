@@ -1625,46 +1625,7 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
-                                                            <div class="row">
-                                                                <span
-                                                                    class="py-2 ps-5 fw-bold fs-6 text-gray-800 col-lg-6 text-lg-start col-md-5 text-md-end col-12 text-start">
-                                                                    Pressure Keep v/v Open
-                                                                </span>
-                                                                <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <label for="">{{ $key->functions_valve_open }}</label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </span>
-                                                            </div>
-                                                            <div class="row">
-                                                                <span
-                                                                    class="py-2 ps-5 fw-bold fs-6 text-gray-800 col-lg-6 text-lg-start col-md-5 text-md-end col-12 text-start">
-                                                                    Blow Off v/v Blows within
-                                                                </span>
-                                                                <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div>
-                                                                        <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <label for="">{{ $key->functions_valve_blow }}</label>
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
-                                                                                <label
-                                                                                    class="py-3 fw-bold fs-8 text-gray-800"
-                                                                                    for="">
-                                                                                    secs [60 secs]
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </span>
-                                                            </div>
+                                                            
                                                             <div class="row">
                                                                 <span
                                                                     class="py-2 ps-5 fw-bold fs-6 text-gray-800 col-lg-6 text-lg-start col-md-5 text-md-end col-12 text-start">
@@ -1700,6 +1661,14 @@
                                                                         <div class="row">
                                                                             <div class="col-lg-4 col-md-6 col-6 ms-2">
                                                                                 <label for="">{{$key->functions_thermal}}</label>
+                                                                            </div>
+                                                                            <div
+                                                                                class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
+                                                                                <label
+                                                                                    class="py-3 fw-bold fs-8 text-gray-800"
+                                                                                    for="">
+                                                                                    A
+                                                                                </label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -2469,23 +2438,47 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            *Auto Blow Off System
+                                                            3,4-WAY solenoid v/v
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_autoblowoff_1" id="maint_autoblowoff_1" disabled>
+                                                            name="maint_solenoid_1" id="maint_solenoid_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_autoblowoff_2" id="maint_autoblowoff_2" disabled>
+                                                            name="maint_solenoid_2" id="maint_solenoid_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_autoblowoff_4" id="maint_autoblowoff_4" disabled>
+                                                            name="maint_solenoid_4" id="maint_solenoid_4" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5">
+                                                    <div
+                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
+                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
+                                                            for="">
+                                                            Shuttle v/v
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_shuttle_1" id="maint_shuttle_1" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_shuttle_2" id="maint_shuttle_2" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_shuttle_4" id="maint_shuttle_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -2517,71 +2510,23 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Pressure Cont. v/v
+                                                            Dis. Silencer Check v/v
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_presscontvav_1" id="maint_presscontvav_1" disabled>
+                                                            name="maint_discharge_silenser_1" id="maint_discharge_silenser_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_presscontvav_2" id="maint_presscontvav_2" disabled>
+                                                            name="maint_discharge_silenser_2" id="maint_discharge_silenser_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_presscontvav_4" id="maint_presscontvav_4" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-5">
-                                                    <div
-                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
-                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
-                                                            for="">
-                                                            Pressure Keep v/v
-                                                        </label>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_presskeepvav_1" id="maint_presskeepvav_1" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_presskeepvav_2" id="maint_presskeepvav_2" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_presskeepvav_4" id="maint_presskeepvav_4" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-5">
-                                                    <div
-                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
-                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
-                                                            for="">
-                                                            Auto Thermo v/v
-                                                        </label>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_thermovav_1" id="maint_thermovav_1" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_thermovav_2" id="maint_thermovav_2" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_thermovav_4" id="maint_thermovav_4" disabled>
+                                                            name="maint_discharge_silenser_4" id="maint_discharge_silenser_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -2613,47 +2558,23 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Oil Recovery System
+                                                            Inter Cooler
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilrecovery_1" id="maint_oilrecovery_1" disabled>
+                                                            name="maint_intercooler_1" id="maint_intercooler_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilrecovery_2" id="maint_oilrecovery_2" disabled>
+                                                            name="maint_intercooler_2" id="maint_intercooler_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilrecovery_4" id="maint_oilrecovery_4" disabled>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-5">
-                                                    <div
-                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
-                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
-                                                            for="">
-                                                            Belt/V-Belt
-                                                        </label>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_belt_1" id="maint_belt_1" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_belt_2" id="maint_belt_2" disabled>
-                                                    </div>
-                                                    <div
-                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
-                                                        <input type="checkbox" class="form-check-input"
-                                                            name="maint_belt_4" id="maint_belt_4" disabled>
+                                                            name="maint_intercooler_4" id="maint_intercooler_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -2677,7 +2598,31 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilcooler_4" id="maint_oilcooler_4" disabled>
+                                                            name="maint_aftercooler_4" id="maint_aftercooler_4" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5">
+                                                    <div
+                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
+                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
+                                                            for="">
+                                                            **After Cooler
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_1" id="maint_aftercooler_1" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_2" id="maint_aftercooler_2" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_4" id="maint_aftercooler_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -2733,7 +2678,7 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Mechanical / Oil seal
+                                                            Labyrinth / Oil Seal
                                                         </label>
                                                     </div>
                                                     <div
@@ -2757,7 +2702,7 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Fan & Fan Motor
+                                                            Fan & Fan Motor 
                                                         </label>
                                                     </div>
                                                     <div
@@ -2781,23 +2726,23 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Air End
+                                                            Oil Pump
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_airend_1" id="maint_airend_1" disabled>
+                                                            name="maint_oilpump_1" id="maint_oilpump_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_airend_2" id="maint_airend_2" disabled>
+                                                            name="maint_oilpump_2" id="maint_oilpump_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_airend_4" id="maint_airend_4" disabled>
+                                                            name="maint_oilpump_4" id="maint_oilpump_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -2805,23 +2750,47 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Bearing(Air End)
+                                                            1st Air End
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingair_1" id="maint_bearingair_1" disabled>
+                                                            name="maint_1st_air_1" id="maint_1st_air_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingair_2" id="maint_bearingair_2" disabled>
+                                                            name="maint_1st_air_2" id="maint_1st_air_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingair_4" id="maint_bearingair_4" disabled>
+                                                            name="maint_1st_air_4" id="maint_1st_air_4" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5">
+                                                    <div
+                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
+                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
+                                                            for="">
+                                                            2nd Air End
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_2nd_air_1" id="maint_2nd_air_1" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_2nd_air_2" id="maint_2nd_air_2" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_2nd_air_4" id="maint_2nd_air_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3047,6 +3016,8 @@
 
     </div>
 
+    {{ var_dump($key)}}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
@@ -3101,21 +3072,21 @@
         var value7    = '{{$key->maint_oil ?? ''}}';
         var value8    = '{{$key->maint_drainseparator ?? ''}}';
         var value9    = '{{$key->maint_motorgrease ?? ''}}';
-        var value10   = '{{$key->maint_autoblowoff ?? ''}}';
-        var value11   = '{{$key->maint_capacityvav ?? ''}}';
-        var value12   = '{{$key->maint_presscontvav ?? ''}}';
-        var value13   = '{{$key->maint_presskeepvav ?? ''}}';
+        var value10   = '{{$key->maint_solenoid ?? ''}}';
+        var value11   = '{{$key->maint_shuttle ?? ''}}';
+        var value12   = '{{$key->maint_capacityvav ?? ''}}';
+        var value13   = '{{$key->maint_discharge_silenser ?? ''}}';
         var value14   = '{{$key->maint_thermovav ?? ''}}';
         var value15   = '{{$key->maint_oillevel ?? ''}}';
-        var value16   = '{{$key->maint_oilrecovery ?? ''}}';
-        var value17   = '{{$key->maint_belt ?? ''}}';
-        var value18   = '{{$key->maint_aftercooler ?? ''}}';
-        var value19   = '{{$key->maint_oilcooler ?? ''}}';
-        var value20   = '{{$key->maint_mainmotor ?? ''}}';
-        var value21   = '{{$key->maint_oilseal ?? ''}}';
-        var value22   = '{{$key->maint_fanmotor ?? ''}}';
-        var value23   = '{{$key->maint_airend  ?? ''}}';
-        var value24   = '{{$key->maint_bearingair ?? ''}}';
+        var value16   = '{{$key->maint_intercooler ?? ''}}';
+        var value17   = '{{$key->maint_aftercooler ?? ''}}';
+        var value18   = '{{$key->maint_oilcooler ?? ''}}';
+        var value19   = '{{$key->maint_mainmotor ?? ''}}';
+        var value20   = '{{$key->maint_oilseal ?? ''}}';
+        var value21   = '{{$key->maint_fanmotor ?? ''}}';
+        var value22   = '{{$key->maint_oilpump ?? ''}}';
+        var value23   = '{{$key->maint_1st_air  ?? ''}}';
+        var value24   = '{{$key->maint_2nd_air?? ''}}';
         var value25   = '{{$key->maint_bearingmotor ?? ''}}';
         var value26   = '{{$key->maint_gauge ?? ''}}';
         var value27   = '{{$key->maint_magnetic ?? ''}}';
@@ -3155,21 +3126,21 @@
         setCheckboxValues("maint_oil_", value7);
         setCheckboxValues("maint_drainseparator_", value8);
         setCheckboxValues("maint_motorgrease_", value9);
-        setCheckboxValues("maint_autoblowoff_", value10);
-        setCheckboxValues("maint_capacityvav_", value11);
-        setCheckboxValues("maint_presscontvav_", value12);
-        setCheckboxValues("maint_presskeepvav_", value13);
+        setCheckboxValues("maint_solenoid_", value10);
+        setCheckboxValues("maint_shuttle_", value11);
+        setCheckboxValues("maint_capacityvav_", value12);
+        setCheckboxValues("maint_discharge_silenser_", value13);
         setCheckboxValues("maint_thermovav_", value14);
         setCheckboxValues("maint_oillevel_", value15);
-        setCheckboxValues("maint_oilrecovery_", value16);
-        setCheckboxValues("maint_belt_", value17);
-        setCheckboxValues("maint_aftercooler_", value18);
-        setCheckboxValues("maint_oilcooler_", value19);
-        setCheckboxValues("maint_mainmotor_", value20);
+        setCheckboxValues("maint_intercooler_", value16);
+        setCheckboxValues("maint_aftercooler_", value17);
+        setCheckboxValues("maint_oilcooler_", value18);
+        setCheckboxValues("maint_mainmotor_", value19);
         setCheckboxValues("maint_oilseal_", value20);
-        setCheckboxValues("maint_fanmotor_", value22);
-        setCheckboxValues("maint_airend_", value23);
-        setCheckboxValues("maint_bearingair_", value24);
+        setCheckboxValues("maint_fanmotor_", value21);
+        setCheckboxValues("maint_oilpump_", value22);
+        setCheckboxValues("maint_1st_air_", value23);
+        setCheckboxValues("maint_2nd_air_", value24);
         setCheckboxValues("maint_bearingmotor_", value25);
         setCheckboxValues("maint_gauge_", value26);
         setCheckboxValues("maint_magnetic_", value27);
