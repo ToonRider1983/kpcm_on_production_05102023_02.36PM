@@ -62,7 +62,7 @@
                                     <input type="date" class="form-control" name="end_date"
                                     value="{{ $request->has('end_date') ? $request->input('end_date') : old('end_date') }}"
                                     placeholder="End Date" aria-label="end_date"
-                                    aria-describedby="basic-addon1" required/>
+                                    aria-describedby="basic-addon1" />
                                 </div>
                                 <div class="col-lg-4 text-lg-end col-md-4 text-md-end col-12">
                                     <a href="{{ route('unmaintainedmachine.export', [

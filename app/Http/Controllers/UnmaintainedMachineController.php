@@ -65,39 +65,75 @@ class UnmaintainedMachineController extends Controller
     public function exportCSV(Request $request)
     {
         // กำหนดคำสั่ง query สำหรับการดึงข้อมูลเครื่องจักร
-        $query = DB::table('services')->orderBy('services.id')
+        // $query = DB::table('services')->orderBy('services.id')
+        // ->select(
+        //     'machines.id AS Index',
+        //     'machines.serial AS SerialMachine',
+        //     'machines.machine_cd AS TypeCode',
+        //     // -- เดา Customer_name2
+        //     'machines.customer_machine_no AS CustomerMachine',
+        //     'customers.customer_cd AS UserCode',
+        //     'customers.customer_name1 AS EndUser',
+        //     'services.service_id AS noinfo', #
+        //     'services.service_dt AS Date',
+        //     'services.service_id AS Content',
+        //     'services.service_performer AS Performer',
+        //     'services.customer_pic AS CustomerPic',
+        //     'services.panel_version AS Panel',
+        //     'services.running_hours AS RunHrs',
+        //     'machines.running_hours_total AS HrsTTL', 
+        //     'companies.company_short_name AS Service',
+        //     'services.remarks AS Remarks'
+        // )
+        // ->leftJoin('machines', 'services.machine_id', '=', 'machines.id')
+        // ->leftJoin('companies', 'companies.id', '=', 'machines.service_factory_id')
+        // ->leftJoin('customers', 'customers.id', '=', 'machines.customer_id')
+        // ->where(function($query) {
+        //     $query->where('services.service_id', '<>', '3')
+        //           ->orWhere('services.service_id', '<>', '2')
+        //           ->orWhere('services.service_id', '<>', '6');
+        // })
+
+        // // ->whereNotIn('services.service_id', [3, 6, 2]) กรณีไม่เอา 
+        // ->orderBy('services.service_id', 'asc')
+        // ->orderBy('machines.serial', 'asc')
+        // ;
+        $query = DB::table('machines')
         ->select(
             'machines.id AS Index',
             'machines.serial AS SerialMachine',
             'machines.machine_cd AS TypeCode',
-            // -- เดา Customer_name2
             'machines.customer_machine_no AS CustomerMachine',
             'customers.customer_cd AS UserCode',
             'customers.customer_name1 AS EndUser',
-            'services.service_id AS noinfo', #
+            'services.service_id AS noinfo',
             'services.service_dt AS Date',
             'services.service_id AS Content',
             'services.service_performer AS Performer',
             'services.customer_pic AS CustomerPic',
             'services.panel_version AS Panel',
             'services.running_hours AS RunHrs',
-            'machines.running_hours_total AS HrsTTL', 
+            'machines.running_hours_total AS HrsTTL',
             'companies.company_short_name AS Service',
             'services.remarks AS Remarks'
         )
-        ->leftJoin('machines', 'services.machine_id', '=', 'machines.id')
+        ->leftJoin('services', 'machines.id', '=', 'services.machine_id')
         ->leftJoin('companies', 'companies.id', '=', 'machines.service_factory_id')
         ->leftJoin('customers', 'customers.id', '=', 'machines.customer_id')
         ->where(function($query) {
-            $query->where('services.service_id', '<>', '3')
-                  ->orWhere('services.service_id', '<>', '2')
-                  ->orWhere('services.service_id', '<>', '6');
+                $query->where('services.service_id', '<>', '3')
+                      ->orWhere('services.service_id', '<>', '2')
+                      ->orWhere('services.service_id', '<>', '6');
         })
-
-        // ->whereNotIn('services.service_id', [3, 6, 2]) กรณีไม่เอา 
+        ->where(function ($query) use ($request) {
+            $query->where('services.service_dt', '>=', $request->start_date)
+                ->where('services.service_dt', '<=', $request->end_date ?: now());
+        })
         ->orderBy('services.service_id', 'asc')
         ->orderBy('machines.serial', 'asc')
-        ;
+        ->distinct();
+
+
 
         // ใช้ applyDateRange เพื่อค้นหาตามช่วงวันที่
         $this->applyDateRange($query, $request, 'start_date', 'end_date', 'services.service_dt');
