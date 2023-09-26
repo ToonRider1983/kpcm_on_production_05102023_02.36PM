@@ -589,7 +589,7 @@
                                                             <div
                                                                 class="col-lg-8 text-lg-start col-md-7 text-md-start col-7 text-start">
                                                                 <label class="pt-3"
-                                                                    for=""><span class="fw-bold fs-7 text-gray-800">Temp</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_in}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span class="fw-bold fs-7 text-gray-800">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_out}}&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                                    for=""><span class="fw-bold fs-7 text-gray-800">Temp</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $key->site_cooling_temp_in}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fw-bold fs-7 text-gray-800">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $key->site_cooling_temp_out}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             </div>
                                                         </div>
                                                     </span>
