@@ -51,7 +51,7 @@
                                     <input type="date" class="form-control" name="start_date"
                                     value="{{ $request->has('start_date') ? $request->input('start_date') : old('start_date') }}"
                                     placeholder="Start Date" aria-label="start_date"
-                                    aria-describedby="basic-addon1" />
+                                    aria-describedby="basic-addon1" required/>
                                 </div>
                                 <div class="ps-13 col-lg-1 text-lg-start col-md-1 text-md-start">
                                     <label class="fw-bold fs-1 text-gray-800" for="">
@@ -62,7 +62,7 @@
                                     <input type="date" class="form-control" name="end_date"
                                     value="{{ $request->has('end_date') ? $request->input('end_date') : old('end_date') }}"
                                     placeholder="End Date" aria-label="end_date"
-                                    aria-describedby="basic-addon1" />
+                                    aria-describedby="basic-addon1" required/>
                                 </div>
                                 <div class="col-lg-4 text-lg-end col-md-4 text-md-end col-12">
                                     <a href="{{ route('unmaintainedmachine.export', [
