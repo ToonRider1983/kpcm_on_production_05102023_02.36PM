@@ -124,17 +124,16 @@ Route::get('/machine/{id}/delete', [MachineMasterController::class, 'machine_del
 Route::get('/machine_result', [MachineMasterController::class, 'machine_result'])->name('machine_result');
 
 Route::resource('/enduser', CustomerMasterController::class);
-Route::get('/enduser/create', [CustomerMasterController::class, 'drop'])->name('enduser.create');
+Route::get('/customer/add', [CustomerMasterController::class, 'drop'])->name('enduser.create');
 Route::post('/dropdown/fetch', [CustomerMasterController::class, 'fetch'])->name('dropdown.fetch'); //ในส่วนของJs
 Route::post('/dropdown/fetchIndustrial', [CustomerMasterController::class, 'fetch'])->name('dropdown.fetchIndustrial');//ในส่วนของJs
 Route::post('/myinput/updateSession', [CustomerMasterController::class, 'updateSession'])->name('myinput.updateSession');
 Route::get('/exportenduser/csv', [CustomerMasterController::class, 'exportCSV'])->name('enduser.export');
 
-Route::get('/enduser/show', [CustomerMasterController::class, 'show'])->name('enduser.show');
-Route::get('/enduser/edit', [CustomerMasterController::class, 'edit'])->name('enduser.edit');
+Route::get('/customer/browse/{id}', [CustomerMasterController::class, 'show'])->name('enduser.show');
+Route::get('/customer/modify/{id}', [CustomerMasterController::class, 'edit'])->name('enduser.edit');
 Route::get('/enduser/{id}/delete', [CustomerMasterController::class, 'enduser_delete'])->name('enduser_delete');
-Route::get('/enduser_result', [CustomerMasterController::class, 'enduser_result'])->name('enduser_result');
-
+Route::get('/customer/result/', [CustomerMasterController::class, 'enduser_result'])->name('enduser_result');
 
 
 
