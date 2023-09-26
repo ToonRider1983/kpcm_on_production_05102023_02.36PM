@@ -120,7 +120,7 @@ Route::get('/machine/{id}/show', 'MachineMasterController@show')->name('pages.da
 Route::get('/machine/{id}/edit', 'MachineMasterController@edit')-> name ('pages.machine.edit');
 Route::put('/machine/{id}', 'MachineMasterController@update')->name ('pages.dashboards.machine.update');
 Route::get('/exportmachine/csv', [MachineMasterController::class, 'exportCSV'])->name('machine.export');
-Route::get('/machine_delete', [MachineMasterController::class, 'machine_delete'])->name('machine_delete');
+Route::get('/machine/{id}/delete', [MachineMasterController::class, 'machine_delete'])->name('machine_delete');
 Route::get('/machine_result', [MachineMasterController::class, 'machine_result'])->name('machine_result');
 
 Route::resource('/enduser', CustomerMasterController::class);

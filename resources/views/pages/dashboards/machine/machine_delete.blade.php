@@ -21,8 +21,7 @@
                             ID :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $machine->id }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $machine->id }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -31,8 +30,7 @@
                             Serial# :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $machine->serial }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $machine->serial }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -41,7 +39,7 @@
                             Factory :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">
+                            <label for="">
                                 @if($machine->factory_type_name == '1')
                                 KCMS
                                 @elseif($machine->factory_type_name == '2')
@@ -49,8 +47,7 @@
                                 @elseif($machine->factory_type_name == '3')
                                 ETC
                                 @endif
-                            </label> --}}
-                            <label for="">text</label>
+                            </label>
                         </div>
                     </div>
                     <div class="row">
@@ -59,14 +56,13 @@
                             Compressor Type :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">
+                            <label for="">
                                 @if($machine->compressor_type_name == '1')
                                     Oil Flooded
                                 @elseif($machine->compressor_type_name == '2')
                                     Oil Free
                                 @endif
-                            </label> --}}
-                            <label for="">text</label>
+                            </label>
                         </div>
                     </div>
                     <div class="row">
@@ -75,8 +71,7 @@
                             Machine Type Code :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->machine_cd) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->machine_cd) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -85,8 +80,7 @@
                             Customer Machine# :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->customer_machine_no) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->customer_machine_no) }}</label>
                         </div>
                     </div>
                 </div>
@@ -100,8 +94,7 @@
                             Kobelco# :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->kcth_order_cd) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->kcth_order_cd) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -110,8 +103,7 @@
                             KSL/KCMS# :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->ksl_order_cd) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->ksl_order_cd) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -120,8 +112,7 @@
                             KMA# :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->kma_order_cd) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->kma_order_cd) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -130,8 +121,7 @@
                             Service Company :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->com_name) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->com_name) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -139,14 +129,13 @@
                             End User :
                         </div>  
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label class="pt-3" for="">@if($machine->cus_name1 && $machine->cus_name2)
+                            <label class="pt-3" for="">@if($machine->cus_name1 && $machine->cus_name2)
                                 {{ $machine->cus_name1 }} / {{ $machine->cus_name2 }}
                             @elseif($machine->cus_name1)
                                 {{ $machine->cus_name1 }}
                             @elseif($machine->cus_name2)
                                 {{ $machine->cus_name2 }}
-                            @endif</label> --}}
-                            <label for="">text</label>
+                            @endif</label>
                         </div>
                     </div>
                     <div class="row pb-5">
@@ -154,8 +143,7 @@
                             [Customer CD] :
                         </div>
                         <div class="col-md-5 text-md-start col-7 text-start">
-                            {{-- <span id="customer_cd">{{ ($machine->cus_code) }}</span> --}}
-                            <span for="">text</span>
+                            <span id="customer_cd">{{ ($machine->cus_code) }}</span>
                         </div>
                     </div>
                     
@@ -164,15 +152,13 @@
                             [Country] :
                         </div>
                         <div class="col-lg-2 text-lg-start col-md-5 text-md-start col-7 text-start pb-5">
-                            {{-- <span id="country"> {{ ($machine->country_cus) }}</span> --}}
-                            <span for="">text</span>
+                            <span id="country"> {{ ($machine->country_cus) }}</span>
                         </div>
                         <div class="fw-bold fs-6 text-gray-800 col-lg-2 text-lg-end col-md-5 text-md-end col-6 text-start">
                             [Industrial Zone] :
                         </div>
                         <div class="col-lg-2 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
-                            {{-- <span id="industrialzone"> {{ ($machine->industrialzone_id) }}</span> --}}
-                            <span for="">text</span>
+                            <span id="industrialzone"> {{ ($machine->industrialzone_id) }}</span>
                         </div>
                     </div>
                     
@@ -181,11 +167,9 @@
                             [Address] :
                         </div>
                         <div class="col-lg-7 text-lg-start col-md-7 text-md-start col-8 text-start">
-                            {{-- <span id="address1">{{ ($machine->address1) }}</span> --}}
-                            <span for="">text</span>
+                            <span id="address1">{{ ($machine->address1) }}</span>
                             <br>
-                            {{-- <span id="address2">{{ ($machine->address2) }}</span> --}}
-                            <span for="">text</span>
+                            <span id="address2">{{ ($machine->address2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -199,8 +183,7 @@
                             Commisioning Date :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->testrun_dt) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->testrun_dt) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -209,8 +192,7 @@
                             Factory C/R Date :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->dispatch_dt) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->dispatch_dt) }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -219,7 +201,7 @@
                             Operation Status :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">
+                            <label for="">
                                 @if($machine->operstat_name == '1')
                                     In Operation
                                 @elseif($machine->operstat_name == '2')
@@ -228,8 +210,7 @@
                                     Discarded
                                 @endif
                                 
-                            </label> --}}
-                            <label for="">text</label>
+                            </label>
                         </div>
                     </div>
                     <div class="row">
@@ -238,8 +219,7 @@
                             Motor :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <span>{{ $machine->motor }}</span> --}}
-                            <span>text</span>
+                            <span>{{ $machine->motor }}</span>
                             <span>KW</span>
                         </div>                        
                     </div>
@@ -254,8 +234,7 @@
                             Remark(Kobelco) :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ ($machine->remarks) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ ($machine->remarks) }}</label>
                         </div>
                     </div>
                 </div>
@@ -273,8 +252,7 @@
                             Remarks1 :
                         </div>
                              <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                                {{-- <label for="remarks_distributor1">{{ ($machine->remarks_distributor1) }}</label> --}}
-                                <label for="">text</label>
+                                <label for="remarks_distributor1">{{ ($machine->remarks_distributor1) }}</label>
                             </div>
                     </div>
                     <div class="row">
@@ -282,8 +260,7 @@
                             Remarks2 :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start">
-                            {{-- <label for="remarks_distributor2">{{ ($machine->remarks_distributor2) }}</label> --}}
-                            <label for="">text</label>
+                            <label for="remarks_distributor2">{{ ($machine->remarks_distributor2) }}</label>
                         </div>
                     </div>
                 </div>
@@ -297,10 +274,10 @@
                             Created :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for=""><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $machine->created_at }}&nbsp;
-                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $machine->created_by }}
-                            </label> --}}
-                            <label for="">text</label>
+                            <label for=""><i
+                                class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($machine->created_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($machine->created_at)->format('H:i') }}&nbsp;
+                            <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $machine->created_by }}
+                        </label>
                         </div>
                     </div>
                     <div class="row">
@@ -309,19 +286,30 @@
                             Updated :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for=""><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $machine->updated_at }}&nbsp;
-                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $machine->updated_by }}
-                            </label> --}}
-                            <label for="">text</label>
+                            <label for=""><i
+                                class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($machine->updated_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($machine->updated_at)->format('H:i') }}&nbsp;
+                            <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $machine->updated_by }}
+                        </label>
                         </div>
                     </div>
                 </div>
             </div>
 
-                    <a href="{{ url('/machine') }}" class="h6 btn btn-primary btn-sm float-start"><i
+            <div class="d-flex justify-content-between">
+                <a href="{{ url('/machine') }}" class="h6 btn btn-primary btn-sm float-start"><i
+                        class="fa-solid fa-backward"></i>&nbsp;Back</a>
+                <form method="POST" action="" accept-charset="UTF-8" style="display:inline">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn-sm btn btn-danger" title="Delete Student"
+                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa-sharp fa-solid fa-xmark"
+                            aria-hidden="true"></i>Delete</button>
+                </form>
+            </div>
+                    {{-- <a href="{{ url('/machine') }}" class="h6 btn btn-primary btn-sm float-start"><i
                         class="fa-solid fa-backward"></i>&nbsp;Back</a>
                 <button type="submit" class="h6 btn btn-danger btn-sm float-end"><i
-                        class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button>
+                        class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button> --}}
         </form>
 
     </div> 

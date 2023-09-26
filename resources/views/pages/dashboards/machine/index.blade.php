@@ -238,14 +238,14 @@
                                                 <i class="fa-sharp fa-solid fa-pen-to-square" aria-hidden="true"></i>
                                             </button>
                                         </a>
-        
-                                        <form method="POST" action="{{ url('/machine/' . $machines->id) }}" accept-charset="UTF-8" style="display:inline">
+                                        <a href="{{ url('/machine/' . $machines->id . '/delete') }}" class="btn btn-danger"><i class="fw-bold fa-solid fa-xmark fa-2xl"></i></a>
+                                        {{-- <form method="POST" action="{{ url('/machine/' . $machines->id) }}" accept-charset="UTF-8" style="display:inline">
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-danger" title="Delete Machine" onclick="return confirm('Confirm delete?')">
                                                 <i class="fa-sharp fa-solid fa-xmark" aria-hidden="true"></i>
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
