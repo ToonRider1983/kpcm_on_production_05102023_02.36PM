@@ -5,7 +5,8 @@ class Form{
   'maint_drainseparator','maint_motorgrease','maint_solenoid','maint_shuttle','maint_capacityvav','maint_discharge_silenser',
   'maint_oillevel','maint_intercooler','maint_aftercooler','maint_oilcooler','maint_mainmotor','maint_oilseal',
   'maint_fanmotor','maint_oilpump','maint_1st_air','maint_2nd_air','maint_bearindmotor','maint_gauge','maint_bearingmotor',
-  'maint_magnetic','maint_sensor','maint_maininv','maint_faninv','maint_leakage'
+  'maint_magnetic','maint_sensor','maint_maininv','maint_faninv','maint_leakage','maint_autoblowoff','maint_presscontvav','maint_presskeepvav',
+  'maint_thermovav','maint_oilrecovery','maint_belt','maint_airend','maint_bearingair'
   ,'chk_filter_replacment','chk_filter_replacment2','chk_filter_replacment3']
   checkId=['servicContent_portal','servicContent_annual','servicContent_repair',
                     'servicContent_overhaul','servicContent_commissioning','servicContent_warranty',
