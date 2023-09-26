@@ -175,9 +175,29 @@ class IndustrialzoneMasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-public function industrialzone_delete() {
-    return view('pages.dashboards.industrialzone.industrialzone_delete');
-}
+public function industrialzone_delete($id)
+    {
+        $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
+        $industrialzone = DB::table('industrialzones');
+        $industrialzone = $industrialzone
+            ->select(
+             'industrialzones.*',
+             'countries.country_name as ContryName',
+             'users.user_name as created_by',
+             'users2.user_name as updated_by')
+            ->where('industrialzones.id', $id)
+            ->whereNull('industrialzones.deleted_at')
+            ->leftjoin('countries', 'industrialzones.country_id', '=', 'countries.id')
+            ->leftjoin('users','industrialzones.created_by','=','users.id')
+            ->leftjoin('users as users2','industrialzones.updated_by','=','users2.id')
+            ->first();
+
+        return view('pages.dashboards.industrialzone.industrialzone_delete', ['industrialzone' => $industrialzone, 'country' => $country]);
+    }
+
+// public function industrialzone_delete() {
+//     return view('pages.dashboards.industrialzone.industrialzone_delete');
+// }
 
 // public function industrialzone_resulte() {
 //     return view('pages.dashboards.industrialzone.result');

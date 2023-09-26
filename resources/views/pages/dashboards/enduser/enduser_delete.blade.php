@@ -21,8 +21,7 @@
                             ID :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->id }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->id }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -31,8 +30,7 @@
                             User Code :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->customer_cd }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->customer_cd }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -41,8 +39,7 @@
                             Company Full Name :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->customer_name1}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->customer_name1}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -51,8 +48,7 @@
                             BranchFactory/Etc :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->customer_name2}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->customer_name2}}</label>
                         </div>
                     </div>
                 </div>
@@ -66,8 +62,7 @@
                             Country Name :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->ct_name}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->ct_name}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -76,8 +71,7 @@
                             Province/Prefecture :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->pv_name}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->pv_name}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -86,8 +80,7 @@
                             Industrial Zone :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->indust}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->indust}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -96,8 +89,7 @@
                             Zip Code :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->zip}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->zip}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -106,8 +98,7 @@
                             Address1 :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->address1}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->address1}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -116,8 +107,7 @@
                             Address2 :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->address2}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->address2}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -126,8 +116,7 @@
                             Telephone :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->address2}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->address2}}</label>
                         </div>
                     </div>
                 </div>
@@ -141,8 +130,7 @@
                             Remarks :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $customer->remarks }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $customer->remarks }}</label>
                         </div>
                     </div>
                 </div>
@@ -156,11 +144,10 @@
                             Created :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="" >
-                                <i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $customer->created_at }}&nbsp;
-                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $customer->created_by  }}
-                            </label> --}}
-                            <label for="">text</label>
+                            <label for=""><i
+                                class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($customer->created_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($customer->created_at)->format('H:i') }}&nbsp;
+                            <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $customer->created_by }}
+                        </label>
                         </div>
                     </div>
                     <div class="row">
@@ -169,20 +156,31 @@
                             Updated :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="" >
-                                <i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $customer->updated_at }}&nbsp;
-                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $customer->updated_by }}
-                            </label> --}}
-                            <label for="">text</label>
+                            <label for=""><i
+                                class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($customer->updated_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($customer->updated_at)->format('H:i') }}&nbsp;
+                            <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $customer->updated_by }}
+                        </label>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="d-flex justify-content-between">
                 <a href="{{ url('/enduser') }}" class="h6 btn btn-primary btn-sm float-start"><i
+                        class="fa-solid fa-backward"></i>&nbsp;Back</a>
+                <form method="POST" action="" accept-charset="UTF-8" style="display:inline">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn-sm btn btn-danger" title="Delete Student"
+                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa-sharp fa-solid fa-xmark"
+                            aria-hidden="true"></i>Delete</button>
+                </form>
+            </div>
+
+                {{-- <a href="{{ url('/enduser') }}" class="h6 btn btn-primary btn-sm float-start"><i
                     class="fa-solid fa-backward"></i>&nbsp;Back</a>
             <button type="submit" class="h6 btn btn-danger btn-sm float-end"><i
-                    class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button>
+                    class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button> --}}
         </form>
 
     </div>

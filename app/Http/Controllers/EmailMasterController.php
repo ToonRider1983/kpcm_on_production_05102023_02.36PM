@@ -147,9 +147,27 @@ class EmailMasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-public function email_delete() {
-    return view('pages.dashboards.emails.email_delete');
-}
+// public function email_delete() {
+//     return view('pages.dashboards.emails.email_delete');
+// }
+
+public function email_delete($id)
+    {
+        $country = DB::table('countries')->get();
+        $emails = DB::table('emails');
+        $emails = $emails
+            ->select('emails.*', 'countries.country_name as ContryName', 'emails.email_type as typename',
+             'users.user_name as created_by',
+            'users2.user_name as updated_by',)
+            ->where('emails.id', $id)
+            ->whereNull('emails.deleted_at') 
+            ->leftjoin('users','emails.created_by','=','users.id')
+            ->leftjoin('users as users2','emails.updated_by','=','users2.id')
+            ->leftjoin('countries', 'emails.country_id', '=', 'countries.id')
+            ->first();
+        //return view('companies.show')->with('company', $company );
+        return view('pages.dashboards.emails.email_delete', ['emails' => $emails, 'country' => $country]);
+    }
 
 // public function email_result() {
 //     return view('pages.dashboards.emails.result');

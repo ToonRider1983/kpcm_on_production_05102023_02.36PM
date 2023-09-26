@@ -100,15 +100,15 @@
                                         <a href="{{ url('/machinetype/' . $item->id . '/edit') }}" title="Edit company"><button class="btn btn-primary"><i
                                                     class="fa-sharp fa-solid fa-pen-to-square"
                                                     aria-hidden="true"></i></button></a>
-
-                                        <form method="POST" action="{{ url('/machinetype/' . $item->id) }}" accept-charset="UTF-8"
+                                        <a href="{{ url('/machinetype/' . $item->id . '/delete') }}" class="btn btn-danger"><i class="fw-bold fa-solid fa-xmark fa-2xl"></i></a>
+                                        {{-- <form method="POST" action="{{ url('/machinetype/' . $item->id) }}" accept-charset="UTF-8"
                                             style="display:inline">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button type="submit" class="btn btn-danger" title="Delete Student"
                                                 onclick="return confirm(&quot;Confirm delete?&quot;)"><i
                                                     class="fa-sharp fa-solid fa-xmark" aria-hidden="true"></i></button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach

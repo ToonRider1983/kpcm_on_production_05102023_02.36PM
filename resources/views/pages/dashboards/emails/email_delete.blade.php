@@ -21,8 +21,7 @@
                             ID :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-10 text-start pb-5">
-                            {{-- <label for="">{{ $emails -> id }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails -> id }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -31,8 +30,7 @@
                             Country :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-8 text-start pb-5">
-                            {{-- <label for="">{{ $emails -> ContryName}}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails -> ContryName}}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -41,15 +39,14 @@
                             Mail Type :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-8 text-start pb-5">
-                            {{-- <label for="">
+                            <label for="">
                                 @if($emails->typename == '1')
                                 Kobelco Judge
                                 @elseif($emails->typename == '2')
                                 Project Time out
                                 @elseif($emails->typename == '3')
                                 Free Project
-                                @endif</label> --}}
-                                <label for="">text</label>
+                                @endif</label>
                         </div>
                     </div>
                 </div>
@@ -63,8 +60,7 @@
                             Subject :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $emails -> email_subject1 }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails -> email_subject1 }}</label>
                         </div>
                     </div>
                 </div>
@@ -78,8 +74,7 @@
                             Body :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $emails ->  email_body1 }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails ->  email_body1 }}</label>
                         </div>
                     </div>
                 </div>
@@ -93,8 +88,7 @@
                             Footer :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for="">{{ $emails -> email_footer }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails -> email_footer }}</label>
                         </div>
                     </div>
                 </div>
@@ -108,8 +102,7 @@
                             Day Count :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-8 text-start pb-5">
-                            {{-- <label for="">{{ $emails -> days }}</label> --}}
-                            <label for="">text</label>
+                            <label for="">{{ $emails -> days }}</label>
                         </div>
                     </div>
                 </div>
@@ -123,10 +116,10 @@
                             Created :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for=""><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $emails->created_at }}&nbsp;
+                                <label for=""><i
+                                    class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($emails->created_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($emails->created_at)->format('H:i') }}&nbsp;
                                 <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $emails->created_by }}
-                 </label>        --}}
-                 <label for="">text</label>
+                            </label>    
                         </div>
                     </div>
                     <div class="row">
@@ -135,18 +128,31 @@
                             Updated :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            {{-- <label for=""><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ $emails->updated_at }}&nbsp;
-                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $emails->updated_by }}</label> --}}
-                                <label for="">text</label>
+                                <label for=""><i
+                                    class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($emails->updated_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($emails->updated_at)->format('H:i') }}&nbsp;
+                                <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $emails->updated_by }}
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="d-flex justify-content-between">
                 <a href="{{ url('/emails') }}" class="h6 btn btn-primary btn-sm float-start"><i
+                        class="fa-solid fa-backward"></i>&nbsp;Back</a>
+                <form method="POST" action="" accept-charset="UTF-8" style="display:inline">
+                    {{ method_field('DELETE') }}
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn-sm btn btn-danger" title="Delete Student"
+                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa-sharp fa-solid fa-xmark"
+                            aria-hidden="true"></i>Delete</button>
+                </form>
+            </div>
+
+                {{-- <a href="{{ url('/emails') }}" class="h6 btn btn-primary btn-sm float-start"><i
                     class="fa-solid fa-backward"></i>&nbsp;Back</a>
             <button type="submit" class="h6 btn btn-danger btn-sm float-end"><i
-                    class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button>
+                    class="fa-solid fa-circle-xmark"></i>&nbsp;Delete</button> --}}
         </form>
 
     </div>
