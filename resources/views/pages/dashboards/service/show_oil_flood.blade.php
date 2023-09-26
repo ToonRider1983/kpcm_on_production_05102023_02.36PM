@@ -121,7 +121,6 @@
             @endphp
         @endif
 
-   
 
 
 
@@ -2418,17 +2417,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilfilter_1" id="maint_oilfilter_1" disabled>
+                                                            name="maint_oilfiter_1" id="maint_oilfiter_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilseparator_2" id="maint_oilseparator_2" disabled>
+                                                            name="maint_oilfiter_2" id="maint_oilfiter_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilseparator_4" id="maint_oilseparator_4" disabled>
+                                                            name="maint_oilfiter_4" id="maint_oilfiter_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3190,6 +3189,7 @@
         var value29   = '{{$key->maint_maininv ?? ''}}';
         var value30   = '{{$key->maint_faninv ?? ''}}';
         var value31   = '{{$key->maint_leakage ?? ''}}';
+        
    
         var detailMotor         = '{{$key->detail_motor ?? ''}}';
         var detailCooler        = '{{$key->detail_cooler ?? ''}}';
@@ -3242,9 +3242,9 @@
         setCheckboxValues("maint_magnetic_", value27);
         setCheckboxValues("maint_sensor_", value28);
         setCheckboxValues("maint_maininv_", value29);
-        setCheckboxValues("maint_faninv_", value23);
+        setCheckboxValues("maint_faninv_", value30);
         setCheckboxValues("maint_leakage_", value31);
-
+   
         Checkbox("detail_motor", detailMotor);
         Checkbox("detail_cooler", detailCooler);
         Checkbox("detail_topup", detailOil);
