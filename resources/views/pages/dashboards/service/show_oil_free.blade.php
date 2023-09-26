@@ -298,7 +298,9 @@
                                             </div>
                                             <div
                                                 class="col-lg-5 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
-                                                <label for="">{{$key->created_at}}</label>
+                                                <label class="pt-4" ><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($key->created_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($key->created_at)->format('H:i') }}&nbsp;
+                                                    <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $key->created_by }}
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -308,7 +310,9 @@
                                             </div>
                                             <div
                                                 class="col-lg-5 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
-                                                <label for="">{{$key->updated_at}}</label>
+                                                <label class="pt-4" ><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($key->updated_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($key->updated_at)->format('H:i') }}&nbsp;
+                                                    <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $key->updated_by }}
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -578,14 +582,14 @@
                                                     <span class="col-lg-5 col-md-6 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-4 text-lg-start col-md-auto text-md-start col-5 text-start">
+                                                                class="col-lg-auto text-lg-start col-md-auto text-md-start col-5 text-start">
                                                                 <label class="py-3 fw-bold fs-6 text-gray-800"
                                                                     for="">Cooling Water</label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-7 text-md-start col-7 text-start">
+                                                                class="col-lg-8 text-lg-start col-md-7 text-md-start col-7 text-start">
                                                                 <label class="pt-3"
-                                                                    for="">Temp&nbsp;&nbsp; {{ $key->site_cooling_temp_in}}/{{ $key->site_cooling_temp_out}}&nbsp;&nbsp;</label>
+                                                                    for=""><span class="fw-bold fs-7 text-gray-800">Temp</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_in}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span class="fw-bold fs-7 text-gray-800">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_out}}&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -593,30 +597,30 @@
                                                         <div class="row">
                                                             <div
                                                                 class="col-lg-auto text-lg-start col-md-auto text-md-start col-4 text-start">
-                                                                <label class="py-3 fw-bold fs-6 text-gray-800"
+                                                                <label class="py-3 fw-bold fs-7 text-gray-800"
                                                                     for="">Pressure</label>
                                                             </div>
                                                             <div
                                                                 class="col-lg-10 text-lg-start col-md-9 text-md-start col-8 text-start">
                                                                 <div class="row">
                                                                     <div
-                                                                        class="py-3 col-lg-2 text-lg-start col-md-2 text-md-start col-3 text-end">
-                                                                        <label class=" fs-9 text-gray-800"
+                                                                        class="py-3 col-lg-2 text-lg-center col-md-2 text-md-start col-3 text-end">
+                                                                        <label class=" fs-7 text-gray-800"
                                                                             for="">{{ $key->site_cooling_pressure_in }}</label>
                                                                     </div>
                                                                     <div
-                                                                        class="py-3 col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-end">
+                                                                        class="py-3 col-lg-auto text-lg-center col-md-auto text-md-start col-auto text-end">
                                                                         <label class=" fs-6 fw-bold text-gray-800"
                                                                             for="">/</label>
                                                                     </div>
                                                                     <div
-                                                                        class="py-3 col-lg-2 text-lg-start col-md-2 text-md-start col-3 text-end">
-                                                                        <label class=" fs-6 text-gray-800"
+                                                                        class="py-3 col-lg-2 text-lg-center col-md-2 text-md-start col-3 text-end">
+                                                                        <label class=" fs-7 text-gray-800"
                                                                             for="">{{ $key->site_cooling_pressure_out }}</label>
                                                                     </div>
                                                                     <div
                                                                         class="py-3 col-lg-auto text-lg-start col-md-auto text-md-start col-3 text-end">
-                                                                        <label class=" fs-6 fw-bold text-gray-800"
+                                                                        <label class="fw-bold fs-7 text-gray-800"
                                                                             for="">(In/Out)</label>
                                                                     </div>
                                                                 </div>
@@ -701,8 +705,8 @@
                                                                     class="pt-3 col-lg-auto text-lg-end col-md-3 text-md-start col-auto text-start">
                                                                     (Number of Liters
                                                                 </div>
-                                                                <div class="col-lg-2 col-md-2 col-3">
-                                                                    <label for="">{{ $key->detail_topup_liters}}</label>
+                                                                <div class="col-lg-2 text-lg-center col-md-2 col-3">
+                                                                    <label class="pt-3" for="">{{ $key->detail_topup_liters}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-1 text-md-start col-auto text-start">
@@ -844,8 +848,8 @@
                                                             </label>
                                                         </div>
                                                         <div
-                                                            class="col-lg-auto text-lg-start col-md-auto text-md-start col-12 text-start">
-                                                            <label class=" fs-6 fw-bold text-gray-800" for=""> {{ $key->detail_other}}</label>
+                                                            class="col-lg-auto text-lg-center col-md-auto text-md-start col-12 text-start">
+                                                            <label class="pt-5 fs-6 text-gray-800" for=""> {{ $key->detail_other}}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -867,7 +871,7 @@
                                                                     Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_oil_temp}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_oil_temp}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -879,7 +883,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Oil Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_oil_pressure}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_oil_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -889,7 +893,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">1st Dis Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_1st_dis_temp}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_1st_dis_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -901,7 +905,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">1st Dis Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_1st_dis_pressure}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_1st_dis_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -911,7 +915,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Suc Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_2nd_suc_temp}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_suc_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -923,7 +927,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Dis Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_2nd_dis_pressure}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_dis_pressure}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -933,7 +937,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Dis Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_2nd_dis_temp}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_dis_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -950,7 +954,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">General Signal</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_signal}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_signal}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -962,7 +966,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Suction Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_suction_pressure}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_suction_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -972,7 +976,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Condition</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_load}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_load}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -984,7 +988,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Ambient Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_ambient_temp}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_ambient_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -994,7 +998,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Running Count</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_count}}</label>
+                                                                <label class="py-3" for="">{{ $key->running_count}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1006,7 +1010,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">PT5 Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_pt5_pressure}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_pt5_pressure}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1016,7 +1020,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Hour</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_load_hour}}</label>
+                                                                <label class="py-3" for="">{{ $key->running_load_hour}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1030,7 +1034,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Current</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_current}}</label>
+                                                                <label class="py-3" for="">{{ $key->running_current}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1040,7 +1044,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Hourmeter</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for=""> {{ $key->running_hourmeter_check}}</label>
+                                                                <label class="py-3" for=""> {{ $key->running_hourmeter_check}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1050,7 +1054,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Tc Temp (Motor Coil)</label>
                                                             </div>
                                                             <div class="col-lg-5 col-md-6 col-5">
-                                                                <label for="">{{ $key->running_tc_temp}} </label>
+                                                                <label class="py-3" for="">{{ $key->running_tc_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1060,7 +1064,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Count</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <label for="">{{ $key->running_load_count}}</label>
+                                                                <label class="py-3" for="">{{ $key->running_load_count}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1162,7 +1166,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_op_load}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_op_load}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1173,7 +1177,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_op_unload}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_op_unload}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1184,7 +1188,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_op_auto}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_op_auto}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1195,7 +1199,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_op_constant}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_op_constant}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1221,7 +1225,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_phh}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_phh}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1232,7 +1236,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_phl}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_phl}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1243,7 +1247,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_ph}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_ph}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1254,7 +1258,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_pl}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_pl}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1265,7 +1269,7 @@
                                                                 </div>
                                                                 <div
                                                                     class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
-                                                                    <label for="">{{$key->setting_pll}}</label>
+                                                                    <label class="pt-3" for="">{{$key->setting_pll}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1610,8 +1614,8 @@
                                                                     class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <label for="">{{$key->functions_timer}}</label>
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_timer}}</label>
                                                                             </div>
                                                                             <div
                                                                                 class="col-lg-5 text-lg-start col-md-3 text-md-start col-3 text-start">
@@ -1635,8 +1639,8 @@
                                                                     class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <label for="">{{$key->functions_valve_operate}}</label>
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_valve_operate}}</label>
                                                                             </div>
                                                                             <div
                                                                                 class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
@@ -1659,8 +1663,8 @@
                                                                     class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-5">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <label for="">{{$key->functions_thermal}}</label>
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_thermal}}</label>
                                                                             </div>
                                                                             <div
                                                                                 class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
@@ -1744,43 +1748,43 @@
                                                             <u class="fw-bold fs-6 text-gray-800">INSULATION TEST</u>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-12">
-                                                            <label class="px-3" for="">
+                                                            <label class="px-3 fw-bold fs-6 text-gray-800" for="">
                                                                 Main Motor Insulation (M &#8486;)
                                                             </label>
                                                             <div class="row mb-2 ps-3">
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U1-V1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_u1v1}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1v1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V1-W1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_u1u2}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1u2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W1-U1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_w1u1}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1u1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -1789,36 +1793,36 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U1-U2
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_u1u2}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1u2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V1-V2
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_v1v2}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_v1v2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W1-W2
                                                                             </label>
                                                                         </div>
-                                                                        <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_w1w2}}</label>
+                                                                        <div class="col-lg-6 col-md-8 col-4">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1w2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -1827,79 +1831,79 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_u1e}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_v1e}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_v1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_main_w1e}}</label>
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-12">
-                                                            <label class="px-3" for="">
+                                                            <label class="px-3 fw-bold fs-6 text-gray-800" for="">
                                                                 Fan Motor Insulation (M &#8486;)
                                                             </label>
                                                             <div class="row mb-2 ps-3">
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U-V
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_u1v1}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_u1v1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V-W
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_v1w1}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_v1w1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W-U
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_w1u1}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_w1u1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -1908,36 +1912,36 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_u1e}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_u1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_v1e}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_v1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <label for="">{{$key->insulation_fan_w1e}}</label>
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_w1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -1988,9 +1992,9 @@
                                                                     Maker
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <label for="">{{ $key->dryer_maker}}</label>
+                                                                        <label class="py-2" for="">{{ $key->dryer_maker}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2000,9 +2004,9 @@
                                                                     Model Number
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <label for="">{{ $key->dryer_model}}</label>
+                                                                        <label class="py-2" for="">{{ $key->dryer_model}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2012,9 +2016,9 @@
                                                                     S/N
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <label for="">{{ $key->dryer_sn}}</label>
+                                                                        <label class="py-2" for="">{{ $key->dryer_sn}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2024,8 +2028,8 @@
                                                                     Dew Point
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
-                                                                    <label for="">{{ $key->dryer_dew}}</label>
+                                                                    class="col-lg-5 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    <label class="py-2" for="">{{ $key->dryer_dew}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2034,8 +2038,8 @@
                                                                     Inlet Pressure
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
-                                                                    <label for="">{{ $key->dryer_inlet}}</label>
+                                                                    class="col-lg-5 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    <label class="py-2" for="">{{ $key->dryer_inlet}}</label>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -2057,7 +2061,7 @@
                                                                         </label>
                                                                     </span>
                                                                     <span class="col-lg-9 col-md-9 col-9">
-                                                                        <label for="">{{ $key->filter_maker}}</label>
+                                                                        <label class="py-4" for="">{{ $key->filter_maker}}</label>
                                                                     </span>
                                                                 </div>
                                                             </span>
@@ -2103,7 +2107,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <label for="">{{ $key->filter_comment_1}}</label>
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_1}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2140,7 +2144,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <label for="">{{ $key->filter_comment_2}}</label>
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_2}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2177,7 +2181,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <label for="">{{ $key->filter_comment_3}}</label>
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_3}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -3016,7 +3020,6 @@
 
     </div>
 
-    {{ var_dump($key)}}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
