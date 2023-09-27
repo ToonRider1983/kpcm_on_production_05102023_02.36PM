@@ -497,9 +497,53 @@ class MachineMasterController extends Controller
         //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
     }
     
-    public function machine_delete() {
-        return view('pages.dashboards.machine.machine_delete');
-    }
+    public function machine_delete($id)
+    {
+        $machine = DB::table('machines as m')->orderBy('id')->where('m.id', $id); 
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
+        $customer = DB::table('customers')-> get();
+        $country = DB::table('countries') ->whereNull('countries.deleted_at')-> get();
+
+
+        //Show LIST
+        $machine = $machine
+        ->select(
+
+            'm.*',
+            'm.serial',
+            'm.machine_cd',
+            'm.customer_machine_no',
+            'customers.customer_cd as cus_code',
+            'customers.customer_name1 as cus_name1',
+            'customers.customer_name2 as cus_name2',
+            'customers.country_id as country_id',
+            'industrialzones.industrialzone_name as industrialzone_id',
+            'customers.address1 as address1',
+            'customers.address2 as address2',
+            'companies.company_name as com_name',
+            'companies.company_short_name as com_shot_name',
+            'countries.country_name as country_cus',
+            'm.operate_status as operstat_name',
+            'm.factory_type as factory_type_name'  ,
+            'm.compressor_type as compressor_type_name' ,
+            'users.user_name as created_by',
+            'users2.user_name as updated_by'
+        )      
+        ->whereNull('m.deleted_at')
+        ->leftjoin('users','m.created_by','=','users.id')
+        ->leftjoin('users as users2','m.updated_by','=','users2.id')
+        ->leftJoin('customers', 'm.customer_id', '=', 'customers.id')
+        ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
+        ->leftJoin('industrialzones','customers.industrialzone_id','=','industrialzones.id')
+
+        ->leftJoin('companies', 'm.service_factory_id', '=', 'companies.id')
+            ->first();
+            return view('pages.dashboards.machine.machine_delete', [
+            'machine' => $machine,
+            'company' => $company,
+            'customer' => $customer ,
+            'country' => $country] );    
+        }
 
     public function machine_result() {
 
