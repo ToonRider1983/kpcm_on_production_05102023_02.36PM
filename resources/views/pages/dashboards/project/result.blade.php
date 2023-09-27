@@ -374,16 +374,16 @@
             <table class="table">
                 <thead class="thead-light">
                     <tr class="fw-bold fs-6 text-gray-800">
-                        <th scope="col">ID</th>
-                        <th scope="col">Ref.ID</th>
+                        <th scope="col">@sortablelink('id','ID')</th>
+                        <th scope="col">@sortablelink('parent_id','Ref.ID')</th>
                         <th scope="col">Status</th>
-                        <th scope="col">Distributor</th>
-                        <th scope="col">E/U Name</th>
+                        <th scope="col">@sortablelink('distributor_id','Distributor')</th>
+                        <th scope="col">@sortablelink('customer_name','E/U Name')</th>
                         <th scope="col">Machine Model - Qty</th>
                         <th scope="col">Route</th>
                         <th scope="col">Poss.</th>
                         <th scope="col">Result</th>
-                        <th scope="col">Updated</th>
+                        <th scope="col">@sortablelink('updated_at','Updated')</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -459,6 +459,7 @@
                             @endforeach
                             @endif
                 </tbody>
+                {{  $projects->withQueryString()->links('pagination::bootstrap-5') }}
             </table>
         </div>
     </div>

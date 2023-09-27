@@ -18,31 +18,31 @@ class MachinemodelMasterController extends Controller
         public function index(Request $request)
         {
             //Search TextBox
-            $machinemodels = DB::table('machinemodels as m')->orderBy('id')  ;
+            $machinemodels = Machinemodel::sortable()->orderBy('updated_at', 'desc');
             $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
 
 
             if ($request->machinemodel_name != null) {
-                $machinemodels = $machinemodels ->Where('m.machinemodel_name', 'like', '%' . $request-> machinemodel_name. '%');
+                $machinemodels = $machinemodels ->Where('machinemodels.machinemodel_name', 'like', '%' . $request-> machinemodel_name. '%');
                 }
             if ($request->power != null) {
-                    $machinemodels = $machinemodels ->Where('m.power', 'like', '%' . $request-> power. '%');
+                    $machinemodels = $machinemodels ->Where('machinemodels.power', 'like', '%' . $request-> power. '%');
                 }
            // ข้อมูล Combobox
             if ($request->origin_country_id != null) {
-                $machinemodels = $machinemodels ->Where('m.origin_country_id', 'like', '%' . $request-> origin_country_id. '%');
+                $machinemodels = $machinemodels ->Where('machinemodels.origin_country_id', 'like', '%' . $request-> origin_country_id. '%');
                 }
             if ($request->oil_type != null) {
-              $machinemodels = $machinemodels->Where('m.oil_type','like',  '%' . $request-> oil_type . '%');
+              $machinemodels = $machinemodels->Where('machinemodels.oil_type','like',  '%' . $request-> oil_type . '%');
                 }
             if ($request-> last_flag != null) {
-               $machinemodels = $machinemodels ->Where('m.latest_flg',  'like', '%' .$request-> last_flag. '%' );
+               $machinemodels = $machinemodels ->Where('machinemodels.latest_flg',  'like', '%' .$request-> last_flag. '%' );
                 }
             if ($request-> cooler_type != null) {
-              $machinemodels = $machinemodels ->Where('m.cooler_type',  'like', '%' .$request-> cooler_type. '%' );
+              $machinemodels = $machinemodels ->Where('machinemodels.cooler_type',  'like', '%' .$request-> cooler_type. '%' );
                 }
             if ($request->inverter_flg != null) {
-                $machinemodels = $machinemodels ->Where('m.inverter_flg', 'like', '%' . $request-> inverter_flg. '%');
+                $machinemodels = $machinemodels ->Where('machinemodels.inverter_flg', 'like', '%' . $request-> inverter_flg. '%');
                 }
 
             if ($request-> machinetype1 != null) {
@@ -53,21 +53,21 @@ class MachinemodelMasterController extends Controller
             $machinemodels = $machinemodels
             ->select(
                 
-                'm.id',
-                'm.machinetype1_id',
-                'm.machinemodel_name',
+                'machinemodels.id',
+                'machinemodels.machinetype1_id',
+                'machinemodels.machinemodel_name',
                 'machinetype1s.machinetype1_name as mtypename',
                
-                'm.power',
-                'm.updated_at',
-                'm.origin_country_id as origin_country_name',
-                'm.oil_type as oil_type_name',
-                'm.cooler_type as cooler_type_name',
-                'm.inverter_flg as inverter_flg_name',
-                'm.latest_flg as latest_flg_name'
+                'machinemodels.power',
+                'machinemodels.updated_at',
+                'machinemodels.origin_country_id as origin_country_name',
+                'machinemodels.oil_type as oil_type_name',
+                'machinemodels.cooler_type as cooler_type_name',
+                'machinemodels.inverter_flg as inverter_flg_name',
+                'machinemodels.latest_flg as latest_flg_name'
             )
-            ->whereNull('m.deleted_at') 
-            ->leftJoin('machinetype1s', 'm.machinetype1_id', '=', 'machinetype1s.id')
+            ->whereNull('machinemodels.deleted_at') 
+            ->leftJoin('machinetype1s', 'machinemodels.machinetype1_id', '=', 'machinetype1s.id')
             ->paginate(10); // แบ่งหน้าข้อมูลที่แสดงผลโดยแสดงทีละ 10 รายการ
 
           return view('pages.dashboards.machinemodels.index', [

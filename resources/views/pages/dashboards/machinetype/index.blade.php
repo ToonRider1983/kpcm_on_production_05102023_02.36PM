@@ -75,9 +75,9 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
-                            <th scope="col">ID</th>
+                            <th scope="col">@sortablelink('id', 'ID')</th>
                             <th scope="col">MachineTypeName</th>
-                            <th scope="col">Update</th>
+                            <th scope="col">@sortablelink('updated_at', 'Updated')</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -114,7 +114,8 @@
                             @endforeach
                         @endif
                     </tbody>
-                    {!! $machinetype->links('pagination::bootstrap-5') !!}
+                    {{-- {!! $machinetype->links('pagination::bootstrap-5') !!} --}}
+                    {{  $machinetype->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
         </div>

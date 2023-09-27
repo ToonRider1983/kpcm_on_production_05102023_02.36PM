@@ -16,7 +16,8 @@ class CompanyMasterController extends Controller
     public function index(Request $request)
     {
         //Search TextBox
-        $querycom = DB::table('companies')->orderBy('id');
+
+        $querycom = Company::sortable()->orderBy('id');
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
         if ($request->keyword != null) {
             $querycom = $querycom->Where('companies.company_name', 'like', '%' . $request->keyword . '%');

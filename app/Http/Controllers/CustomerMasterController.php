@@ -21,7 +21,7 @@ class CustomerMasterController extends Controller
     public function index(Request $request)
     
     {              //Search TextBox
-        $customer = DB::table('customers')->orderBy('id') ;
+        $customer = Customer::sortable()->orderBy('id');
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
         $province = DB::table('provinces')->whereNull('provinces.deleted_at')->get();
         $industrialzone = DB::table('industrialzones')->whereNull('industrialzones.deleted_at')->get();

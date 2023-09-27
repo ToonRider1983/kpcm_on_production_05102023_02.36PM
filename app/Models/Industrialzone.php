@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use DB;
+use Kyslik\ColumnSortable\Sortable;
 
 class Industrialzone extends Model
 {
-    use HasFactory;
+    use HasFactory , Sortable;
     protected $table = 'industrialzones';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -18,6 +18,7 @@ class Industrialzone extends Model
     'created_by',
     'updated_by' ,
     ];
+    public $sortable = ['id','updated_at'];
 
    
     public function setKeyName($value)

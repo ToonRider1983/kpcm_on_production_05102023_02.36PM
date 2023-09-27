@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MstCountries;
+use Kyslik\ColumnSortable\Sortable;
 
 class Machinetype extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
+    public $sortable = ['id','updated_at'];
     protected $table = 'machinetype1s';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -20,11 +21,6 @@ class Machinetype extends Model
 		 	
     ];
 
-
-    public function country()
-    {
-        return $this -> hasMany (MstCountries::class, 'countrycode' , 'countrycode');
-    }
     
     public function setKeyName($value)
     {

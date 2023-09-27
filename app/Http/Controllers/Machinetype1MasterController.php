@@ -19,7 +19,8 @@ class Machinetype1MasterController extends Controller
     public function index(Request $request)
     {
         $selecttype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
-        $query = DB::table('machinetype1s');
+        $query = Machinetype::sortable()->orderBy('updated_at', 'desc')->whereNull('machinetype1s.deleted_at');
+        
         if ($request->keyword != null) {
             $query->orWhere('machinetype1s.machinetype1_name', 'like', '%' . $request->keyword . '%');
         }

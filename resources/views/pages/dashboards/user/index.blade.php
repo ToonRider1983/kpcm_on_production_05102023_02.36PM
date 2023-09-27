@@ -131,11 +131,11 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
-                            <th scope="col">Usercode</th>
-                            <th scope="col">Company Name</th>
+                            <th scope="col">@sortablelink('id','ID')</th>
+                            <th scope="col">@sortablelink('companies.company_name','Company Name')</th>
                             <th scope="col">Username</th>
                             <th scope="col">User Scope</th>
-                            <th scope="col">Updated</th>
+                            <th scope="col">@sortablelink('updated_at','Updated')</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -185,7 +185,8 @@
                                 @endforeach
                             @endif
                     </tbody>
-                    {!! $user->links('pagination::bootstrap-5') !!}
+                    {{-- {!! $user->links('pagination::bootstrap-5') !!} --}}
+                    {{  $user->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
         </div>

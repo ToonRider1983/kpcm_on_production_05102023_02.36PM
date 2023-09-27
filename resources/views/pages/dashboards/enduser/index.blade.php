@@ -100,20 +100,19 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
-                            <th scope="col">User Code</th>
-                            <th scope="col">User Name</th>
+                            <th scope="col">@sortablelink('customer_cd', 'User Code')</th>
+                            <th scope="col">@sortablelink('customer_name1', 'User Name')</th>
                             <th scope="col">Country</th>
                             <th scope="col">Province</th>
                             <th scope="col">I.E</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @if (!@empty($customer))
                         @foreach ($customer as $enduser)
                             <tr>
                                 <th>{{ $enduser->customer_cd }}</th>
-                                <th><a href="{{ url('/customer/'.'browse'.'/'. $enduser->id) }}">{{ $enduser->customer_name1 }}</a></th>
+                                <th><a href="{{ url('/customer/'.'browse'.'/'. $enduser->id) }}">{{ $enduser->customer_name1 }} @if($enduser->customer_name2) / {{ $enduser->customer_name2 }}@endif</a></th>
                                 <th>{{ $enduser->ct_name }}</th>
                                 <th>{{ $enduser->pv_name }}</th>
                                 <th>{{ $enduser->indust }}</th>
@@ -127,7 +126,8 @@
                         @endforeach
                         @endif
                     </tbody>
-                    {!! $customer->links('pagination::bootstrap-5') !!}
+                    {{-- {!! $customer->links('pagination::bootstrap-5') !!} --}}
+                    {{  $customer->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
         </div>

@@ -19,9 +19,9 @@ class IndustrialzoneMasterController extends Controller
 
     public function index(Request $request)
     {
-        $industrialzone = DB::table('industrialzones');
+        
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
-
+        $industrialzone = IndustrialZone::sortable();
         if ($request->keyword != null) {
             $industrialzone = $industrialzone->orWhere('industrialzones.industrialzone_name', 'like', '%' . $request->keyword . '%');
         }

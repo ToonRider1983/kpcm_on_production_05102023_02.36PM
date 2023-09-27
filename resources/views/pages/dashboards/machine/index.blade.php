@@ -202,7 +202,7 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
-                            <th scope="col">ID</th>
+                            <th scope="col">@sortablelink('id', 'ID')</th>
                             <th scope="col">Serial#</th>
                             <th scope="col">Typecode</th>
                             <th scope="col">Customer Machine#</th>
@@ -210,7 +210,6 @@
                             <th scope="col">UserName</th>
                             <th scope="col">Service</th>
                             <th scope="col">Factory</th>
-                        
                         </tr>
                     </thead>
                     <tbody>
@@ -255,7 +254,8 @@
                             </tr>
                         @endif
                     </tbody>
-                    {!! $machine->links('pagination::bootstrap-5') !!}
+                    {{-- {!! $machine->links('pagination::bootstrap-5') !!} --}}
+                    {{  $machine->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
             

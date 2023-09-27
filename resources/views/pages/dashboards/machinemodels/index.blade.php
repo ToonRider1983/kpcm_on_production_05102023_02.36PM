@@ -126,7 +126,7 @@
             <table class="table">
                 <thead class="thead-light">
                     <tr class="fw-bold fs-6 text-gray-800">
-                        <th scope="col">ID</th>
+                        <th scope="col">@sortablelink('id', 'ID')</th>
                         <th scope="col">Machine Type</th>
                         <th scope="col">Machine Model Name</th>
                         <th scope="col">Active</th>
@@ -135,7 +135,7 @@
                         <th scope="col">Cooling Method</th>
                         <th scope="col">Inverter</th>
                         <th scope="col">Power</th>
-                        <th scope="col">Updated</th>
+                        <th scope="col">@sortablelink('updated_at', 'Updated')</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -185,7 +185,8 @@
                     @endforeach
                 @endif
                 </tbody>
-                {!! $machinemodels->links('pagination::bootstrap-5') !!}
+                {{-- {!! $machinemodels->links('pagination::bootstrap-5') !!} --}}
+                {{  $machinemodels->withQueryString()->links('pagination::bootstrap-5') }}
             </table>
         </div>
     </div>

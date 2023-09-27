@@ -38,44 +38,41 @@ class MachineMasterController extends Controller
     
     public function index(Request $request)
     {
-        $machine = DB::table('machines as m')->orderBy('id');
+        // $machine = DB::table('machines as m')->orderBy('id');
+        $machine = Machine::sortable()->orderBy('id');
+
         $machinemodels = DB::table('machinemodels');
         $machinetype1s = DB::table('machinetype1s');
         $company = DB::table('companies')->get();
-        // $type = DB::table('enumeration')->get();
         $customer = DB::table('customers')->get();
         $country = DB::table('countries')->whereNull('countries.deleted_at')-> get();
-
-        //Search Condition
-        // $search_fac = DB::table('enumeration') ->where('grouptype', '=', 'factorytype')->get(); 
-        // $search_com = DB::table('enumeration') ->where('grouptype', '=', 'compressortype')->get(); 
 
         // ใช้ applySearchCondition เพื่อค้นหาตามเงื่อนไขต่าง ๆ
         $this->applySearchCondition($machine, $request, 'customer_cd', 'customers.customer_cd');
         $this->applySearchCondition($machine, $request, 'customer_name', 'customers.customer_name1');
-        $this->applySearchCondition($machine, $request, 'typecode', 'm.machine_cd');
-        $this->applySearchCondition($machine, $request, 'serial', 'm.serial');
-        $this->applySearchCondition($machine, $request, 'factory_type', 'm.factory_type');
-        $this->applySearchCondition($machine, $request, 'compressor_type', 'm.compressor_type');
+        $this->applySearchCondition($machine, $request, 'typecode', 'machines.machine_cd');
+        $this->applySearchCondition($machine, $request, 'serial', 'machines.serial');
+        $this->applySearchCondition($machine, $request, 'factory_type', 'machines.factory_type');
+        $this->applySearchCondition($machine, $request, 'compressor_type', 'machines.compressor_type');
         $this->applySearchCondition($machine, $request, 'country', 'countries.country_name');
         $this->applySearchCondition($machine, $request, 'company', 'companies.company_short_name');
-        $this->applySearchCondition($machine, $request, 'remarks', 'm.remarks');
+        $this->applySearchCondition($machine, $request, 'remarks', 'machines.remarks');
         
         // ใช้ applyDateRange เพื่อค้นหาตามช่วงวันที่
-        $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'm.testrun_dt');
-        $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'm.dispatch_dt');
+        $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'machines.testrun_dt');
+        $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'machines.dispatch_dt');
         
         //Show LIST
         $machine = $machine
         ->select(
             // 'machinetype1s.machinetype1_name',
-            'm.*',
-            'm.id',
-            'm.serial',
-            'm.remarks',
-            'm.machine_cd',
+            'machines.*',
+            'machines.id',
+            'machines.serial',
+            'machines.remarks',
+            'machines.machine_cd',
             'machinemodels.machinetype1_id',
-            'm.customer_machine_no',
+            'machines.customer_machine_no',
             'customers.customer_cd as cus_code',
             'customers.customer_name1 as cus_name1',
             'customers.customer_name2 as cus_name2',
@@ -83,24 +80,16 @@ class MachineMasterController extends Controller
             'companies.company_name as com_name',
             'companies.company_short_name as com_shot_name',
             'countries.country_name as country_cus',
-            'm.machinemodel_id',
-            'm.factory_type as factory_type_name'  ,
-            'm.compressor_type as compressor_type_name'  
-        )      
-        ->whereNull('m.deleted_at') 
-        ->leftJoin('customers', 'm.customer_id', '=', 'customers.id')
+            'machines.machinemodel_id',
+            'machines.factory_type as factory_type_name'  ,
+            'machines.compressor_type as compressor_type_name'  
+        ) 
+        ->whereNull('machines.deleted_at') 
+        ->leftJoin('customers', 'machines.customer_id', '=', 'customers.id')
         ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
-        ->leftJoin('companies', 'm.service_factory_id', '=', 'companies.id')
-        ->leftJoin('machinemodels', 'm.machinemodel_id', '=', 'machinemodels.id')
+        ->leftJoin('companies', 'machines.service_factory_id', '=', 'companies.id')
+        ->leftJoin('machinemodels', 'machines.machinemodel_id', '=', 'machinemodels.id')
         ->leftJoin('machinetype1s', 'machinemodels.machinetype1_id', '=', 'machinetype1s.id') // แก้ไขต
-        // ->leftJoin('enumeration as fac', function ($join) {
-        //     $join->on('fac.grouptype', '=', DB::raw("'factorytype'"))
-        //         ->on('fac.code', '=', DB::raw("CAST(m.factory_type AS CHAR)"));
-        // })
-        // ->leftJoin('enumeration as com', function ($join) {
-        //     $join->on('com.grouptype', '=', DB::raw("'compressortype'"))
-        //         ->on('com.code', '=', DB::raw("CAST(m.compressor_type AS CHAR)"));
-        // })
 
         ->paginate(10);
         return view('pages.dashboards.machine.index', [
@@ -108,12 +97,8 @@ class MachineMasterController extends Controller
             'machinemodels' => $machinemodels, 
             'machinetype1s' => $machinetype1s, 
             'company' => $company, 
-            // 'type' => $type  , 
             'customer' => $customer , 
             'country' => $country, 
-            // 'search_fac' => $search_fac,
-            // 'search_com' => $search_com,
-            // 'search_country' => $search_country,
             'request' => $request,
             ] );    
     }

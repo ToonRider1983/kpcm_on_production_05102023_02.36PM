@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Project extends Model
 {
-    use HasFactory;   
+    use HasFactory, Sortable;
+    public $sortable = ['id','parent_id','distributor_id','customer_name','updated_at'];
     
     protected $table = 'projects';
     protected $primaryKey = 'id';

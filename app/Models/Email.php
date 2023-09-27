@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Email extends Model
 {
-    use HasFactory;
-  
+    use HasFactory , Sortable;
+    public $sortable = ['updated_at'];
+
     protected $table = 'emails';
     protected $primaryKey = 'id';
     protected $fillable = [

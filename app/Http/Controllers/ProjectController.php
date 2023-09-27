@@ -81,7 +81,7 @@ class ProjectController extends Controller
     {
         
         //Search TextBox
-        $projects = DB::table('projects as pj')->orderBy('updated_at', 'desc');
+        $projects = Project::sortable()->orderBy('updated_at', 'desc');
         $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
         $customer = DB::table('customers')->whereNull('customers.deleted_at')->get();
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
@@ -100,19 +100,19 @@ class ProjectController extends Controller
         }
         if ($request->route != null) {
             $projects = $projects->where(function($query) use ($request) {
-                $query->where('pj.route1', 'LIKE', '%' . $request->route . '%')
-                      ->orWhere('pj.route2', 'LIKE', '%' . $request->route . '%')
-                      ->orWhere('pj.route3', 'LIKE', '%' . $request->route . '%');
+                $query->where('projects.route1', 'LIKE', '%' . $request->route . '%')
+                      ->orWhere('projects.route2', 'LIKE', '%' . $request->route . '%')
+                      ->orWhere('projects.route3', 'LIKE', '%' . $request->route . '%');
         });
         }
         if ($request->username != null) {
-            $projects = $projects->where('pj.customer_name', 'LIKE', '%' . $request->username . '%');
+            $projects = $projects->where('projects.customer_name', 'LIKE', '%' . $request->username . '%');
         }
         if ($request->user_cd != null) {
             $projects = $projects->where('customers.customer_cd', 'LIKE', '%' . $request->user_cd . '%'); //อาจต้องเช็คจาก old_project
         }
         if ($request->pro_id != null) {
-            $projects = $projects->where('pj.id',  $request->pro_id ); //อาจต้องเช็คจาก old_project
+            $projects = $projects->where('projects.id',  $request->pro_id ); //อาจต้องเช็คจาก old_project
         }
         if ($request->ref_id != null) {
             $projects = $projects->where('prentid.parent_id',  $request->ref_id ); //อาจต้องเช็คจาก old_project
@@ -147,33 +147,33 @@ class ProjectController extends Controller
             -> orWhere('mm3.machinemodel_name',$request->machinemodel) ;
         }
         if ($request->status != null) {
-            $projects = $projects->where('pj.status',  $request->status );//อาจต้องเช็คจาก old_project
+            $projects = $projects->where('projects.status',  $request->status );//อาจต้องเช็คจาก old_project
         }
         if ($request->result != null) {
-            $projects = $projects->where('pj.result',  $request->result ); //อาจต้องเช็คจาก old_project
+            $projects = $projects->where('projects.result',  $request->result ); //อาจต้องเช็คจาก old_project
         }
         if ($request->possibility != null) {
-            $projects = $projects->where('pj.possibility',  $request->possibility);//อาจต้องเช็คจาก old_project
+            $projects = $projects->where('projects.possibility',  $request->possibility);//อาจต้องเช็คจาก old_project
         }
         if ($request->filled('from_datec') && $request->filled('to_datec')) {
-            $projects = $projects->whereBetween('pj.created_at', [$request->from_datec, $request->to_datec]);//อาจต้องเช็คจาก old_project
+            $projects = $projects->whereBetween('projects.created_at', [$request->from_datec, $request->to_datec]);//อาจต้องเช็คจาก old_project
         }
         if ($request->filled('from_dateu') && $request->filled('to_dateu')) {
-            $projects = $projects->whereBetween('pj.updated_at', [$request->from_dateu, $request->to_dateu]);//อาจต้องเช็คจาก old_project
+            $projects = $projects->whereBetween('projects.updated_at', [$request->from_dateu, $request->to_dateu]);//อาจต้องเช็คจาก old_project
         }
 
     
         $projects = $projects->select(
-            'pj.*',
+            'projects.*',
             'prentid.parent_id as parent_id',
-            'pj.status as status_name',
+            'projects.status as status_name',
             'countries.country_name as Ct_name',
             'mm1.machinemodel_name as Mc_name1',
             'mm2.machinemodel_name as Mc_name2',
             'mm3.machinemodel_name as Mc_name3',
             'industrialzones.industrialzone_name as idz_name',
             'companies.company_short_name as Cpns_name',
-            'pj.customer_name as customer_name',
+            'projects.customer_name as customer_name',
             // 'customers.customer_name as customer_name1',     
             // 'orcm1.origin_country_id  as origincountry_name',
             // 'orcm2.origin_country_id  as origincountry_name',
@@ -182,30 +182,30 @@ class ProjectController extends Controller
             // 'oitm2.oil_type as oiltype_name',
             // 'oitm3.oil_type as oiltype_name',
             // 'oitm3.oil_type as oiltype_name',
-            'pj.route1 as routename1',
-            'pj.route2 as routename2',
-            'pj.route3 as routename3',
-            'pj.possibility as possibility_name',
-            'pj.result as result_name',
+            'projects.route1 as routename1',
+            'projects.route2 as routename2',
+            'projects.route3 as routename3',
+            'projects.possibility as possibility_name',
+            'projects.result as result_name',
              )
-            ->whereNull('pj.deleted_at') 
-            ->leftJoin('projects as prentid','pj.parent_id','=','prentid.id')
-            ->leftJoin('companies', 'pj.distributor_id', '=', 'companies.id')
-            ->leftJoin('customers', 'pj.customer_id', '=', 'customers.id')
-            ->leftJoin('industrialzones', 'pj.industrialzone_id', '=', 'industrialzones.id')
-            ->leftJoin('machinemodels as mm1', 'pj.machinemodel1_id', '=', 'mm1.id')
-            ->leftJoin('machinemodels as mm2', 'pj.machinemodel2_id', '=', 'mm2.id')
-            ->leftJoin('machinemodels as mm3', 'pj.machinemodel3_id', '=', 'mm3.id')
-            ->leftJoin('countries', 'pj.country_id', '=', 'countries.id')
-            ->leftJoin('machinemodels as orcm1','pj.machinemodel1_id','=','orcm1.id')
-            ->leftJoin('machinemodels as orcm2','pj.machinemodel2_id','=','orcm2.id')
-            ->leftJoin('machinemodels as orcm3','pj.machinemodel3_id','=','orcm3.id')
-            ->leftJoin('machinemodels as oitm1','pj.machinemodel1_id','=','oitm1.id')
-            ->leftJoin('machinemodels as oitm2','pj.machinemodel2_id','=','oitm2.id')
-            ->leftJoin('machinemodels as oitm3','pj.machinemodel3_id','=','oitm3.id')  
-            ->leftJoin('machinetype1s as type1', 'pj.machinemodel1_id', '=', 'type1.id')
-            ->leftJoin('machinetype1s as type2', 'pj.machinemodel2_id', '=', 'type2.id')
-            ->leftJoin('machinetype1s as type3', 'pj.machinemodel3_id', '=', 'type3.id')            
+            ->whereNull('projects.deleted_at') 
+            ->leftJoin('projects as prentid','projects.parent_id','=','prentid.id')
+            ->leftJoin('companies', 'projects.distributor_id', '=', 'companies.id')
+            ->leftJoin('customers', 'projects.customer_id', '=', 'customers.id')
+            ->leftJoin('industrialzones', 'projects.industrialzone_id', '=', 'industrialzones.id')
+            ->leftJoin('machinemodels as mm1', 'projects.machinemodel1_id', '=', 'mm1.id')
+            ->leftJoin('machinemodels as mm2', 'projects.machinemodel2_id', '=', 'mm2.id')
+            ->leftJoin('machinemodels as mm3', 'projects.machinemodel3_id', '=', 'mm3.id')
+            ->leftJoin('countries', 'projects.country_id', '=', 'countries.id')
+            ->leftJoin('machinemodels as orcm1','projects.machinemodel1_id','=','orcm1.id')
+            ->leftJoin('machinemodels as orcm2','projects.machinemodel2_id','=','orcm2.id')
+            ->leftJoin('machinemodels as orcm3','projects.machinemodel3_id','=','orcm3.id')
+            ->leftJoin('machinemodels as oitm1','projects.machinemodel1_id','=','oitm1.id')
+            ->leftJoin('machinemodels as oitm2','projects.machinemodel2_id','=','oitm2.id')
+            ->leftJoin('machinemodels as oitm3','projects.machinemodel3_id','=','oitm3.id')  
+            ->leftJoin('machinetype1s as type1', 'projects.machinemodel1_id', '=', 'type1.id')
+            ->leftJoin('machinetype1s as type2', 'projects.machinemodel2_id', '=', 'type2.id')
+            ->leftJoin('machinetype1s as type3', 'projects.machinemodel3_id', '=', 'type3.id')            
             ->paginate(50);    
      
         return view('pages.dashboards.project.result', [

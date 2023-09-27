@@ -20,7 +20,7 @@ class UserMasterController extends Controller
     public function index(Request $request)
     {
         //Search TextBox
-        $user = DB::table('users') ->orderBy('id');
+        $user = User::sortable()->orderBy('updated_at', 'desc');
         $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
        
 

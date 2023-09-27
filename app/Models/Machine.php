@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Machine extends Model
 {
-    use HasFactory;
-
-    use HasFactory;
+    use HasFactory, Sortable;
+    public $sortable = ['id'];
     protected $table = 'machines';
     protected $primaryKey = 'id';
     protected $fillable = 

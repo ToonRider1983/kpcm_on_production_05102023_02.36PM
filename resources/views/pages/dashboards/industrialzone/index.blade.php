@@ -91,10 +91,10 @@
                 <table class="table">
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
-                            <th scope="col">ID</th>
+                            <th scope="col">@sortablelink('id', 'ID')</th>
                             <th scope="col">Industrial Zone Name</th>
                             <th scope="col">Country</th>
-                            <th scope="col">Updated</th>
+                            <th scope="col">@sortablelink('updated_at', 'Updated')</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -134,7 +134,8 @@
                             @endforeach
                         @endif
                     </tbody>
-                    {!! $industrialzone->links('pagination::bootstrap-5') !!}
+                    {{-- {!! $industrialzone->links('pagination::bootstrap-5') !!} --}}
+                    {{  $industrialzone->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
         </div>

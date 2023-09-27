@@ -15,7 +15,7 @@ class EmailMasterController extends Controller
     public function index(Request $request)
     
     {              //Search TextBox
-        $emails = DB::table('emails')->orderBy('id');
+        $emails = Email::sortable()->orderBy('id');
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
 
         if ($request->country != null) {

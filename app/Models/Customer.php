@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Customer extends Model
 {
-    use HasFactory;
-  
+    use HasFactory, Sortable;
+    public $sortable = ['customer_cd','customer_name1','customer_name2'];
     protected $table = 'customers';
     protected $primaryKey = 'id';
     protected $fillable = 

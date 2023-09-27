@@ -82,7 +82,7 @@
                             <th scope="col">ID</th>
                             <th scope="col">Country</th>
                             <th scope="col">Email Type</th>
-                            <th scope="col">Updated</th>
+                            <th scope="col">@sortablelink('updated_at', 'Updated')</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
@@ -127,7 +127,7 @@
                             @endforeach
                         @endif
                     </tbody>
-                    {!! $emails->links('pagination::bootstrap-5') !!}
+                    {{  $emails->withQueryString()->links('pagination::bootstrap-5') }}
                 </table>
             </div>
         </div>
