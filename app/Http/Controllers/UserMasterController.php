@@ -21,7 +21,7 @@ class UserMasterController extends Controller
     {
         //Search TextBox
         $user = DB::table('users') ->orderBy('id');
-        $company = DB::table('companies')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
        
 
         if ($request->keyword != null) {
@@ -56,6 +56,7 @@ class UserMasterController extends Controller
                 ->select(
                     'users.*', 'companies.company_name as companyname', 'users.user_scope as typename'
                 )
+                ->whereNull('users.deleted_at')
                 ->leftjoin('companies', 'users.company_id', '=', 'companies.id');
 
             // เพิ่มเงื่อนไขการค้นหาตาม request ที่ถูกส่งมา
@@ -103,7 +104,7 @@ class UserMasterController extends Controller
 
     public function show($id)
     {
-        $company = DB::table('companies')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
         $user = DB::table('users') ->orderBy('id');
         $user = $user 
             ->select(
@@ -113,6 +114,7 @@ class UserMasterController extends Controller
                   'create_user_by.user_name as created_by',
                   'update_user_by.user_name as updated_by')
             ->where('users.id', $id)
+            ->whereNull('users.deleted_at')
             ->leftjoin('companies', 'users.company_id', '=', 'companies.id')
             ->leftjoin('users as create_user_by','users.created_by','=','create_user_by.id' )
             ->leftjoin('users as update_user_by','users.updated_by','=','update_user_by.id' )
@@ -149,7 +151,7 @@ class UserMasterController extends Controller
     public function edit($id)
     {
             
-        $company = DB::table('companies')->get();
+        $company = DB::table('companies') ->whereNull('companies.deleted_at')->get();
         $user = DB::table('users') ->orderBy('id');
         $user = $user
             ->select(
@@ -159,6 +161,7 @@ class UserMasterController extends Controller
                  'created_by_user.user_name as created_by', 
                  'updated_by_user.user_name as updated_by' )
             ->where('users.id', $id)
+            ->whereNull('users.deleted_at')
             ->leftjoin('companies', 'users.company_id', '=', 'companies.id')
             ->leftJoin('users as created_by_user', 'users.created_by', '=', 'created_by_user.id') 
             ->leftJoin('users as updated_by_user', 'users.updated_by', '=', 'updated_by_user.id')
@@ -173,8 +176,7 @@ class UserMasterController extends Controller
                 'Edit All' => $user->user_privilege_editall,
             ];
             
-            $company = DB::table('companies')->get();
-        
+
             return view('pages.dashboards.user.edit', [
                 'user' => $user,
                 'company' => $company,
@@ -235,9 +237,7 @@ class UserMasterController extends Controller
         
         $lastId = User::max('id');
         $newId = $lastId ? $lastId + 1 : 1;
-        $companies = Company::all();
-        
-        
+        $companies = DB::table('companies') ->whereNull('companies.deleted_at')->get();
 
             return view('pages.dashboards.user.create', compact('newId', 'companies','uppbox','request',));
             
@@ -304,10 +304,6 @@ class UserMasterController extends Controller
     //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
 }
 
-// public function user_delete() {
-//     return view('pages.dashboards.user.user_delete');    
-// }
-
 public function user_delete($id)
     {
         $company = DB::table('companies')->get();
@@ -347,7 +343,7 @@ public function user_result(Request $request)
         $userid = session('user');
 
         $id = $userid->id;
-        $company = DB::table('companies')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
         $user = DB::table('users') ->orderBy('id');
         $user = $user 
             ->select(

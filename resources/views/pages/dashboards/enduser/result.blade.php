@@ -116,7 +116,7 @@
                             Telephone :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            <label for="">{{ $customer->address2}}</label>
+                            <label for="">{{ $customer->telephone}}</label>
                         </div>
                     </div>
                 </div>

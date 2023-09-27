@@ -292,7 +292,7 @@ class MachineMasterController extends Controller
         $machine = DB::table('machines as m')->orderBy('id')->where('m.id', $id);
         $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
 
-        $customer = DB::table('customers')-> get();
+        $customer = DB::table('customers')->whereNull('customers.deleted_at')-> get();
         $country = DB::table('countries')->whereNull('countries.deleted_at')-> get();
 
 
@@ -396,14 +396,16 @@ class MachineMasterController extends Controller
                             customers.customer_name1 AS customer_name1,
                             customers.customer_name2 AS customer_name2
                         FROM customers
-                        LEFT JOIN companies ON customers.company_id = companies.id AND companies.deleted_at IS NULL
                         LEFT JOIN countries ON customers.country_id = countries.id
                         LEFT JOIN industrialzones ON customers.industrialzone_id = industrialzones.id
                         WHERE
-                            customers.customer_cd LIKE ?
-                            OR customers.customer_name1 LIKE ?
-                            OR customers.customer_name2 LIKE ?
-                            OR countries.country_name LIKE ?";
+                                (customers.deleted_at IS NULL)
+                                    AND (
+                                        customers.customer_cd LIKE ?
+                                        OR customers.customer_name1 LIKE ?
+                                        OR customers.customer_name2 LIKE ?
+                                        OR countries.country_name LIKE ?
+                                    )";
 
                 $customers = DB::select($sql, ["%$searchTerm%", "%$searchTerm%", "%$searchTerm%", "%$searchTerm%"]);
                 
@@ -495,67 +497,9 @@ class MachineMasterController extends Controller
         //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
     }
     
-    // public function machine_delete() {
-    //     return view('pages.dashboards.machine.machine_delete');
-    // }
-
-    public function machine_delete($id)
-    {
-        $machine = DB::table('machines as m')->orderBy('id')->where('m.id', $id); 
-        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
-        // $type = DB::table('enumeration')->get();
-        $customer = DB::table('customers')-> get();
-        $country = DB::table('countries') ->whereNull('countries.deleted_at')-> get();
-       
-        // $search_usercode = DB::table('enumeration') ->where('grouptype', '=', 'origin_country_id') ->get();
-        // $search_username = DB::table('enumeration') ->where('grouptype', '=', 'oil_type')->get();
-        // $search_type_code = DB::table('enumeration') ->where('grouptype', '=', 'cooler_type') ->get();
-        // $search_serial = DB::table('enumeration') ->where('grouptype', '=', 'inverter_flg') ->get();
-        // $search_fac_type = DB::table('enumeration') ->where('grouptype', '=', 'latest_flg')->get(); 
-        // $search_com_type = DB::table('enumeration') ->where('grouptype', '=', 'latest_flg')->get(); 
-        // $search_country = DB::table('enumeration') ->where('grouptype', '=', 'latest_flg')->get(); 
-        // $search_remark = DB::table('enumeration') ->where('grouptype', '=', 'latest_flg')->get(); 
-
-        //Show LIST
-        $machine = $machine
-        ->select(
-
-            'm.*',
-            'm.serial',
-            'm.machine_cd',
-            'm.customer_machine_no',
-            'customers.customer_cd as cus_code',
-            'customers.customer_name1 as cus_name1',
-            'customers.customer_name2 as cus_name2',
-            'customers.country_id as country_id',
-            'industrialzones.industrialzone_name as industrialzone_id',
-            'customers.address1 as address1',
-            'customers.address2 as address2',
-            'companies.company_name as com_name',
-            'companies.company_short_name as com_shot_name',
-            'countries.country_name as country_cus',
-            'm.operate_status as operstat_name',
-            'm.factory_type as factory_type_name'  ,
-            'm.compressor_type as compressor_type_name' ,
-            'users.user_name as created_by',
-            'users2.user_name as updated_by'
-        )      
-        ->whereNull('m.deleted_at')
-        ->leftjoin('users','m.created_by','=','users.id')
-        ->leftjoin('users as users2','m.updated_by','=','users2.id')
-        ->leftJoin('customers', 'm.customer_id', '=', 'customers.id')
-        ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
-        ->leftJoin('industrialzones','customers.industrialzone_id','=','industrialzones.id')
-        
-        ->leftJoin('companies', 'm.service_factory_id', '=', 'companies.id')
-            ->first();
-            return view('pages.dashboards.machine.machine_delete', [
-            'machine' => $machine,
-            'company' => $company,
-            // 'type' => $type  ,
-            'customer' => $customer ,
-            'country' => $country] );    
-        }
+    public function machine_delete() {
+        return view('pages.dashboards.machine.machine_delete');
+    }
 
     public function machine_result() {
 

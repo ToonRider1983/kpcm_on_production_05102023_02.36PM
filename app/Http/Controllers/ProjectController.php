@@ -17,80 +17,17 @@ class ProjectController extends Controller
     {
         //Search TextBox
         $projects = DB::table('projects as pj')->orderBy('id');
-        $company = DB::table('companies')->get();
-        $customer = DB::table('customers')->get();
-        $country = DB::table('countries')->get();
-        $machinetype = DB::table('machinetype1s')->get();
-        $machinemodel = DB::table('machinemodels')->get();
-        $industrialzone = DB::table('industrialzones')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
+        $customer = DB::table('customers')->whereNull('customers.deleted_at')->get();
+        $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
+        $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
+        $machinemodel = DB::table('machinemodels')->whereNull('machinemodels.deleted_at')->get();
+        $industrialzone = DB::table('industrialzones')->whereNull('industrialzones.deleted_at')->get();
         $fromDateC = $request->input('from_datec');
         $toDateC = $request->input('to_datec');
         $fromDateU = $request->input('from_dateu');
         $toDateU = $request->input('to_dateu');
      
-        // if (!empty($fromDateC) && !empty($toDateC)) {
-        //     $projects = $projects->whereBetween('pj.created_at', [$fromDateC, $toDateC]);
-        // }
-        // if (!empty($fromDateU) && !empty($toDateU)) {
-        //     $projects = $projects->whereBetween('pj.updated_at', [$fromDateU, $toDateU]);
-        // }
-        // if ($request->company != null) {
-        //     $projects = $projects->where('companies.company_short_name', $request->company);
-        // }
-        // if ($request->country != null) {
-        //     $projects = $projects->where('countries.country_name', $request->country);
-        // }
-        // if ($request->username != null) {
-        //     $projects = $projects->where('customers.customer_name1',  $request->username );
-        // }
-        // if ($request->user_cd != null) {
-        //     $projects = $projects->where('customers.customer_cd', $request->user_cd );
-        // }
-        // if ($request->machinetype != null) {
-        //      $projects = $projects->where('machinetype1s.machinetype1_name',  $request->machinetype );
-        // }
-        // if ($request->machinemodel != null) {
-        //     $projects = $projects->where('mm1.machinemodel_name',$request->machinemodel )
-        //                         -> orWhere('mm2.machinemodel_name',$request->machinemodel)
-        //                         -> orWhere('mm3.machinemodel_name',$request->machinemodel) ;
-        // }
-        // if ($request->status != null) {
-        //     $projects = $projects->where('pj.status',  $request->status );
-        // }
-
-        
-        // if ($request->possibility != null) {
-        //     $projects = $projects->where('pj.possibility',  $request->possibility);
-        // }
-        // if ($request->result != null) {
-        //     $projects = $projects->where('pj.result',  $request->result );
-        // }
-        // if ($request->orc_id != null) {
-        //     $projects = $projects->where('orcm1.origin_country_id',  $request->orc_id )
-        //     -> orWhere('orcm2.origin_country_id',$request->orc_id)
-        //     -> orWhere('orcm3.origin_country_id',$request->orc_id)            
-        //     ;
-        // }
-        // if ($request->oil_id != null) {
-        //     $projects = $projects->where('oitm1.oil_type',  $request->oil_id )
-        //     -> orWhere('oitm2.oil_type',$request->oil_id)
-        //     -> orWhere('oitm3.oil_type',$request->oil_id)            
-        //     ;
-        // }
-        // if ($request->route != null) {
-        //     $projects = $projects->where('projects.route1',  $request->route );
-        // }
-        // if ($request->pro_id != null) {
-        //     $projects = $projects->where('projects.id',  $request->pro_id );
-        // }
-        // //********************************************* DATE ******************************************* */
-        // if ($request->filled('from_datec') && $request->filled('to_datec')) {
-        //     $projects = $projects->whereBetween('pj.created_at', [$request->from_datec, $request->to_datec]);
-        // }
-        // if ($request->filled('from_dateu') && $request->filled('to_dateu')) {
-        //     $projects = $projects->whereBetween('pj.updated_at', [$request->from_dateu, $request->to_dateu]);
-        // }
-        //************************************************************************************************ */
         $projects = $projects->select(
             'pj.*',
             'mm1.machinemodel_name as Mc_name1',
@@ -145,12 +82,12 @@ class ProjectController extends Controller
         
         //Search TextBox
         $projects = DB::table('projects as pj')->orderBy('updated_at', 'desc');
-        $company = DB::table('companies')->get();
-        $customer = DB::table('customers')->get();
-        $country = DB::table('countries')->get();
-        $machinetype = DB::table('machinetype1s')->get();
-        $machinemodel = DB::table('machinemodels')->get();
-        $industrialzone = DB::table('industrialzones')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
+        $customer = DB::table('customers')->whereNull('customers.deleted_at')->get();
+        $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
+        $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
+        $machinemodel = DB::table('machinemodels')->whereNull('machinemodels.deleted_at')->get();
+        $industrialzone = DB::table('industrialzones')->whereNull('industrialzones.deleted_at')->get();
         $fromDateC = $request->input('from_datec');
         $toDateC = $request->input('to_datec');
         $fromDateU = $request->input('from_dateu');
@@ -314,12 +251,12 @@ class ProjectController extends Controller
     {
         //Search TextBox
         $projects = DB::table('projects as pj')->orderBy('id')->where('pj.id', $id);
-        $company = DB::table('companies')->get();
-        $customer = DB::table('customers')->get();
-        $country = DB::table('countries')->get();
-        $machinetype = DB::table('machinetype1s')->get();
-        $machinemodel = DB::table('machinemodels')->get();
-        $industrialzone = DB::table('industrialzones')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
+        $customer = DB::table('customers')->whereNull('customers.deleted_at')->get();
+        $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
+        $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
+        $machinemodel = DB::table('machinemodels')->whereNull('machinemodels.deleted_at')->get();
+        $industrialzone = DB::table('industrialzones')->whereNull('industrialzones.deleted_at')->get();
      
         $projects = $projects->select(
             'pj.*',
@@ -347,6 +284,7 @@ class ProjectController extends Controller
             'pj.possibility as possibility_name',
             'pj.result as result_name',
              )
+             ->whereNull('pj.deleted_at')
             ->leftJoin('projects as prentid','pj.parent_id','=','prentid.id')
             ->leftJoin('companies', 'pj.distributor_id', '=', 'companies.id')
             ->leftJoin('users','companies.id', '=', 'users.company_id')
@@ -602,9 +540,9 @@ public function updateData(Request $request, $id)
     { 
         $lastId = Project::max('id');
         $newId = $lastId ? $lastId + 1 : 1;
-        $country = Country::all();
-        $industrialzone = Industrialzone::all();
-        $list = DB::table('companies')->get();
+        $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
+        $industrialzone = DB::table('industrialzones')->whereNull('industrialzones.deleted_at')->get();
+        $list = DB::table('companies')->whereNull('companies.deleted_at')->get();
 
             return view('pages.dashboards.project.create', compact(
                 'newId',
@@ -622,7 +560,7 @@ public function updateData(Request $request, $id)
             $inverter = $request->input('inverter_flg');
         
             // Query the machinemodels table based on the selected values
-            $query = DB::table('machinemodels');
+            $query = DB::table('machinemodels')->whereNull('machinemodels.deleted_at');
         
             if ($origin) {
                 $query->where('origin_country_id', $origin);
@@ -631,7 +569,7 @@ public function updateData(Request $request, $id)
             if ($oilType) {
                 $query->where('oil_type', $oilType);
             }
-        
+            
             if ($coolerType) {
                 $query->where('cooler_type', $coolerType);
             }
@@ -670,6 +608,7 @@ public function updateData(Request $request, $id)
     {
         $id = $request->get('select'); //เลือก id 
         $industrialZones = DB::table('countries')
+            ->whereNull('industrialzones.deleted_at')
             ->join('industrialzones', 'countries.id', '=', 'industrialzones.country_id')
             ->select('industrialzones.id', 'industrialzones.industrialzone_name')
             ->where('countries.id', $id)
@@ -691,6 +630,7 @@ public function updateData(Request $request, $id)
 {
     $id = $request->get('select'); //เลือก id 
     $users = DB::table('companies')
+        ->whereNull('users.deleted_at')
         ->join('users', 'companies.id', '=', 'users.company_id')
         ->select('users.id', 'users.user_name')
         ->where('companies.id', $id)

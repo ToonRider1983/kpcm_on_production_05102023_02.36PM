@@ -113,22 +113,15 @@
                         @foreach ($customer as $enduser)
                             <tr>
                                 <th>{{ $enduser->customer_cd }}</th>
-                                <th><a href="{{ url('/enduser/'. $enduser->id) }}">{{ $enduser->customer_name1 }}</a></th>
+                                <th><a href="{{ url('/customer/'.'browse'.'/'. $enduser->id) }}">{{ $enduser->customer_name1 }}</a></th>
                                 <th>{{ $enduser->ct_name }}</th>
                                 <th>{{ $enduser->pv_name }}</th>
                                 <th>{{ $enduser->indust }}</th>
                             <th class="float-end">
-                                <a href="{{ url('/enduser/'. $enduser->id.'/edit') }}" title="Edit company"><button class="btn btn-primary"><i
+                                <a href="{{ url('/customer/'.'modify'.'/'. $enduser->id) }}" title="Edit company"><button class="btn btn-primary"><i
                                             class="fa-sharp fa-solid fa-pen-to-square"
                                             aria-hidden="true"></i></button></a>
-                                <a href="{{ url('/enduser/' . $enduser->id . '/delete') }}" class="btn btn-danger"><i class="fw-bold fa-solid fa-xmark fa-2xl"></i></a>
-                                {{-- <form method="POST" action="" accept-charset="UTF-8" style="display:inline">
-                                    {{ method_field('DELETE') }}
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-danger" title="Delete Student"
-                                        onclick="return confirm(&quot;Confirm delete?&quot;)"><i
-                                            class="fa-sharp fa-solid fa-xmark" aria-hidden="true"></i></button>
-                                </form> --}}
+                                            <a href="{{ url('/enduser/' . $enduser->id . '/delete') }}" class="btn btn-danger"><i class="fw-bold fa-solid fa-xmark fa-2xl"></i></a>
                             </th>
                         </tr>
                         @endforeach

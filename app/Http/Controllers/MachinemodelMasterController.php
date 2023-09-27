@@ -18,7 +18,7 @@ class MachinemodelMasterController extends Controller
         public function index(Request $request)
         {
             //Search TextBox
-            $machinemodels = DB::table('machinemodels as m') ->orderBy('id')  ;
+            $machinemodels = DB::table('machinemodels as m')->orderBy('id')  ;
             $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
 
 
@@ -221,7 +221,7 @@ class MachinemodelMasterController extends Controller
         {
             // Retrieve specific machinemodel based on the provided ID
             $machinemodels = DB::table('machinemodels as m');
-            $machinetype = DB::table('machinetype1s')->get();
+            $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
             $machinemodels = $machinemodels
                 ->select(
                 'm.*',
@@ -241,6 +241,7 @@ class MachinemodelMasterController extends Controller
                 'users.user_name as created_by',
                 'users2.user_name as updated_by'
                 )
+            ->whereNull('m.deleted_at')    
             ->leftJoin('machinetype1s', 'm.machinetype1_id', '=', 'machinetype1s.id')
             ->leftjoin('users','m.created_by','=','users.id')
             ->leftjoin('users as users2' ,'m.updated_by','=','users2.id')
@@ -283,8 +284,7 @@ class MachinemodelMasterController extends Controller
         {
             $lastId = Machinemodel::max('id');
             $newId = $lastId ? $lastId + 1 : 1;
-            $machinetype1s = Machinetype::all();
-
+            $machinetype1s = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
             return view('pages.dashboards.machinemodels.create', compact('newId', 'machinetype1s'));
         }
 
@@ -337,10 +337,10 @@ class MachinemodelMasterController extends Controller
         //มีการเปลี่ยน ในส่วนของตัวfile ชื่อdatabase.php ในconfig เพื่อตรวจสอบการเพิ่มข้อมูล เปลี่ยนเพียงแค่ 'strict' => เป็น false จากที่เป็นtrue
     }
 
-    // public function machinemodel_delete() {
-    //     return view('pages.dashboards.machinemodels.machinemodel_delete');
-    // }
 
+
+
+    
     public function machinemodel_delete($id)
         {
             $machinemodels = DB::table('machinemodels as m');
@@ -377,14 +377,13 @@ class MachinemodelMasterController extends Controller
     // public function machinemodel_result() {
     //     return view('pages.dashboards.machinemodels.result');
     // }
-
     public function machinemodel_result(Request $request)
         {
             $machinemodelid = session('machinemodel');
 
             $id = $machinemodelid->id;
             $machinemodels = DB::table('machinemodels as m');
-            $machinetype = DB::table('machinetype1s')->get();
+            $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
             $machinemodels = $machinemodels
             ->select(
                 'm.id',
@@ -406,6 +405,7 @@ class MachinemodelMasterController extends Controller
                 'users2.user_name as updated_by'
                 )
             ->where('m.id', $id)
+            ->whereNull('m.deleted_at')
             ->leftJoin('machinetype1s', 'm.machinetype1_id', '=', 'machinetype1s.id')
             ->leftjoin('users','m.created_by','=','users.id')
             ->leftjoin('users as users2' ,'m.updated_by','=','users2.id')

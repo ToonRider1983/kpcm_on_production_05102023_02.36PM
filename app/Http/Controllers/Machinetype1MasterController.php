@@ -18,7 +18,7 @@ class Machinetype1MasterController extends Controller
  
     public function index(Request $request)
     {
-        $selecttype = DB::table('machinetype1s')->get();
+        $selecttype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();
         $query = DB::table('machinetype1s');
         if ($request->keyword != null) {
             $query->orWhere('machinetype1s.machinetype1_name', 'like', '%' . $request->keyword . '%');
@@ -57,6 +57,7 @@ class Machinetype1MasterController extends Controller
     {
         $machinetype = DB::table('machinetype1s')
             ->select('machinetype1s.*','users.user_name as created_by','users2.user_name as updated_by')
+            ->whereNull('machinetype1s.deleted_at')
             ->leftJoin('users','machinetype1s.created_by','=' , 'users.id')
             ->leftJoin('users as users2','machinetype1s.updated_by','=' , 'users2.id')
             ->where('machinetype1s.id', $id) 
@@ -70,6 +71,7 @@ class Machinetype1MasterController extends Controller
     {   
         $machinetype = DB::table('machinetype1s')
             ->select('machinetype1s.*', 'users.user_name as created_by_name', 'users2.user_name as updated_by_name')
+            ->whereNull('machinetype1s.deleted_at')
             ->leftJoin('users', 'machinetype1s.created_by', '=', 'users.id')
             ->leftJoin('users as users2', 'machinetype1s.updated_by', '=', 'users2.id')
             ->where('machinetype1s.id', $id)
@@ -163,6 +165,7 @@ public function machinetype_result(Request $request)
         $id = $machinetypeid->id;
         $machinetype = DB::table('machinetype1s')
             ->select('machinetype1s.*','users.user_name as created_by','users2.user_name as updated_by')
+            ->whereNull('machinetype1s.deleted_at')
             ->leftJoin('users','machinetype1s.created_by','=' , 'users.id')
             ->leftJoin('users as users2','machinetype1s.updated_by','=' , 'users2.id')
             ->where('machinetype1s.id', $id) 
