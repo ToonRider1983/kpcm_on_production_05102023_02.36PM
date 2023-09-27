@@ -132,7 +132,7 @@
                     <thead class="thead-light">
                         <tr class="fw-bold fs-6 text-gray-800">
                             <th scope="col">@sortablelink('id','ID')</th>
-                            <th scope="col">@sortablelink('companies.company_name','Company Name')</th>
+                            <th scope="col">@sortablelink('company_id','Company Name')</th>
                             <th scope="col">Username</th>
                             <th scope="col">User Scope</th>
                             <th scope="col">@sortablelink('updated_at','Updated')</th>

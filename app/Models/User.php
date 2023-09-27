@@ -18,10 +18,6 @@ class User extends Authenticatable
     /**
     * Get the user_detail record associated with the user.
     */
-    public function company()
-    {
-        return $this->hasOne(App\company::class, 'company_id');
-    }
     /**
      * The attributes that are mass assignable.
      *
