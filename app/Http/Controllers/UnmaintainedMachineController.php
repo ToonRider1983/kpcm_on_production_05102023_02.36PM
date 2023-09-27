@@ -130,8 +130,8 @@ class UnmaintainedMachineController extends Controller
                 ->where('services.service_dt', '<=', $request->end_date ?: now());
         })
         ->orderBy('services.service_id', 'asc')
-        ->orderBy('machines.serial', 'asc')
-        ->distinct();
+        ->orderBy('machines.serial', 'asc');
+ 
 
 
 
