@@ -72,7 +72,7 @@
                         </div>
                         <div class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-5">
                             <select class="form-select country_id" name="country_id" id="country_id" aria-label="Select example">
-                                <option>Select country</option>
+                                <option value="0">Select country</option>
                                 @foreach ($country as $companyItem)
                                     <option value="{{ $companyItem->id }}" @if ($companyItem->id == $customer->country_id) selected @endif>
                                             {{ $companyItem->country_name }}
@@ -98,7 +98,6 @@
                             Industrial Zone :
                         </div>
                         <div class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-5">
-                            
                             <select class="form-select industrialzones" name="industrialzone_id" id="industrialzone_id"  aria-label="Select example" >
                                 <option value="{{ $customer->industrialzone_id }}">{{ $customer->indust }}</option>
                             </select>

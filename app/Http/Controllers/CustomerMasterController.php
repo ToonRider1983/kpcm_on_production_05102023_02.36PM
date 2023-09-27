@@ -705,7 +705,7 @@ class CustomerMasterController extends Controller
         $outputProvinces .= '<option value="'.$province->id.'">'.$province->province_name.'</option>';
     }
     
-    $outputIndustrialZones = '<option value="">Select IndustrialZone</option>';
+    $outputIndustrialZones = '<option value=""></option>';
     foreach ($industrialZones as $industrialZone) {
         $outputIndustrialZones .= '<option value="'.$industrialZone->id.'">'.$industrialZone->industrialzone_name.'</option>';
     }
