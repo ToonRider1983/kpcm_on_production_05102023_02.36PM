@@ -21,7 +21,7 @@ class IndustrialzoneMasterController extends Controller
     {
         
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
-        $industrialzone = IndustrialZone::sortable();
+        $industrialzone = IndustrialZone::sortable()->orderby('updated_at', 'desc');
         if ($request->keyword != null) {
             $industrialzone = $industrialzone->orWhere('industrialzones.industrialzone_name', 'like', '%' . $request->keyword . '%');
         }

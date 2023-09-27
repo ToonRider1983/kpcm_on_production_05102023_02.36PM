@@ -93,7 +93,7 @@
                         <tr class="fw-bold fs-6 text-gray-800">
                             <th scope="col">@sortablelink('id', 'ID')</th>
                             <th scope="col">Industrial Zone Name</th>
-                            <th scope="col">Country</th>
+                            <th scope="col">Country Name</th>
                             <th scope="col">@sortablelink('updated_at', 'Updated')</th>
                             <th scope="col"></th>
                         </tr>
