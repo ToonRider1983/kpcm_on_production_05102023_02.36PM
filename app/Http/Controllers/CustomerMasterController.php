@@ -801,7 +801,7 @@ public function enduser_delete($id)
 //     return view('pages.dashboards.enduser.result');
 // }
 
-public function enduser_result(Request $request)
+public function enduser_result($id)
     {
         $emailid = session('email');
 
