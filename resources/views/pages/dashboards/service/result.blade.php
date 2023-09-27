@@ -440,7 +440,8 @@
                                         'Serial' => $val->serial,
                                         'Type' => $val->machine_cd,
                                         'Service_cus' => $val->customer_name1,
-                                        'Service_com' => $val->company_name
+                                        'Service_com' => $val->company_name,
+                                        'url' => 'Result'
                                             ]) }}" title="">
                                         <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;ADD</button>
                                     </a>
@@ -450,7 +451,8 @@
                                         'Serial' => $val->serial,
                                         'Type' => $val->machine_cd,
                                         'Service_cus' => $val->customer_name1,
-                                        'Service_com' => $val->company_name
+                                        'Service_com' => $val->company_name,
+                                        'url' => 'Result'
                                             ]) }}" title="">
                                         <button type="button" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;ADD</button>
                                     </a>

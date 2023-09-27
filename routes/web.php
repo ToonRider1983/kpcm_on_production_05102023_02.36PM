@@ -124,17 +124,16 @@ Route::get('/machine/{id}/delete', [MachineMasterController::class, 'machine_del
 Route::get('/machine_result', [MachineMasterController::class, 'machine_result'])->name('machine_result');
 
 Route::resource('/enduser', CustomerMasterController::class);
-Route::get('/enduser/create', [CustomerMasterController::class, 'drop'])->name('enduser.create');
+Route::get('/customer/add', [CustomerMasterController::class, 'drop'])->name('enduser.create');
 Route::post('/dropdown/fetch', [CustomerMasterController::class, 'fetch'])->name('dropdown.fetch'); //ในส่วนของJs
 Route::post('/dropdown/fetchIndustrial', [CustomerMasterController::class, 'fetch'])->name('dropdown.fetchIndustrial');//ในส่วนของJs
 Route::post('/myinput/updateSession', [CustomerMasterController::class, 'updateSession'])->name('myinput.updateSession');
 Route::get('/exportenduser/csv', [CustomerMasterController::class, 'exportCSV'])->name('enduser.export');
 
-Route::get('/enduser/show', [CustomerMasterController::class, 'show'])->name('enduser.show');
-Route::get('/enduser/edit', [CustomerMasterController::class, 'edit'])->name('enduser.edit');
+Route::get('/customer/browse/{id}', [CustomerMasterController::class, 'show'])->name('enduser.show');
+Route::get('/customer/modify/{id}', [CustomerMasterController::class, 'edit'])->name('enduser.edit');
 Route::get('/enduser/{id}/delete', [CustomerMasterController::class, 'enduser_delete'])->name('enduser_delete');
-Route::get('/enduser_result', [CustomerMasterController::class, 'enduser_result'])->name('enduser_result');
-
+Route::get('/customer/result/', [CustomerMasterController::class, 'enduser_result'])->name('enduser_result');
 
 
 
@@ -164,12 +163,13 @@ Route::get('/show_oil_flood',  [ServiceController::class, 'show_oil_flood'])->na
 Route::get('/show_oil_free',  [ServiceController::class, 'show_oil_free'])->name('show_oil_free');
 Route::get('/history',  [ServiceController::class, 'history'])->name('history');
 
-Route::get('service/modify_OFL/{machine_id}/{id}',   [ServiceController::class, 'edit_oil_flood'])->name('edit_oil_flood');
-Route::get('service/modify_OF/{machine_id}/{id}', [ServiceController::class, 'edit_oil_free'])->name('edit_oil_free');
+Route::get('service/modify_of/{machine_id}/{id}',   [ServiceController::class, 'edit_oil_flood'])->name('edit_oil_flood');
+Route::get('service/modify_ofl/{machine_id}/{id}', [ServiceController::class, 'edit_oil_free'])->name('edit_oil_free');
 Route::get('/service/edit/{id}', 'ServiceController@edit')->name('service.edit');
 Route::post('/edit_show/{id}', [ServiceController::class, 'update'])->name('service.update');
 Route::post('/update_history/{Id}/{machine_id}/{service_idx}', [ServiceController::class, 'update_history'])->name('update_history');
 Route::get('/show_history/{Id}',  [ServiceController::class, 'show_history'])->name('show_history');
+Route::get('service/browse/{machine_id}/{id}',   [ServiceController::class, 'browse_history'])->name('browse_history');
 
 Route::resource('/homeindex', HomeIndexController::class);
 

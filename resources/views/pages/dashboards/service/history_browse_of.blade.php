@@ -1,11 +1,4 @@
 <x-default-layout>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
-
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" > 
-
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="http://keith-wood.name/js/jquery.signature.js"></script>
-
     <style>
         .card {
             background-color: #fff;
@@ -48,69 +41,95 @@
             font-size: 18px;
             width: 100%;
         }
-
-        @media only screen and (max-width: 400px) {
-            .kbw-signature {
-                width: 180px;
-                height: 100px;
-            }
-
-            #sig canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #sig1 canvas {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        @media only screen and (min-width: 760px) and (max-width: 770px) {
-            .kbw-signature {
-                width: 550px;
-                /* ใช้ค่านี้สำหรับ iPad */
-                height: 150px;
-            }
-
-            #sig canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #sig1 canvas {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-
-        @media only screen and (min-width: 1250px) {
-            .kbw-signature {
-                width: 600px;
-                height: 200px;
-            }
-
-            #sig canvas {
-                width: 100%;
-                height: 100%;
-            }
-
-            #sig1 canvas {
-                width: 100%;
-                height: 100%;
-            }
-        }
     </style>
-
+{{ var_dump($key)}}
     <div class="container">
-        <div class="text-start">
-            <label class="mb-2 h1 fw-bold">Service - Modify</label>
+        <label class="h1 mb-5 fw-bold">Service - Browse</label>
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        
+        @php
+            $text_content = ''; 
+            $text_site_condition = '';
+            $text_monitor = '';
+            $text_battery = '';
+            $text_sensor = '';
+            $text_ocr = '';
+            $text_magnetic = '';
+            $text_presssensor = '';
+            $text_tempsensor = '';
+            $text_flowswitch = '';
+            $text_discharge = '';
+
+        @endphp
+        
+        {{-- Service Content --}}
+        @if ($key->service_content == 6)
+            @php
+                $text_content = "PATROL SERVICE/CLEANUP";
+            @endphp
+        @elseif ($key->service_content == 3)
+            @php
+                $text_content = "ANNUAL INSPECTION/PARTS CHANGE";
+            @endphp
+        @elseif ($key->service_content == 4)
+            @php
+                $text_content = "REPAIR";
+            @endphp
+        @elseif ($key->service_content == 2)
+            @php
+                $text_content = "OVERHAUL";
+            @endphp
+        @elseif ($key->service_content == 1)
+            @php
+                $text_content = "COMMISSIONING";
+            @endphp
+        @elseif ($key->service_content == 5)
+            @php
+                $text_content = "WARRANTY CLAIM RELATED";
+            @endphp
+        @elseif ($key->service_content == 8)
+            @php
+                $text_content = "EMERGENCY CALL/CHCKUP";
+            @endphp
+        @elseif ($key->service_content == 7)
+            @php
+                $text_content = "OTHERS/ETC";
+            @endphp
+        @endif
+
+
+        {{-- Ventilation --}}
+        @if ($key->site_ventilation == 1)
+            @php
+                $text_site_condition = "Good ";
+            @endphp
+        @elseif ($key->site_ventilation == 2)
+            @php
+                $text_site_condition = "Fair";
+            @endphp
+        @elseif ($key->site_ventilation == 3)
+            @php
+                $text_site_condition = "Not Goog";
+            @endphp
+        @elseif ($key->site_ventilation == 0)
+            @php
+                $text_site_condition = "N/A";
+            @endphp
+        @endif
+
+   
+
+
+
+
+        <div class="col-12 text-end">
+            <button type="button" class="btn btn-primary" onclick="printPDF(<?php echo $key->machine_id ?>, <?php echo $key->id ?>)"><i class="fa-solid fa-print"></i>&nbsp;Print</button>
         </div>
-        <div class="text-end h4">
-            <label class="pe-10" style="color: red;z-index: 1040;" for=""><b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b>&nbsp;=&nbsp;Mandatory Field</label>
-        </div>
-       <form action="{{ route('update_history', ['Id' => $key->id, 'machine_id' => $key->machine_id, 'service_idx' => $key->service_idx]) }}" method="POST" enctype="multipart/form-data">
+        <form method="POST" action="">
             @csrf
             @method('PUT')
 
@@ -129,9 +148,6 @@
                         <div class="tab-pane show active" id="kt_tab_pane_1" role="tabpanel">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="text-end">
-                                        <label class="fw-bold h4" style="color: red;z-index: 1040;" for="">(Date format is "day/month/year")</label>
-                                    </div>
                                     <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
                                         <div class="row">
                                             <div
@@ -140,7 +156,7 @@
                                             </div>
                                             <div
                                                 class="col-lg-5 text-lg-start col-md-5 text-md-start col-9 text-start pb-5 pt-1">
-                                                <label class="pt-3" for="">(New)</label>
+                                                <label class="pt-3" for="">{{$key->service_idx}}</label>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -150,135 +166,111 @@
                                             </div>
                                             <div
                                                 class="col-lg-5 text-lg-start col-md-5 text-md-start col-9 text-start pb-5">
-                                                <label class="pt-3" for="">3SA01016</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Machine Type Code :
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <label class="pt-3" for="">ALE120W-5EXNK4</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Service Company :
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <label class="pt-3" for="">Kobelco Compressors Asia Singapore
-                                                    PTE., LTD.</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                End User :
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <label class="pt-3" for="">KLA-TENCOR(SINGAPORE)PTE
-                                                    LTD</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-1 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Service Date :<b class="h1" style="color: red;z-index: 1040;">&#42;</b>
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <input type="date" class="form-control" name=""
-                                                    id="">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-1 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Service Content :<b class="h1" style="color: red;z-index: 1040;">&#42;</b>
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <select class="form-select" aria-label="Select example">
-                                                    <option></option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Service Performer :
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Customer PIC :
-                                            </div>
-                                            <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <input type="text" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
-                                        <div class="row">
-                                            <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
-                                                Runing Hours :
-                                            </div>
-                                            <div
-                                                class="col-lg-7 text-lg-start col-md-7 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <div class="row">
-                                                    <div
-                                                        class="col-lg-3 col-md-3 col-12">
-                                                        <input type="text" class="form-control text-lg-end text-md-end text-end" name=""
-                                                            id="" value="12345">
-                                                    </div>
-                                                    <div
-                                                        class="col-lg-9 text-lg-start col-md-9 col-md-start col-12 col-start">
-                                                        <label class="pt-3" for="">[Last Time: 108820
-                                                            (17/04/2023)]</label>
-                                                    </div>
-                                                </div>
+                                                <label class="pt-3" for="">{{$key->serial}}</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div
                                                 class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
-                                                Panel Generation :<b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b>
+                                                Machine Type Code :
                                             </div>
                                             <div
-                                                class="col-lg-5 text-lg-start col-md-7 text-md-start col-12 text-start pb-5">
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->machine_cd}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
+                                                Service Company :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->company_name}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
+                                                End User :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->customer_name1}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-6 text-start">
+                                                Service Date :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->service_dt}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
+                                                Service Content :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$text_content}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
+                                                Service Performer :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->service_performer}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
+                                                Customer PIC :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->customer_pic}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-6 text-start">
+                                                Runing Hours :
+                                            </div>
+                                            <div
+                                                class="col-lg-7 text-lg-start col-md-7 text-md-start col-6 text-start pb-5">
                                                 <div class="row">
                                                     <div
-                                                        class="pt-4 col-lg-1 text-lg-center col-md-1 text-md-center col-1 text-center">
-                                                        <label for="">1</label>
+                                                        class="col-lg-3 text-lg-start col-md-3 col-md-start col-12 col-start">
+                                                        <label class="pt-3" for="">{{$key->running_hours}}</label>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-6 text-start">
+                                                Panel Generation :
+                                            </div>
+                                            <div
+                                                class="col-lg-5 text-lg-start col-md-7 text-md-start col-6 text-start pb-5">
+                                                <div class="row">
                                                     <div
-                                                        class="pt-4 col-lg-1 text-lg-center col-md-1 text-md-center col-1 text-center">
-                                                        <input type="checkbox" class="form-check-input" name=""
-                                                            id="">
-                                                    </div>
-                                                    <div
-                                                        class="pt-4 col-lg-8 text-lg-start  col-md-10 text-md-start col-12 text-start">
-                                                        <label for="">Click when "Hour Meter" has been
-                                                            replaced.</label>
+                                                        class="col-lg-3 text-lg-start col-md-3 col-md-start col-12 col-start">
+                                                        <label class="pt-3" for="">{{$key->panel_version_current}}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,13 +280,12 @@
                                     <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
                                         <div class="row">
                                             <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-12 text-start">
                                                 Remarks :
                                             </div>
                                             <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <input type="text" class="form-control" name=""
-                                                    id="">
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
+                                                <label class="pt-3" for="">{{$key->remarks}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -302,22 +293,26 @@
                                     <div class="col-lg-12 rounded-2 bg-light text-dark my-4 py-3 px-3">
                                         <div class="row">
                                             <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-6 text-start">
                                                 Created :
                                             </div>
                                             <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <label for=""></label>
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
+                                                <label class="pt-4" ><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($key->created_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($key->created_at)->format('H:i') }}&nbsp;
+                                                    <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $key->created_by }}
+                                                </label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div
-                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start">
+                                                class="fw-bold fs-6 text-gray-800 py-3 col-lg-5 text-lg-end col-md-5 text-md-end col-6 text-start">
                                                 Updated :
                                             </div>
                                             <div
-                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-sm-12 text-sm-start pb-5">
-                                                <label for=""></label>
+                                                class="col-lg-5 text-lg-start col-md-5 text-md-start col-6 text-start pb-5">
+                                                <label class="pt-4" ><i class="fw-bold text-gray-800 fa-solid fa-calendar-days"></i>&nbsp;{{ \Carbon\Carbon::parse($key->updated_at)->format('d/m/Y') }}&nbsp;{{ \Carbon\Carbon::parse($key->updated_at)->format('H:i') }}&nbsp;
+                                                    <i class="fw-bold text-gray-800 fa-solid fa-user"></i>&nbsp;{{ $key->updated_by }}
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -327,10 +322,6 @@
                         <div class="tab-pane " id="kt_tab_pane_2" role="tabpanel">
                             <div class="card">
                                 <div class="card-body">
-                                    <div class="col-lg-12 text-lg-end col-md-12 text-md-end col-12 text-end">
-                                        <label class="fw-bold h4" style="color: red;z-index: 1040;" for="">(Date format is "day/month/year")</label>
-                                    </div>
-
                                     <div class="row pt-5 pb-3">
                                         <div class="col-lg-2 col-md-3 col-12">
                                             <img alt="Logo"
@@ -347,29 +338,13 @@
                                         <div class="pt-3 col-lg-4 text-lg-end col-md-12 text-md-end col-12">
                                             <div class="row">
                                                 <div
-                                                    class="col-lg-4 text-lg-start col-md-3 text-md-start col-12 text-start">
+                                                    class="col-lg-9 text-lg-end col-md-3 text-md-start col-6 text-start">
                                                     <label class="fs-5 fw-bold" for="">Unit of
                                                         Pressure</label>
                                                 </div>
                                                 <div
-                                                    class="col-lg-1 text-lg-end col-md-1 text-md-end col-2 text-start">
-                                                    <input class="form-check-input" type="radio" value=""
-                                                        name="unitofpressure" id="MPa,kPa" />
-                                                </div>
-                                                <div
-                                                    class="col-lg-3 text-lg-end col-md-2 text-md-start col-4 text-start">
-                                                    <label class="form-check-label text-gray-800" for="MPa,kPa">
-                                                        MPa, kPa
-                                                    </label>
-                                                </div>
-                                                <div
-                                                    class="col-lg-1 text-lg-end col-md-1 text-md-end col-2 text-start">
-                                                    <input class="form-check-input" type="radio" value=""
-                                                        name="unitofpressure" id="bar,mbar" />
-                                                </div>
-                                                <div
-                                                    class="col-lg-3 text-lg-end col-md-2 text-md-start col-4 text-start">
-                                                    <label class="form-check-label  text-gray-800" for="bar,mbar">
+                                                    class="col-lg-3 text-lg-end col-md-2 text-md-start col-6 text-start">
+                                                    <label class="form-check-label" for="bar,mbar">
                                                         bar, mbar
                                                     </label>
                                                 </div>
@@ -388,7 +363,7 @@
                                                     </div>
                                                     <div
                                                         class="col-lg-9 text-lg-start col-md-12 text-md-start col-12 text-start">
-                                                        <label for="">{{ $key->customer_name1}}</label>
+                                                        <label for="">{{$key->customer_name1}}</label>
                                                     </div>
                                                 </div>
                                                 <br>
@@ -411,56 +386,27 @@
                                                     <div class="col-lg-6 col-md-12 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-4 text-md-start col-12 text-start">
+                                                                class="col-lg-6 text-lg-start col-md-4 text-md-start col-6 text-start">
                                                                 <label
-                                                                    class="pt-6 fw-bold fs-6 text-gray-800">Date<b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b></label>
+                                                                    class="pt-3 fw-bold fs-6 text-gray-800">Date<b class="h1" style="color: red;z-index: 1040;">&#42;</b></label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-8 text-md-start col-12 text-start my-3">
-                                                                <input type="date" class="form-control  serviceDate"
-                                                                    name="" id="" value="">
+                                                                class="col-lg-6 text-lg-start col-md-8 text-md-start col-6 text-start my-3">
+                                                                <label class="pt-3"
+                                                                    for=""></label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-12 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-4 text-md-start col-12 text-start">
+                                                                class="col-lg-6 text-lg-start col-md-4 text-md-start col-6 text-start">
                                                                 <label class="pt-6 fw-bold fs-6 text-gray-800">Report
                                                                     No.</label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-8 text-md-start col-12 text-start my-3">
-                                                                <input type="text" class="form-control"
-                                                                    name="report_no" id="textInput1" readonly>
-                                                                <div class="popup" id="inputPopup1">
-                                                                    <div class="numpad">
-                                                                        <button type="button"
-                                                                            data-value="1">1</button>
-                                                                        <button type="button"
-                                                                            data-value="2">2</button>
-                                                                        <button type="button"
-                                                                            data-value="3">3</button>
-                                                                        <button type="button"
-                                                                            data-value="4">4</button>
-                                                                        <button type="button"
-                                                                            data-value="5">5</button>
-                                                                        <button type="button"
-                                                                            data-value="6">6</button>
-                                                                        <button type="button"
-                                                                            data-value="7">7</button>
-                                                                        <button type="button"
-                                                                            data-value="8">8</button>
-                                                                        <button type="button"
-                                                                            data-value="9">9</button>
-                                                                        <button type="button"
-                                                                            id="clear1">Clear</button>
-                                                                        <button type="button"
-                                                                            data-value="0">0</button>
-                                                                        <button type="button"
-                                                                            id="confirmButton1">Yes</button>
-                                                                    </div>
-                                                                </div>
+                                                                class="col-lg-6 text-lg-start col-md-8 text-md-start col-6 text-start my-3">
+                                                                <label class="pt-3" for="">{{$key->report_no}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -469,28 +415,26 @@
                                                     <div class="col-lg-6 col-md-12 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-5 text-md-start col-12 text-start">
-                                                                <label class="pt-6 fw-bold fs-6 text-gray-800">Work
-                                                                    Start Date <b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b></label>
+                                                                class="col-lg-auto text-lg-start col-md-5 text-md-start col-6 text-start">
+                                                                <label class="pt-3 fw-bold fs-6 text-gray-800">Work Start Date<b class="h1" style="color: red;z-index: 1040;">&#42;</b></label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start my-3">
-                                                                <input type="date" class="form-control"
-                                                                    name="" id="">
+                                                                class="col-lg-6 text-lg-end col-md-7 text-md-start col-6 text-start my-3">
+                                                                <label class="pt-3"
+                                                                    for=""></label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-12 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-6 text-lg-start col-md-5 text-md-start col-12 text-start">
-                                                                <label class="pt-6 fw-bold fs-6 text-gray-800">Work
-                                                                    Finish Date</label>
+                                                                class="col-lg-6 text-lg-start col-md-5 text-md-start col-6 text-start">
+                                                                <label class="pt-6 fw-bold fs-6 text-gray-800">Work Finish Date</label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-6 text-lg-end col-md-7 text-md-start col-12 text-start my-3">
-                                                                <input type="date" class="form-control"
-                                                                    name="" id="">
+                                                                class="col-lg-6 text-lg-end col-md-7 text-md-start col-6 text-start my-3">
+                                                                <label class="pt-3"
+                                                                    for=""></label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -498,7 +442,7 @@
                                                 <div
                                                     class="col-lg-12 text-lg-center col-md-12 text-md-center col-12 text-center">
                                                     <label for=""
-                                                        class="fw-bold fs-4 text-gray-800 pt-5"></label>
+                                                        class="fw-bold fs-4 text-gray-800 pt-5">{{$key->company_name}}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -520,7 +464,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-6 text-lg-start col-md-5 text-md-start col-6 text-start">
-                                                                <label for=""></label>
+                                                                <label for="">{{$key->machine_cd}}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -533,7 +477,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-6 text-lg-start col-md-5 text-md-start col-6 text-start">
-                                                                <label for=""></label>
+                                                                <label for="">{{$key->serial}}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -546,7 +490,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-6 text-lg-start col-md-6 text-md-start col-6 text-start">
-                                                                <label for=""></label>
+                                                                <label for="">{{ $key->ksl_order_cd}}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -574,7 +518,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-6 text-lg-start col-md-5 text-md-start col-6 text-start">
-                                                                <label for=""></label>
+                                                                <label for="">{{ $key->customer_machine_no }}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -587,7 +531,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-6 text-lg-start col-md-6 text-md-start col-6 text-start">
-                                                                <label for=""></label>
+                                                                <label for="">{{ $key->testrun_dt}}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -595,7 +539,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <div class="col-lg-12 col-md-12 col-12 mb-4">
                                         <div class="py-3 row rounded-2 bg-light text-dark">
@@ -608,40 +551,16 @@
                                                     <span class="col-lg-7 col-md-7 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-2 text-lg-start col-md-3 text-md-start col-12 text-start">
+                                                                class="col-lg-2 text-lg-start col-md-3 text-md-start col-4 text-start">
                                                                 <label class="py-3 fw-bold fs-6 text-gray-800"
                                                                     for="">Ventilation</label>
                                                             </div>
                                                             <div
-                                                                class="py-3 col-lg-10 text-lg-start col-md-9 text-md-start col-12 text-start">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="1" name="site_ventilation"
-                                                                    id="Good" />
+                                                                class="py-3 col-lg-10 text-lg-start col-md-9 text-md-start col-8 text-start">
+
+
                                                                 <label class="text-gray-800 form-check-label"
-                                                                    for="Good">
-                                                                    Good
-                                                                </label>&nbsp;
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="2" name="site_ventilation"
-                                                                    id="Fair" />
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="Fair">
-                                                                    Fair
-                                                                </label>&nbsp;
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="3" name="site_ventilation"
-                                                                    id="NotGood" />
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="NotGood">
-                                                                    Not Good
-                                                                </label>&nbsp;
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="0" name="site_ventilation"
-                                                                    id="N/A" />
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="N/A">
-                                                                    N/A
-                                                                </label>
+                                                                    for="N/A"> {{ $text_site_condition }}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -654,44 +573,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-lg-3 text-lg-start col-md-5 text-md-start col-5 text-start">
-                                                                <div class="input-group mb-5">
-                                                                    <input name="site_roomtemp" type="text" class="form-control"
-                                                                        aria-label="Recipient's username"
-                                                                        aria-describedby="basic-addon2"
-                                                                        id="textInput2" readonly />
-                                                                    <div class="popup" id="inputPopup2">
-                                                                        <div class="numpad">
-                                                                            <button type="button"
-                                                                                data-value="1">1</button>
-                                                                            <button type="button"
-                                                                                data-value="2">2</button>
-                                                                            <button type="button"
-                                                                                data-value="3">3</button>
-                                                                            <button type="button"
-                                                                                data-value="4">4</button>
-                                                                            <button type="button"
-                                                                                data-value="5">5</button>
-                                                                            <button type="button"
-                                                                                data-value="6">6</button>
-                                                                            <button type="button"
-                                                                                data-value="7">7</button>
-                                                                            <button type="button"
-                                                                                data-value="8">8</button>
-                                                                            <button type="button"
-                                                                                data-value="9">9</button>
-                                                                            <button type="button"
-                                                                                id="clear2">Clear</button>
-                                                                            <button type="button"
-                                                                                data-value="0">0</button>
-                                                                            <button type="button"
-                                                                                id="confirmButton2">Yes</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="input-group-text" id="basic-addon2">
-                                                                        <span class="path1"></span><span
-                                                                            class="path2">&#8451;</span>
-                                                                    </span>
-                                                                </div>
+                                                                <label class="pt-3" for="">{{  $key->site_roomtemp}}</label>
                                                             </div>
                                                         </div>
                                                     </span>
@@ -700,187 +582,45 @@
                                                     <span class="col-lg-5 col-md-6 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-auto text-lg-start col-md-auto text-md-start col-12 text-start">
+                                                                class="col-lg-auto text-lg-start col-md-auto text-md-start col-5 text-start">
                                                                 <label class="py-3 fw-bold fs-6 text-gray-800"
                                                                     for="">Cooling Water</label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-8 text-lg-start col-md-8 text-md-start col-12 text-start">
-                                                                <div class="input-group mb-5">
-                                                                    <span class="input-group-text" id="basic-addon2">
-                                                                        <span class="path1"></span><span
-                                                                            class="path2 fs-9 text-gray-800">Temp</span>
-                                                                    </span>
-                                                                    <input name="site_cooling_temp_in" type="text" class="form-control"
-                                                                        aria-label="Recipient's username"
-                                                                        aria-describedby="basic-addon2"
-                                                                        id="textInput3" readonly />
-                                                                    <div class="popup" id="inputPopup3">
-                                                                        <div class="numpad">
-                                                                            <button type="button"
-                                                                                data-value="1">1</button>
-                                                                            <button type="button"
-                                                                                data-value="2">2</button>
-                                                                            <button type="button"
-                                                                                data-value="3">3</button>
-                                                                            <button type="button"
-                                                                                data-value="4">4</button>
-                                                                            <button type="button"
-                                                                                data-value="5">5</button>
-                                                                            <button type="button"
-                                                                                data-value="6">6</button>
-                                                                            <button type="button"
-                                                                                data-value="7">7</button>
-                                                                            <button type="button"
-                                                                                data-value="8">8</button>
-                                                                            <button type="button"
-                                                                                data-value="9">9</button>
-                                                                            <button type="button"
-                                                                                id="clear3">Clear</button>
-                                                                            <button type="button"
-                                                                                data-value="0">0</button>
-                                                                            <button type="button"
-                                                                                id="confirmButton3">Yes</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="input-group-text" id="basic-addon2">
-                                                                        <span class="path1"></span><span
-                                                                            class="path2">&nbsp;/&nbsp;</span>
-                                                                    </span>
-                                                                    <input type="text" class="form-control"
-                                                                    name="site_cooling_temp_out"
-                                                                        aria-label="Recipient's username"
-                                                                        aria-describedby="basic-addon2"
-                                                                        id="textInput4" readonly />
-                                                                    <div class="popup" id="inputPopup4">
-                                                                        <div class="numpad">
-                                                                            <button type="button"
-                                                                                data-value="1">1</button>
-                                                                            <button type="button"
-                                                                                data-value="2">2</button>
-                                                                            <button type="button"
-                                                                                data-value="3">3</button>
-                                                                            <button type="button"
-                                                                                data-value="4">4</button>
-                                                                            <button type="button"
-                                                                                data-value="5">5</button>
-                                                                            <button type="button"
-                                                                                data-value="6">6</button>
-                                                                            <button type="button"
-                                                                                data-value="7">7</button>
-                                                                            <button type="button"
-                                                                                data-value="8">8</button>
-                                                                            <button type="button"
-                                                                                data-value="9">9</button>
-                                                                            <button type="button"
-                                                                                id="clear4">Clear</button>
-                                                                            <button type="button"
-                                                                                data-value="0">0</button>
-                                                                            <button type="button"
-                                                                                id="confirmButton4">Yes</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <span class="input-group-text" id="basic-addon2">
-                                                                        <span class="path1"></span><span
-                                                                            class="path2">&#8451;</span>
-                                                                    </span>
-                                                                </div>
+                                                                class="col-lg-8 text-lg-start col-md-7 text-md-start col-7 text-start">
+                                                                <label class="pt-3"
+                                                                    for=""><span class="fw-bold fs-7 text-gray-800">Temp</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_in}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp<span class="fw-bold fs-7 text-gray-800">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp{{ $key->site_cooling_temp_out}}&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             </div>
                                                         </div>
                                                     </span>
                                                     <span class="col-lg-7 col-md-6 col-12">
                                                         <div class="row">
                                                             <div
-                                                                class="col-lg-2 text-lg-start col-md-auto text-md-start col-12 text-start">
-                                                                <label class="py-3 fs-9 text-gray-800"
+                                                                class="col-lg-auto text-lg-start col-md-auto text-md-start col-4 text-start">
+                                                                <label class="py-3 fw-bold fs-7 text-gray-800"
                                                                     for="">Pressure</label>
                                                             </div>
                                                             <div
-                                                                class="col-lg-10 text-lg-start col-md-10 text-md-start col-12 text-start">
+                                                                class="col-lg-10 text-lg-start col-md-9 text-md-start col-8 text-start">
                                                                 <div class="row">
-                                                                    <div class="col-lg-6 col-md-8 col-9">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text" class="form-control"
-                                                                                name="site_cooling_pressure_in"
-                                                                                aria-label="Recipient's username"
-                                                                                aria-describedby="basic-addon2"
-                                                                                id="textInput5" readonly />
-                                                                            <div class="popup" id="inputPopup5">
-                                                                                <div class="numpad">
-                                                                                    <button type="button"
-                                                                                        data-value="1">1</button>
-                                                                                    <button type="button"
-                                                                                        data-value="2">2</button>
-                                                                                    <button type="button"
-                                                                                        data-value="3">3</button>
-                                                                                    <button type="button"
-                                                                                        data-value="4">4</button>
-                                                                                    <button type="button"
-                                                                                        data-value="5">5</button>
-                                                                                    <button type="button"
-                                                                                        data-value="6">6</button>
-                                                                                    <button type="button"
-                                                                                        data-value="7">7</button>
-                                                                                    <button type="button"
-                                                                                        data-value="8">8</button>
-                                                                                    <button type="button"
-                                                                                        data-value="9">9</button>
-                                                                                    <button type="button"
-                                                                                        id="clear5">Clear</button>
-                                                                                    <button type="button"
-                                                                                        data-value="0">0</button>
-                                                                                    <button type="button"
-                                                                                        id="confirmButton5">Yes</button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <span class="input-group-text"
-                                                                                id="basic-addon2">
-                                                                                <span class="path1"></span><span
-                                                                                    class="path2">&nbsp;/&nbsp;</span>
-                                                                            </span>
-                                                                            <input type="text" class="form-control"
-                                                                                name="site_cooling_pressure_out"
-                                                                                aria-label="Recipient's username"
-                                                                                aria-describedby="basic-addon2"
-                                                                                id="textInput6" readonly />
-                                                                            <div class="popup" id="inputPopup6">
-                                                                                <div class="numpad">
-                                                                                    <button type="button"
-                                                                                        data-value="1">1</button>
-                                                                                    <button type="button"
-                                                                                        data-value="2">2</button>
-                                                                                    <button type="button"
-                                                                                        data-value="3">3</button>
-                                                                                    <button type="button"
-                                                                                        data-value="4">4</button>
-                                                                                    <button type="button"
-                                                                                        data-value="5">5</button>
-                                                                                    <button type="button"
-                                                                                        data-value="6">6</button>
-                                                                                    <button type="button"
-                                                                                        data-value="7">7</button>
-                                                                                    <button type="button"
-                                                                                        data-value="8">8</button>
-                                                                                    <button type="button"
-                                                                                        data-value="9">9</button>
-                                                                                    <button type="button"
-                                                                                        id="clear6">Clear</button>
-                                                                                    <button type="button"
-                                                                                        data-value="0">0</button>
-                                                                                    <button type="button"
-                                                                                        id="confirmButton6">Yes</button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <span class="input-group-text"
-                                                                                id="basic-addon2">
-                                                                                <span class="path1"></span><span
-                                                                                    class="path2 unit_of_pressure unit_of_pressure">bar</span>
-                                                                            </span>
-                                                                        </div>
+                                                                    <div
+                                                                        class="py-3 col-lg-2 text-lg-center col-md-2 text-md-start col-3 text-end">
+                                                                        <label class=" fs-7 text-gray-800"
+                                                                            for="">{{ $key->site_cooling_pressure_in }}</label>
                                                                     </div>
                                                                     <div
-                                                                        class="py-3 col-lg-3 text-lg-start col-md-auto text-md-start col-3 text-end">
-                                                                        <label class=" fs-9 text-gray-800"
+                                                                        class="py-3 col-lg-auto text-lg-center col-md-auto text-md-start col-auto text-end">
+                                                                        <label class=" fs-6 fw-bold text-gray-800"
+                                                                            for="">/</label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="py-3 col-lg-2 text-lg-center col-md-2 text-md-start col-3 text-end">
+                                                                        <label class=" fs-7 text-gray-800"
+                                                                            for="">{{ $key->site_cooling_pressure_out }}</label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="py-3 col-lg-auto text-lg-start col-md-auto text-md-start col-3 text-end">
+                                                                        <label class="fw-bold fs-7 text-gray-800"
                                                                             for="">(In/Out)</label>
                                                                     </div>
                                                                 </div>
@@ -901,138 +641,7 @@
                                             </div>
                                             <div
                                                 class="col-lg-10 text-lg-start col-md-12 text-md-start col-12 text-start">
-                                                <div class="row">
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="6" name="service_id"
-                                                                    id="servicContent_portal" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    PATROL SERVICE/CLEANUP
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="3" name="service_id"
-                                                                    id="servicContent_annual" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    ANNUAL INSPECTION/PARTS CHANGE
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="4" name="service_id"
-                                                                    id="servicContent_repair" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    REPAIR
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="2" name="service_id"
-                                                                    id="servicContent_overhaul" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    OVERHAUL
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                                <div class="row">
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="1" name="service_id"
-                                                                    id="servicContent_commissioning" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    COMMISSIONING
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="5" name="service_id"
-                                                                    id="servicContent_warranty" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    WARRANTY CLAIM RELATED
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="8" name="service_id"
-                                                                    id="servicContent_emergency" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="">&nbsp;
-                                                                    EMERGENCY CALL/CHECKUP
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                    <span class="py-2 col-lg-auto col-md-6 col-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-1 col-md-1 col-1">
-                                                                <input class="form-check-input" type="radio"
-                                                                    value="7" name="service_id"
-                                                                    id="serviceContent_portal" />
-                                                            </div>
-                                                            <div
-                                                                class="col-lg-auto text-lg-start col-md-11 text-md-start col-11 text-start">
-                                                                <label class="text-gray-800 form-check-label"
-                                                                    for="servicContent_other">&nbsp;
-                                                                    OTHERS/ETC
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </span>
-                                                </div>
+                                                <label class=" fs-6 text-gray-800" for="">{{ $text_content}}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1050,7 +659,7 @@
                                                         <div
                                                             class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_motor" value="0" id="detail_motor">
+                                                                name="detail_motor" value="" id="detail_motor" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
@@ -1065,7 +674,7 @@
                                                         <div
                                                             class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_cooler" value="0" id="detail_cooler">
+                                                                name="detail_cooler" value="" id="detail_cooler" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
@@ -1083,8 +692,8 @@
                                                                 <div
                                                                     class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                                     <input class="mt-3 form-check-input "
-                                                                        type="checkbox" name="detail_topup" value="0"
-                                                                        id="detail_topup">
+                                                                        type="checkbox" name="detail_topup" value=""
+                                                                        id="detail_topup" disabled>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-11 text-start">
@@ -1096,37 +705,8 @@
                                                                     class="pt-3 col-lg-auto text-lg-end col-md-3 text-md-start col-auto text-start">
                                                                     (Number of Liters
                                                                 </div>
-                                                                <div class="col-lg-2 col-md-2 col-2">
-                                                                    <input type="text" class="form-control"
-                                                                        name="detail_topup_liters" id="textInput7" readonly>
-                                                                    <div class="popup" id="inputPopup7">
-                                                                        <div class="numpad">
-                                                                            <button type="button"
-                                                                                data-value="1">1</button>
-                                                                            <button type="button"
-                                                                                data-value="2">2</button>
-                                                                            <button type="button"
-                                                                                data-value="3">3</button>
-                                                                            <button type="button"
-                                                                                data-value="4">4</button>
-                                                                            <button type="button"
-                                                                                data-value="5">5</button>
-                                                                            <button type="button"
-                                                                                data-value="6">6</button>
-                                                                            <button type="button"
-                                                                                data-value="7">7</button>
-                                                                            <button type="button"
-                                                                                data-value="8">8</button>
-                                                                            <button type="button"
-                                                                                data-value="9">9</button>
-                                                                            <button type="button"
-                                                                                id="clear7">Clear</button>
-                                                                            <button type="button"
-                                                                                data-value="0">0</button>
-                                                                            <button type="button"
-                                                                                id="confirmButton7">Yes</button>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="col-lg-2 text-lg-center col-md-2 col-3">
+                                                                    <label class="pt-3" for="">{{ $key->detail_topup_liters}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-1 text-md-start col-auto text-start">
@@ -1143,8 +723,8 @@
                                                                 <div
                                                                     class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                                     <input class="mt-3 form-check-input"
-                                                                        type="checkbox" name="detail_replace" value="0"
-                                                                        id="detailReplace">
+                                                                        type="checkbox" name="detailReplace" value=""
+                                                                        id="detailReplace" disabled>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-start">
@@ -1157,8 +737,7 @@
                                                                     (Brand
                                                                 </div>
                                                                 <div class="col-lg-3 col-md-2 col-2">
-                                                                    <input type="text" class="form-control"
-                                                                        name="detail_replace_brand" id="0">
+                                                                    <label for=""></label>
                                                                 </div>
                                                                 <div class="pt-3 col-lg-auto col-md-auto col-auto">)
                                                                 </div>
@@ -1173,7 +752,7 @@
                                                         <div
                                                             class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_overhaul_air" value="" id="detail_overhaul_air">
+                                                                name="detail_overhaul_air" value="" id="detail_overhaul_air" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
@@ -1188,7 +767,7 @@
                                                         <div
                                                             class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_overhaul_motor" value="0" id="detail_overhaul_motor">
+                                                                name="detail_overhaul_motor" value="" id="detail_overhaul_motor" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
@@ -1203,7 +782,7 @@
                                                         <div
                                                             class="col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_rewind" value="0" id="detail_rewind">
+                                                                name="detail_rewind" value="" id="detail_rewind" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
@@ -1220,12 +799,12 @@
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_3000" value="0" id="detail_3000">
+                                                                name="detail_3000" value="" id="detail_3000" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-6 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
                                                             <label class="text-dark" for="">&nbsp;
-                                                                8,000 Hrs
+                                                                3,000 Hrs
                                                             </label>
                                                         </div>
                                                     </div>
@@ -1235,12 +814,12 @@
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_6000" value="0" id="detail_6000">
+                                                                name="detail_6000" value="" id="detail_6000" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-6 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
                                                             <label class="text-dark" for="">&nbsp;
-                                                                16,000 Hrs
+                                                                6,000 Hrs
                                                             </label>
                                                         </div>
                                                     </div>
@@ -1250,12 +829,12 @@
                                                         <div
                                                             class="pt-3 col-lg-auto text-lg-start col-md-auto text-md-start col-1 text-start">
                                                             <input class="mt-3 form-check-input" type="checkbox"
-                                                                name="detail_12000" value="0" id="detail_12000">
+                                                                name="detail_12000" value="" id="detail_12000" disabled>
                                                         </div>
                                                         <div
                                                             class="pt-6 col-lg-auto text-lg-start col-md-auto text-md-start col-11 text-start">
                                                             <label class="text-dark" for="">&nbsp;
-                                                                24,000 Hrs
+                                                                12,000 Hrs
                                                             </label>
                                                         </div>
                                                     </div>
@@ -1269,9 +848,8 @@
                                                             </label>
                                                         </div>
                                                         <div
-                                                            class="col-lg-auto text-lg-start col-md-auto text-md-start col-12 text-start">
-                                                            <input class="mt-3 form-control" type="text"
-                                                                name="detail_other" value="" id="">
+                                                            class="col-lg-auto text-lg-center col-md-auto text-md-start col-12 text-start">
+                                                            <label class="pt-5 fs-6 text-gray-800" for=""> {{ $key->detail_other}}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1284,8 +862,7 @@
                                             <div class="col-lg-6 col-md-12 col-12">
                                                 <div class="row">
                                                     <div class="py-3 col-lg-6 col-md-6 col-12">
-                                                        <u class="fw-bold fs-6 text-gray-800" for="">RUNNING
-                                                            CONDITION1</u>
+                                                        <u class="fw-bold fs-6 text-gray-800" for="">RUNNING CONDITION1</u>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-12">
                                                         <div class="row">
@@ -1294,11 +871,7 @@
                                                                     Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">mbar</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_oil_temp}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1310,11 +883,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Oil Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">bar</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_oil_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1324,11 +893,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">1st Dis Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">&#8451;</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_1st_dis_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1340,11 +905,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">1st Dis Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">bar</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_1st_dis_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1354,11 +915,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Suc Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">&#8451;</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_suc_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1370,11 +927,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Dis Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">bar</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_dis_pressure}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1384,11 +937,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">2nd Dis Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">&#8451;</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_2nd_dis_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1397,8 +946,7 @@
                                             <div class="col-lg-6 col-md-12 col-12">
                                                 <div class="row">
                                                     <div class="py-3 col-lg-6 col-md-6 col-12">
-                                                        <u class="fw-bold fs-6 text-gray-800" for="">RUNNING
-                                                            CONDITION2</u>
+                                                        <u class="fw-bold fs-6 text-gray-800" for="">RUNNING CONDITION2</u>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6 col-12">
                                                         <div class="row">
@@ -1406,11 +954,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">General Signal</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">%</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_signal}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1422,11 +966,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Suction Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">mbar</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_suction_pressure}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1436,11 +976,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Condition</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">%</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_load}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1452,11 +988,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Ambient Temp.</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">&#8451;</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_ambient_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1466,7 +998,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Running Count</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <input type="number" class="form-control text-lg-end text-md-end text-end" />
+                                                                <label class="py-3" for="">{{ $key->running_count}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1478,11 +1010,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">PT5 Pressure</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">bar</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_pt5_pressure}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1492,11 +1020,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Hour</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom" data-bs-toggle="tooltip" title="(Load Run Time)">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">Hrs</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_load_hour}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1510,11 +1034,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Current</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">A</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_current}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1524,11 +1044,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Hourmeter</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">Hrs</span>
-                                                                </div>
+                                                                <label class="py-3" for=""> {{ $key->running_hourmeter_check}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1538,11 +1054,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Tc Temp (Motor Coil)</label>
                                                             </div>
                                                             <div class="col-lg-5 col-md-6 col-5">
-                                                                <div class="input-group mb-2"
-                                                                    data-bs-placement="bottom">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                    <span class="input-group-text">&#8451;</span>
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_tc_temp}} </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1552,9 +1064,7 @@
                                                                 <label class="fw-bold fs-6 text-gray-800" for="">Load Count</label>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-6">
-                                                                <div class="col-lg-12 col-md-12 col-12"data-bs-placement="bottom" data-bs-toggle="tooltip" title="(Load Run Time)">
-                                                                    <input type="number" class="form-control text-lg-end text-md-end text-end" />
-                                                                </div>
+                                                                <label class="py-3" for="">{{ $key->running_load_count}}</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1577,7 +1087,7 @@
                                                         <div class="row">
                                                             <div
                                                                 class="pt-3 col-lg-1 text-lg-start col-md-auto text-md-start col-auto text-start">
-                                                                <input type="checkbox" class="form-check-input" />
+                                                                <input name="setting_operation_local" type="checkbox" class="form-check-input" id="setting_operation_local" disabled/>
                                                             </div>
                                                             <div
                                                                 class="pt-3 col-lg-4 text-lg-start col-md-auto text-md-start col-10 text-start">
@@ -1586,7 +1096,7 @@
                                                             </div>
                                                             <div
                                                                 class="pt-3 col-lg-1 text-lg-start col-md-auto text-md-start col-auto text-start">
-                                                                <input type="checkbox" class="form-check-input" />
+                                                                <input name="setting_operation_run_on" type="checkbox" class="form-check-input" id="setting_operation_run_on" disabled/>
                                                             </div>
                                                             <div
                                                                 class="pt-3 col-lg-2 text-lg-start col-md-auto text-md-start col-auto text-start">
@@ -1595,7 +1105,7 @@
                                                             </div>
                                                             <div
                                                                 class="pt-3 col-lg-1 text-lg-start col-md-auto text-md-start col-auto text-start">
-                                                                <input type="checkbox" class="form-check-input" />
+                                                                <input name="setting_operation_run_load" type="checkbox" class="form-check-input" id="setting_operation_run_load" disabled/>
                                                             </div>
                                                             <div
                                                                 class="pt-3 col-lg-2 text-lg-start col-md-auto text-md-start col-auto text-start">
@@ -1609,7 +1119,7 @@
                                                         <div class="row">
                                                             <div
                                                                 class="col-lg-2 text-lg-start col-md-auto text-md-start col-auto text-start">
-                                                                <input type="checkbox" class="form-check-input" />
+                                                                <input name="setting_group_link" type="checkbox" class="form-check-input"  id="setting_group_link" disabled/>
                                                             </div>
                                                             <div
                                                                 class="col-lg-10 text-lg-start col-md-auto text-md-start col-auto text-start">
@@ -1623,7 +1133,7 @@
                                                         <div class="row">
                                                             <div
                                                                 class="col-lg-1 text-lg-start col-md-auto text-md-start col-auto text-start">
-                                                                <input type="checkbox" class="form-check-input" />
+                                                                <input name="setting_group_panel" type="checkbox" class="form-check-input" id="setting_group_panel" disabled/>
                                                             </div>
                                                             <div
                                                                 class="col-lg-11 text-lg-start col-md-auto text-md-start col-auto text-start">
@@ -1640,8 +1150,7 @@
                                                     <div class="row">
                                                         <div
                                                             class="py-6 col-lg-2 text-lg-start col-md-2 text-md-start col-12 text-start">
-                                                            <label class="fw-bold fs-6 text-gray-800"
-                                                                for="">
+                                                            <label class="fw-bold fs-6 text-gray-800" for="">
                                                                 Local/Link Op.
                                                             </label>
                                                         </div>
@@ -1656,14 +1165,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7 ">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_op_load}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1673,14 +1176,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_op_unload}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1690,14 +1187,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_op_auto}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-auto text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1707,14 +1198,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_op_constant}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1739,14 +1224,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_phh}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1756,14 +1235,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_phl}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1773,14 +1246,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_ph}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1790,14 +1257,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_pl}}</label>
                                                                 </div>
                                                                 <div
                                                                     class="pt-3 col-lg-1 text-lg-start col-md-2 text-md-start col-5 text-start">
@@ -1807,14 +1268,8 @@
                                                                     </label>
                                                                 </div>
                                                                 <div
-                                                                    class="col-lg-2 col-md-4 col-7">
-                                                                    <div class="row">
-                                                                        <div class="input-group mb-5">
-                                                                            <input type="text"
-                                                                                class="form-control text-lg-end text-md-end text-end" />
-                                                                            <span class="input-group-text">bar</span>
-                                                                        </div>
-                                                                    </div>
+                                                                    class="col-lg-2 text-lg-start col-md-4 text-md-start col-7 text-start">
+                                                                    <label class="pt-3" for="">{{$key->setting_pll}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1848,50 +1303,66 @@
                                                                 class="col-lg-11 text-lg-start col-md-10 text-md-start col-12 text-start">
                                                                 <div class="row">
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip" title="(ON/OFF)">
-                                                                            <span class="input-group-text">R-S</span>
-                                                                            <input name="meas_voltage_rs_on" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_voltage_rs_off" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">V</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">R-S</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_rs_on }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_rs_off }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip" title="(ON/OFF)">
-                                                                            <span class="input-group-text">S-T</span>
-                                                                            <input name="meas_voltage_st_on" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_voltage_st_off" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">V</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">S-T</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_st_on }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_st_on }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip" title="(ON/OFF)">
-                                                                            <span class="input-group-text">T-R</span>
-                                                                            <input name="meas_voltage_tr_on" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_voltage_tr_off" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">V</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">T-R</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_tr_on }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_voltage_tr_on }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <label class="py-3 fw-bold fs-8 text-gray-800"
+                                                                        class="col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-start">
+                                                                        <label class="py-4 fw-bold fs-8 text-gray-800"
+                                                                            for="">
+                                                                            (ON/OFF)
+                                                                        </label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-start">
+                                                                        <label class="py-4 fw-bold fs-8 text-gray-800"
                                                                             for="">
                                                                             [+-10% of rated current]
                                                                         </label>
@@ -1913,53 +1384,66 @@
                                                                 class="col-lg-10 text-lg-start col-md-10 text-md-start col-12 text-start">
                                                                 <div class="row">
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">R</span>
-                                                                            <input name="meas_input_r_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_input_r_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">R</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_r_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_r_unload }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">S</span>
-                                                                            <input name="meas_input_s_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_input_s_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">S</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_s_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_s_unload }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">T</span>
-                                                                            <input name="meas_input_t_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_input_t_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">T</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_t_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_input_t_unload }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <label class="py-3 fw-bold fs-8 text-gray-800"
+                                                                        class="col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-start">
+                                                                        <label class="py-4 fw-bold fs-8 text-gray-800"
+                                                                            for="">
+                                                                            (Load/Unload)
+                                                                        </label>
+                                                                    </div>
+                                                                    <div
+                                                                        class="col-lg-auto text-lg-start col-md-auto text-md-start col-auto text-start">
+                                                                        <label class="py-4 fw-bold fs-8 text-gray-800"
                                                                             for="">
                                                                             [+-5% of rated current]
                                                                         </label>
@@ -1981,58 +1465,65 @@
                                                                 class="col-lg-10 text-lg-start col-md-10 text-md-start col-12 text-start">
                                                                 <div class="row">
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">U1</span>
-                                                                            <input name="meas_motor_u_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_motor_u_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">U1</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_u_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_u_unload }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">V1</span>
-                                                                            <input name="meas_motor_v_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_motor_v_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">V1</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_v_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_v_unload }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5"
-                                                                            data-bs-placement="bottom"
-                                                                            data-bs-toggle="tooltip"
-                                                                            title="(Load/Unload)">
-                                                                            <span class="input-group-text">W1</span>
-                                                                            <input name="meas_motor_w_load" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">/</span>
-                                                                            <input name="meas_motor_w_unload" type="number"
-                                                                                class="form-control" />
-                                                                            <span class="input-group-text">A</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">W1</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_w_load }}</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">/</label>
+                                                                            </div>
+                                                                            <div class="col-lg-3 col-md-3 col-3 text-center">
+                                                                                <label for="">{{$key->meas_motor_w_load }}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
-                                                                        <div class="input-group mb-5">
-                                                                            <span class="input-group-text">Dis Pipe Temp</span>
-                                                                            <input name="meas_pipetemp" type="number"
-                                                                                class="form-control" />
-                                                                            <span
-                                                                                class="input-group-text">&#8451;</span>
+                                                                        class="py-4 col-lg-3 text-lg-start col-md-6 text-md-start col-12 text-start">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-auto col-md-auto col-auto text-center">
+                                                                                <label class="fw-bold fs-6 text-gray-800" for="">Dis Pipe Temp</label>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-6 col-6 text-center">
+                                                                                <label for="">{{ $key->meas_pipetemp}}</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2043,6 +1534,26 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                      
+                                    @php
+                                    $statusMap = [
+                                        1 => 'OK',
+                                        2 => 'NG',
+                                        0 => 'N/A',
+                                    ];
+                                    
+                                    $text_monitor       = $statusMap[$key->functions_monitor] ?? 'N/A';
+                                    $text_battery       = $statusMap[$key->functions_battery] ?? 'N/A';
+                                    $text_sensor        = $statusMap[$key->functions_sensor] ?? 'N/A';
+                                    $text_ocr           = $statusMap[$key->functions_ocr] ?? 'N/A';
+                                    $text_magnetic      = $statusMap[$key->functions_magnetic] ?? 'N/A';
+                                    $text_presssensor   = $statusMap[$key->functions_presssensor] ?? 'N/A';
+                                    $text_tempsensor    = $statusMap[$key->functions_tempsensor] ?? 'N/A';
+                                    $text_flowswitch    = $statusMap[$key->functions_flowswitch] ?? 'N/A';
+                                    $text_discharge     = $statusMap[$key->functions_discharge] ?? 'N/A';
+                                    $text_pressswitch   = $statusMap[$key->	functions_pressswitch] ?? 'N/A';
+                                    @endphp
 
                                     <div class="row g-5">
                                         <div class="col-lg-8">
@@ -2060,34 +1571,8 @@
                                                                     Monitor/Controller
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-start col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="monitor/controller"
-                                                                            id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="monitor/controller"
-                                                                            id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="monitor/controller"
-                                                                            id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_monitor}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2096,31 +1581,8 @@
                                                                     Battery
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-start col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="battery" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="battery" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="battery" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_battery}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2129,31 +1591,8 @@
                                                                     Drain Sensor
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-start col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="drainsensor" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="drainsensor" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="drainsensor" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_sensor}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2162,31 +1601,8 @@
                                                                     OCR
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-start col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="OCR" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="OCR" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="OCR" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_ocr}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2195,20 +1611,11 @@
                                                                     Star-Deita Timer
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-5">
+                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <input class="form-control text-lg-end text-md-end text-end"
-                                                                                    type="text" />
-                                                                            </div>
-                                                                            <div
-                                                                                class="col-lg-2 text-lg-start col-md-2 text-md-start col-2 text-start">
-                                                                                <label
-                                                                                    class="py-3 fw-bold fs-8 text-gray-800"
-                                                                                    for="">
-                                                                                    secs
-                                                                                </label>
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_timer}}</label>
                                                                             </div>
                                                                             <div
                                                                                 class="col-lg-5 text-lg-start col-md-3 text-md-start col-3 text-start">
@@ -2222,25 +1629,25 @@
                                                                     </div>
                                                                 </span>
                                                             </div>
+                                                            
                                                             <div class="row">
                                                                 <span
                                                                     class="py-2 ps-5 fw-bold fs-6 text-gray-800 col-lg-6 text-lg-start col-md-5 text-md-end col-12 text-start">
                                                                     Safety Valve Operates at
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-5">
+                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <input class="form-control text-lg-end text-md-end text-end"
-                                                                                    type="text" />
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_valve_operate}}</label>
                                                                             </div>
                                                                             <div
                                                                                 class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
                                                                                 <label
                                                                                     class="py-3 fw-bold fs-8 text-gray-800"
                                                                                     for="">
-                                                                                    bar
+                                                                                    [specx1.1]
                                                                                 </label>
                                                                             </div>
                                                                         </div>
@@ -2256,12 +1663,11 @@
                                                                     class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-5">
                                                                     <div>
                                                                         <div class="row">
-                                                                            <div class="col-lg-4 col-md-6 col-6 ms-2">
-                                                                                <input class="form-control text-lg-end text-md-end text-end"
-                                                                                    type="text" />
+                                                                            <div class="col-lg-4 text-lg-start col-md-6 col-6 ms-2">
+                                                                                <label class="py-3" for="">{{$key->functions_thermal}}</label>
                                                                             </div>
                                                                             <div
-                                                                                class="col-lg-2 text-lg-start col-md-5 text-md-start col-5">
+                                                                                class="col-lg-2 text-lg-start col-md-5 text-md-start col-5 text-start">
                                                                                 <label
                                                                                     class="py-3 fw-bold fs-8 text-gray-800"
                                                                                     for="">
@@ -2278,34 +1684,8 @@
                                                                     Magnetic Connector
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="magneticconnector"
-                                                                            id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="magneticconnector"
-                                                                            id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="magneticconnector"
-                                                                            id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_magnetic}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2314,31 +1694,8 @@
                                                                     Pressure Sensor
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="pressuresensor" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="pressuresensor" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="pressuresensor" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_presssensor}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2347,34 +1704,18 @@
                                                                     Temperature Sensor
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="temperaturesensor"
-                                                                            id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="temperaturesensor"
-                                                                            id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="temperaturesensor"
-                                                                            id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_tempsensor}}</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class="row">
+                                                                <span
+                                                                    class="py-2 ps-5 fw-bold fs-6 text-gray-800 col-lg-6 text-lg-start col-md-5 text-md-end col-12 text-start">
+                                                                    Pressure Switch
+                                                                </span>
+                                                                <span
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_pressswitch}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2383,31 +1724,8 @@
                                                                     Flow Switch
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="flowswitch" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="flowswitch" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="flowswitch" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_flowswitch}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2416,31 +1734,8 @@
                                                                     Discharge v/v
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-6 text-lg-end col-md-7 text-md-end col-12 text-start pb-1">
-                                                                    <div
-                                                                        class="form-check form-check-custom form-check-solid py-2 px-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="dischargev/v" id="OK" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="OK">
-                                                                            OK
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="dischargev/v" id="NG" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="NG">
-                                                                            NG
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="dischargev/v" id="N/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="N/A">
-                                                                            N/A
-                                                                        </label>
-                                                                    </div>
+                                                                    class="py-2 col-lg-6 text-lg-start col-md-7 text-md-start col-12 text-start pb-1">
+                                                                    <label for="">{{ $text_discharge}}</label>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -2453,49 +1748,43 @@
                                                             <u class="fw-bold fs-6 text-gray-800">INSULATION TEST</u>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-12">
-                                                            <label class="px-3" for="">
+                                                            <label class="px-3 fw-bold fs-6 text-gray-800" for="">
                                                                 Main Motor Insulation (M &#8486;)
                                                             </label>
                                                             <div class="row mb-2 ps-3">
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U1-V1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_u1v1"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1v1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V1-W1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_v1w1"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1u2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W1-U1
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_w1u1"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1u1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -2504,42 +1793,36 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 U1-U2
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_u1u2"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1u2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 V1-V2
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_v1v2"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_v1v2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
                                                                                 W1-W2
                                                                             </label>
                                                                         </div>
-                                                                        <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_w1w2"
-                                                                                id="">
+                                                                        <div class="col-lg-6 col-md-8 col-4">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1w2}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -2548,91 +1831,79 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                U1 - E
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                U1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_u1e"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_u1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                V1 - E 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                V1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_v1e"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_v1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                W1 - E 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                W1-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_main_w1e"
-                                                                                id="">
+                                                                            <label class="pt-2 pb-4 fs-7 text-gray-800" for="">{{$key->insulation_main_w1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-12">
-                                                            <label class="px-3" for="">
+                                                            <label class="px-3 fw-bold fs-6 text-gray-800" for="">
                                                                 Fan Motor Insulation (M &#8486;)
                                                             </label>
                                                             <div class="row mb-2 ps-3">
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                U - V 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                U-V
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_u1v1"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_u1v1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                 V - W 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                V-W
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_v1w1"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_v1w1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                W - U 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                W-U
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_w1u1"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_w1u1}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
@@ -2641,48 +1912,60 @@
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                U - E 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                U-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_u1e"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_u1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                V - E 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                V-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_v1e"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_v1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                                 <span class="col-lg-4 col-md-4 col-12">
                                                                     <div class="row py-2">
                                                                         <div class="col-lg-auto col-md-4 col-3">
-                                                                            <label class="py-4 fs-9" for="">
-                                                                                W - E 
+                                                                            <label class="py-3 fw-bold fs-8 text-gray-800" for="">
+                                                                                W-E
                                                                             </label>
                                                                         </div>
                                                                         <div class="col-lg-7 col-md-8 col-4">
-                                                                            <input type="number"
-                                                                                class="form-control" name="insulation_fan_w1e"
-                                                                                id="">
+                                                                            <label class="pt-3 pb-2 fs-7 text-gray-800" for="">{{$key->insulation_fan_w1e}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @php
+                                                    $text_dryer_type = '';
+                                                            @endphp
+                                                        {{-- AIR DRYER --}}
+                                                        @if ($key->dryer_type == 1)
+                                                            @php
+                                                                $text_dryer_type = "Refrigerator ";
+                                                            @endphp
+                                                        @elseif ($key->dryer_type == 2)
+                                                            @php
+                                                                $text_dryer_type = "Other";
+                                                            @endphp
+                                                        @elseif ($key->dryer_type == 3)
+                                                            @php
+                                                                $text_dryer_type = "N/A";
+                                                            @endphp
+                                                    
+                                                        @endif
 
                                                     <div class="rounded-2 bg-light mb-5 p-3">
                                                         <div
@@ -2699,27 +1982,7 @@
                                                                     class="col-lg-8 text-lg-end col-md-7 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div
                                                                         class="form-check form-check-custom form-check-solid py-2">
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="Type" id="Refrigerator" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="Refrigerator">
-                                                                            Refrigerator
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="Type" id="Other" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="Other">
-                                                                            Other
-                                                                        </label>&nbsp;
-                                                                        <input class="form-check-input"
-                                                                            type="radio" value=""
-                                                                            name="Type" id="typeN/A" />
-                                                                        <label class="form-check-label text-gray-800"
-                                                                            for="typeN/A">
-                                                                            N/A
-                                                                        </label>
+                                                                        <label for="">{{$text_dryer_type}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2729,10 +1992,9 @@
                                                                     Maker
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <input name="dryer_maker" class="form-control" type="number"
-                                                                             value="" />
+                                                                        <label class="py-2" for="">{{ $key->dryer_maker}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2742,10 +2004,9 @@
                                                                     Model Number
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <input name="dryer_model" class="form-control" type="text"
-                                                                            value="" />
+                                                                        <label class="py-2" for="">{{ $key->dryer_model}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2755,10 +2016,9 @@
                                                                     S/N
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-8 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    class="col-lg-8 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
                                                                     <div class="">
-                                                                        <input name="dryer_sn" class="form-control" type="text"
-                                                                            value="" />
+                                                                        <label class="py-2" for="">{{ $key->dryer_sn}}</label>
                                                                     </div>
                                                                 </span>
                                                             </div>
@@ -2768,15 +2028,8 @@
                                                                     Dew Point
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
-                                                                    <div class="input-group mb-5"
-                                                                        data-bs-placement="bottom"
-                                                                        data-bs-toggle="tooltip"
-                                                                        title="(Load/Unload)">
-                                                                        <input name="dryer_dew" type="number"
-                                                                            class="form-control" />
-                                                                        <span class="input-group-text">&#8451;</span>
-                                                                    </div>
+                                                                    class="col-lg-5 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    <label class="py-2" for="">{{ $key->dryer_dew}}</label>
                                                                 </span>
                                                             </div>
                                                             <div class="row">
@@ -2785,15 +2038,8 @@
                                                                     Inlet Pressure
                                                                 </span>
                                                                 <span
-                                                                    class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
-                                                                    <div class="input-group mb-5"
-                                                                        data-bs-placement="bottom"
-                                                                        data-bs-toggle="tooltip"
-                                                                        title="(Load/Unload)">
-                                                                        <input type="text" name="dryer_inlet"
-                                                                            class="form-control" />
-                                                                        <span class="input-group-text unit_of_pressure">bar</span>
-                                                                    </div>
+                                                                    class="col-lg-5 text-lg-start col-md-5 text-md-end col-sm-12 text-sm-start pb-2">
+                                                                    <label class="py-2" for="">{{ $key->dryer_inlet}}</label>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -2815,31 +2061,34 @@
                                                                         </label>
                                                                     </span>
                                                                     <span class="col-lg-9 col-md-9 col-9">
-                                                                        <input type="text" class="form-control"
-                                                                            name="filter_maker" id="">
+                                                                        <label class="py-4" for="">{{ $key->filter_maker}}</label>
                                                                     </span>
                                                                 </div>
                                                             </span>
                                                             <span class="col-lg-6 col-md-7 col-12">
                                                                 <div class="row mb-3">
-                                                                    <span class="py-3 col-lg-4 text-lg-start col-md-3 text-md-start col-4 text-start">
+                                                                    <span
+                                                                        class="py-3 col-lg-4 text-lg-start col-md-3 text-md-start col-4 text-start">
                                                                         <label for="">
                                                                             Replacement
                                                                         </label>
                                                                     </span>
-                                                                    <span class="py-3 col-lg-3 text-lg-center col-md-3 text-md-center col-3 text-center">
+                                                                    <span
+                                                                        class="py-3 col-lg-3 text-lg-center col-md-3 text-md-center col-3 text-center">
                                                                         <label class="fw-bold fs-6 text-gray-800"
                                                                             for="">
                                                                             Element
                                                                         </label>
                                                                     </span>
-                                                                    <span class="py-3 col-lg-2 text-lg-center col-md-2 text-md-center col-2 text-center">
+                                                                    <span
+                                                                        class="py-3 col-lg-2 text-lg-center col-md-2 text-md-center col-2 text-center">
                                                                         <label class="fw-bold fs-6 text-gray-800"
                                                                             for="">
                                                                             A'ssy
                                                                         </label>
                                                                     </span>
-                                                                    <span class="py-3 col-lg-3 text-lg-center col-md-4 text-md-center col-3 text-center">
+                                                                    <span
+                                                                        class="py-3 col-lg-3 text-lg-center col-md-4 text-md-center col-3 text-center">
                                                                         <label class="fw-bold fs-6 text-gray-800"
                                                                             for="">
                                                                             Auto Drain
@@ -2858,8 +2107,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <input type="text" class="form-control"
-                                                                            name="filter_comment_1" id="">
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_1}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2869,25 +2117,19 @@
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
                                                                             class="form-check-input" name="chk_filter_replacment1_1"
-                                                                            id="chk_filter_replacment1_1">
+                                                                            id="chk_filter_replacment1_1" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
                                                                             class="form-check-input" name="chk_filter_replacment1_2"
-                                                                            id="chk_filter_replacment1_2">
+                                                                            id="chk_filter_replacment1_2" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
                                                                             class="form-check-input" name="chk_filter_replacment1_4"
-                                                                            id="chk_filter_replacment1_4">
-                                                                    </div>
-                                                                    <div
-                                                                        class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
-                                                                        <input type="hidden"
-                                                                            class="form-check-input" name="filter_replacement_1"
-                                                                            id="chk_filter_replacment">
+                                                                            id="chk_filter_replacment1_4" disabled>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2902,8 +2144,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <input type="text" class="form-control"
-                                                                            name="filter_comment_2" id="">
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_2}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2912,26 +2153,20 @@
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment2"
-                                                                            id="">
+                                                                            class="form-check-input" name="chk_filter_replacment2_1"
+                                                                            id="chk_filter_replacment2_1" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment2"
-                                                                            id="">
+                                                                            class="form-check-input" name="chk_filter_replacment2_2"
+                                                                            id="chk_filter_replacment2_2" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment2"
-                                                                            id="">
-                                                                    </div>
-                                                                    <div
-                                                                        class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
-                                                                        <input type="hidden"
-                                                                            class="form-check-input" name="filter_replacement_2"
-                                                                            id="chk_filter_replacment2">
+                                                                            class="form-check-input" name="chk_filter_replacment2_4"
+                                                                            id="chk_filter_replacment2_4" disabled> 
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2946,8 +2181,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-lg-11 col-md-11 col-8">
-                                                                        <input type="text" class="form-control"
-                                                                            name="filter_comment_3" id="">
+                                                                        <label class="py-3" for="">{{ $key->filter_comment_3}}</label>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2956,26 +2190,20 @@
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment3"
-                                                                            id="">
+                                                                            class="form-check-input" name="chk_filter_replacment3_1"
+                                                                            id="chk_filter_replacment3_1" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment3"
-                                                                            id="">
+                                                                            class="form-check-input" name="chk_filter_replacment3_2"
+                                                                            id="chk_filter_replacment3_2" disabled>
                                                                     </div>
                                                                     <div
                                                                         class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
                                                                         <input type="checkbox"
-                                                                            class="form-check-input" name="chk_filter_replacment3"
-                                                                            id="">
-                                                                    </div>
-                                                                    <div
-                                                                        class="my-3 d-flex justify-content-center col-lg-4 col-md-4 col-4">
-                                                                        <input type="hidden"
-                                                                            class="form-check-input" name="filter_replacement_3"
-                                                                            id="chk_filter_replacment3">
+                                                                            class="form-check-input" name="chk_filter_replacment3_4"
+                                                                            id="chk_filter_replacment3_4" disabled>
                                                                     </div>
                                                                 </div>
                                                             </span>
@@ -2991,7 +2219,8 @@
                                                             </span>
                                                             <span class="col-lg-5 col-md-12 col-12">
                                                                 <div class="row">
-                                                                    <div class="col-lg-6 text-lg-start col-md-3 col-12">
+                                                                    <div
+                                                                        class="col-lg-6 text-lg-start col-md-3 col-12">
                                                                         <label class="py-3 fw-bold fs-6 text-gray-800"
                                                                             for="">
                                                                             Air Compressor
@@ -3000,7 +2229,7 @@
                                                                     <div class="col-lg-1 col-md-1 col-2">
                                                                         <input type="checkbox"
                                                                             class="my-3 form-check-input"
-                                                                            name="comment_compressor_normal" id="">
+                                                                            name="comment_compressor_normal" id="comment_compressor_normal" disabled>
                                                                     </div>
                                                                     <div class="col-lg-2 col-md-2 col-3">
                                                                         <label class="py-3 text-lg-start"
@@ -3011,7 +2240,7 @@
                                                                     <div class="col-lg-1 col-md-1 col-2">
                                                                         <input type="checkbox"
                                                                             class="my-3 form-check-input"
-                                                                            name="comment_compressor_abnormal" id="">
+                                                                            name="comment_compressor_abnormal" id="comment_compressor_abnormal" disabled> 
                                                                     </div>
                                                                     <div class="col-lg-2 col-md-2 col-3">
                                                                         <label class="py-3 text-lg-start"
@@ -3025,7 +2254,7 @@
                                                             <div class="col-lg-4"></div>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-12">
-                                                            <textarea class="form-control Remarks" rows="4" maxlength="500"></textarea>
+                                                            <label for="">{{ $key->remarks}}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3074,17 +2303,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                        name="maint_suction_1" id="maint_suction_1">
+                                                            name="maint_suction_1" id="maint_suction_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                        name="maint_suction_2" id="maint_suction_2">
+                                                            name="maint_suction_2" id="maint_suction_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                        name="maint_suction_4" id="maint_suction_4">
+                                                            name="maint_suction_4" id="maint_suction_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3098,17 +2327,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilfiter_1" id="maint_oilfiter_1">
+                                                            name="maint_oilfiter_1" id="maint_oilfiter_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilfiter_2" id="maint_oilfiter_2">
+                                                            name="maint_oilfiter_2" id="maint_oilfiter_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilfiter_4" id="maint_oilfiter_4">
+                                                            name="maint_oilfiter_4" id="maint_oilfiter_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3122,17 +2351,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oil_1" id="maint_oil_1">
+                                                            name="maint_oil_1" id="maint_oil_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oil_2" id="maint_oil_2">
+                                                            name="maint_oil_2" id="maint_oil_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                        qname="maint_oil_4" id="maint_oil_4">
+                                                            name="maint_oil_4" id="maint_oil_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3146,17 +2375,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_1" id="maint_drainseparator_1">
+                                                            name="maint_drainseparator_1" id="maint_drainseparator_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_2" id="maint_drainseparator_2">
+                                                            name="maint_drainseparator_2" id="maint_drainseparator_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_4" id="maint_drainseparator_4">
+                                                            name="maint_drainseparator_4" id="maint_drainseparator_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3170,17 +2399,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_1" id="maint_drainseparator_1">
+                                                            name="maint_drainseparator_1" id="maint_drainseparator_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_2" id="maint_drainseparator_2">
+                                                            name="maint_drainseparator_2" id="maint_drainseparator_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_drainseparator_4" id="maint_drainseparator_4">
+                                                            name="maint_drainseparator_4" id="maint_drainseparator_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3194,17 +2423,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_motorgrease_1" id="maint_motorgrease_1">
+                                                            name="maint_motorgrease_1" id="maint_motorgrease_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_motorgrease_2" id="maint_motorgrease_2">
+                                                            name="maint_motorgrease_2" id="maint_motorgrease_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_motorgrease_4" id="maint_motorgrease_4">
+                                                            name="maint_motorgrease_4" id="maint_motorgrease_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="border-bottom border-gray-400 mb-5"></div>
@@ -3219,17 +2448,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_solenoid_1" id="maint_solenoid_1">
+                                                            name="maint_solenoid_1" id="maint_solenoid_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_solenoid_2" id="maint_solenoid_2">
+                                                            name="maint_solenoid_2" id="maint_solenoid_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_solenoid_4" id="maint_solenoid_4">
+                                                            name="maint_solenoid_4" id="maint_solenoid_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3243,17 +2472,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_shuttle_1" id="maint_shuttle_1">
+                                                            name="maint_shuttle_1" id="maint_shuttle_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_shuttle_2" id="maint_shuttle_2">
+                                                            name="maint_shuttle_2" id="maint_shuttle_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_shuttle_4" id="maint_shuttle_4">
+                                                            name="maint_shuttle_4" id="maint_shuttle_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3267,17 +2496,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_capacityvav_1" id="maint_capacityvav_1">
+                                                            name="maint_capacityvav_1" id="maint_capacityvav_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_capacityvav_2" id="maint_capacityvav_2">
+                                                            name="maint_capacityvav_2" id="maint_capacityvav_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_capacityvav_4" id="maint_capacityvav_4">
+                                                            name="maint_capacityvav_4" id="maint_capacityvav_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3291,17 +2520,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_discharge_silenser_1" id="maint_discharge_silenser_1">
+                                                            name="maint_discharge_silenser_1" id="maint_discharge_silenser_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_discharge_silenser_2" id="maint_discharge_silenser_2">
+                                                            name="maint_discharge_silenser_2" id="maint_discharge_silenser_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_discharge_silenser_4" id="maint_discharge_silenser_4">
+                                                            name="maint_discharge_silenser_4" id="maint_discharge_silenser_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3315,17 +2544,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oillevel_1" id="maint_oillevel_1">
+                                                            name="maint_oillevel_1" id="maint_oillevel_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oillevel_2" id="maint_oillevel_2">
+                                                            name="maint_oillevel_2" id="maint_oillevel_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oillevel_4" id="maint_oillevel_4">
+                                                            name="maint_oillevel_4" id="maint_oillevel_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3339,17 +2568,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_intercooler_1" id="maint_intercooler_1">
+                                                            name="maint_intercooler_1" id="maint_intercooler_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_intercooler_2" id="maint_intercooler_2">
+                                                            name="maint_intercooler_2" id="maint_intercooler_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_intercooler_4" id="maint_intercooler_4">
+                                                            name="maint_intercooler_4" id="maint_intercooler_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3363,17 +2592,41 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_aftercooler_1" id="maint_aftercooler_1">
+                                                            name="maint_aftercooler_1" id="maint_aftercooler_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_aftercooler_2" id="maint_aftercooler_2">
+                                                            name="maint_aftercooler_2" id="maint_aftercooler_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_aftercooler_4" id="maint_aftercooler_4">
+                                                            name="maint_aftercooler_4" id="maint_aftercooler_4" disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-5">
+                                                    <div
+                                                        class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
+                                                        <label class="ps-3 fw-bold fs-6 text-gray-800"
+                                                            for="">
+                                                            **After Cooler
+                                                        </label>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_1" id="maint_aftercooler_1" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_2" id="maint_aftercooler_2" disabled>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
+                                                        <input type="checkbox" class="form-check-input"
+                                                            name="maint_aftercooler_4" id="maint_aftercooler_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3387,17 +2640,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilcooler_1" id="maint_oilcooler_1">
+                                                            name="maint_oilcooler_1" id="maint_oilcooler_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilcooler_2" id="maint_oilcooler_2">
+                                                            name="maint_oilcooler_2" id="maint_oilcooler_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilcooler_4" id="maint_oilcooler_4">
+                                                            name="maint_oilcooler_4" id="maint_oilcooler_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3411,17 +2664,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_mainmotor_1" id="maint_mainmotor_1">
+                                                            name="maint_mainmotor_1" id="maint_mainmotor_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_mainmotor_2" id="maint_mainmotor_2">
+                                                            name="maint_mainmotor_2" id="maint_mainmotor_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_mainmotor_4" id="maint_mainmotor_4">
+                                                            name="maint_mainmotor_4" id="maint_mainmotor_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3435,17 +2688,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilseal_1" id="maint_oilseal_1">
+                                                            name="maint_oilseal_1" id="maint_oilseal_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilseal_2" id="maint_oilseal_2">
+                                                            name="maint_oilseal_2" id="maint_oilseal_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilseal_4" id="maint_oilseal_4">
+                                                            name="maint_oilseal_4" id="maint_oilseal_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3453,23 +2706,23 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Fan & Fan Motor
+                                                            Fan & Fan Motor 
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_fanmotor_1" id="maint_fanmotor_1">
+                                                            name="maint_fanmotor_1" id="maint_fanmotor_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_fanmotor_2" id="maint_fanmotor_2">
+                                                            name="maint_fanmotor_2" id="maint_fanmotor_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_fanmotor_4" id="maint_fanmotor_4">
+                                                            name="maint_fanmotor_4" id="maint_fanmotor_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3483,17 +2736,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilpump_1" id="maint_oilpump_1">
+                                                            name="maint_oilpump_1" id="maint_oilpump_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilpump_2" id="maint_oilpump_2">
+                                                            name="maint_oilpump_2" id="maint_oilpump_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_oilpump_4" id="maint_oilpump_4">
+                                                            name="maint_oilpump_4" id="maint_oilpump_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3507,17 +2760,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_1st_air_1" id="maint_1st_air_1">
+                                                            name="maint_1st_air_1" id="maint_1st_air_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_1st_air_2" id="maint_1st_air_2">
+                                                            name="maint_1st_air_2" id="maint_1st_air_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_1st_air_4" id="maint_1st_air_4">
+                                                            name="maint_1st_air_4" id="maint_1st_air_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3531,17 +2784,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_2nd_air_1" id="maint_2nd_air_1">
+                                                            name="maint_2nd_air_1" id="maint_2nd_air_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_2nd_air_2" id="maint_2nd_air_2">
+                                                            name="maint_2nd_air_2" id="maint_2nd_air_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_2nd_air_4" id="maint_2nd_air_4">
+                                                            name="maint_2nd_air_4" id="maint_2nd_air_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3549,23 +2802,23 @@
                                                         class="col-lg-6 text-lg-start col-md-6 text-md-start col-4 text-start">
                                                         <label class="ps-3 fw-bold fs-6 text-gray-800"
                                                             for="">
-                                                            Bearing (Motor)
+                                                            Bearing(Motor)
                                                         </label>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingmotor_1" id="maint_bearingmotor_1">
+                                                            name="maint_bearingmotor_1" id="maint_bearingmotor_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingmotor_2" id="maint_bearingmotor_2">
+                                                            name="maint_bearingmotor_2" id="maint_bearingmotor_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_bearingmotor_4" id="maint_bearingmotor_4">
+                                                            name="maint_bearingmotor_4" id="maint_bearingmotor_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="border-bottom border-gray-400 mb-5"></div>
@@ -3580,17 +2833,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_gauge_1" id="maint_gauge_1">
+                                                            name="maint_gauge_1" id="maint_gauge_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_gauge_2" id="maint_gauge_2">
+                                                            name="maint_gauge_2" id="maint_gauge_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_gauge_4" id="maint_gauge_4">
+                                                            name="maint_gauge_4" id="maint_gauge_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3604,17 +2857,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_magnetic_1" id="maint_magnetic_1">
+                                                            name="maint_magnetic_1" id="maint_magnetic_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_magnetic_2" id="maint_magnetic_2">
+                                                            name="maint_magnetic_2" id="maint_magnetic_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_magnetic_4" id="maint_magnetic_4">
+                                                            name="maint_magnetic_4" id="maint_magnetic_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3628,17 +2881,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_sensor_1" id="maint_sensor_1">
+                                                            name="maint_sensor_1" id="maint_sensor_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_sensor_2" id="maint_sensor_2">
+                                                            name="maint_sensor_2" id="maint_sensor_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_sensor_4" id="maint_sensor_4">
+                                                            name="maint_sensor_4" id="maint_sensor_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3652,17 +2905,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_maininv_1" id="maint_maininv_1">
+                                                            name="maint_maininv_1" id="maint_maininv_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_maininv_2" id="maint_maininv_2">
+                                                            name="maint_maininv_2" id="maint_maininv_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_maininv_4" id="maint_maininv_4">
+                                                            name="maint_maininv_4" id="maint_maininv_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-5">
@@ -3676,17 +2929,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_faninv_1" id="maint_faninv_1">
+                                                            name="maint_faninv_1" id="maint_faninv_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_faninv_2" id="maint_faninv_2">
+                                                            name="maint_faninv_2" id="maint_faninv_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_faninv_4" id="maint_faninv_4">
+                                                            name="maint_faninv_4" id="maint_faninv_4" disabled>
                                                     </div>
                                                 </div>
                                                 <div class="border-bottom border-gray-400 mb-5"></div>
@@ -3701,17 +2954,17 @@
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-2">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_leakage_1" id="maint_leakage_1">
+                                                            name="maint_leakage_1" id="maint_leakage_1" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_leakage_2" id="maint_leakage_2">
+                                                            name="maint_leakage_2" id="maint_leakage_2" disabled>
                                                     </div>
                                                     <div
                                                         class="d-flex justify-content-center col-lg-2 col-md-2 col-3">
                                                         <input type="checkbox" class="form-check-input"
-                                                            name="maint_leakage_4" id="maint_leakage_4">
+                                                            name="maint_leakage_4" id="maint_leakage_4" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3723,323 +2976,65 @@
                                         </div>
                                     </div>
 
-                                    <div class="row g-2">
+                                    <div class="row g-5">
                                         <div class="col-lg-6">
                                             <div class="rounded-2 bg-light p-3">
                                                 <div class="col-lg-12 text-lg-center">
-                                                    <label class="pb-3 fw-bold fs-6 text-gray-800" for="">
+                                                    <label class="fw-bold fs-6 text-gray-800" for="">
                                                         Serviced By
                                                     </label>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="border border-gray-400" id="sig"></div>
-                                                    <br /><br />
-                                                    <div style="text-align:right">
-                                                        <button id="clear_signature1" class="btn btn-danger btn-sm">Clear
-                                                            Signature</button>
-                                                    </div>
-                                                    <textarea id="signature64" name="signed" style="display: none"></textarea>
+                                                    <input type="text" class="form-control" name=""
+                                                        id="">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="rounded-2 bg-light p-3">
                                                 <div class="col-lg-12 text-lg-center">
-                                                    <label class="pb-3 fw-bold fs-6 text-gray-800" for="">
+                                                    <label class="fw-bold fs-6 text-gray-800" for="">
                                                         Accepted By Customer
                                                     </label>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="border border-gray-400" id="sig1"></div>
-                                                    <br /><br />
-                                                    <div style="text-align:right">
-                                                        <button id="clear_signature2" class="btn btn-danger btn-sm">Clear
-                                                            Signature</button>
-                                                    </div>
-                                                    <textarea id="signature641" name="signed" style="display: none"></textarea>
+                                                    <input type="text" class="form-control" name=""
+                                                        id="">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-12 ">
+                <a href="{{ route('history', ['machine_id' => $key->machine_id ])}}" class="btn btn-primary btn-sm float-start"><i
+                        class="fa-solid fa-forward"></i>&nbsp;Back</a>
+            </div>
 
-            <a href="{{ route('history', ['machine_id' => $key->machine_id]) }}" class="btn btn-primary btn-sm float-start"><i
-                    class="fa-solid fa-backward"></i>&nbsp;Cencle</a>
-            <a href="{{ url('/show_oil_free') }}" type="submit" class="btn btn-success btn-sm float-end"><i
-                    class="fa-solid fa-floppy-disk"></i>&nbsp;Save</a>
+
         </form>
 
     </div>
 
-    <script>
-        // Text Input 1
-        const textInput1 = document.getElementById('textInput1');
-        const inputPopup1 = document.getElementById('inputPopup1');
-        const confirmButton1 = document.getElementById('confirmButton1');
-        const buttons1 = document.querySelectorAll('#inputPopup1 button[data-value]');
-        const clear1 = document.getElementById('clear1');
 
-        textInput1.addEventListener('click', () => {
-            inputPopup1.style.display = 'block';
-        });
-
-        confirmButton1.addEventListener('click', (event) => {
-            event.preventDefault();
-            const dataValue = textInput1.value; // หรือดึงค่าจาก popupInput1.value หากคุณมีการเก็บค่าใน popup ไว้
-
-            textInput1.value = dataValue; // นำค่าที่เลือกใน popup มาใส่ในช่อง input
-
-            inputPopup1.style.display = 'none';
-        });
-
-        buttons1.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput1.value += dataValue;
-            });
-        });
-
-        clear1.addEventListener('click', () => {
-            textInput1.value = "";
-        });
-
-        // Text Input 2
-        const textInput2 = document.getElementById('textInput2');
-        const inputPopup2 = document.getElementById('inputPopup2');
-        const confirmButton2 = document.getElementById('confirmButton2');
-        const buttons2 = document.querySelectorAll('#inputPopup2 button[data-value]');
-        const clear2 = document.getElementById('clear2');
-
-        textInput2.addEventListener('click', () => {
-            inputPopup2.style.display = 'block';
-        });
-
-        confirmButton2.addEventListener('click', () => {
-            if (textInput2.value) {
-                textInput2.value = textInput2.value;
-            }
-            inputPopup2.style.display = 'none';
-        });
-
-        buttons2.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput2.value += dataValue;
-            });
-        });
-
-        clear2.addEventListener('click', () => {
-            textInput2.value = "";
-        });
-
-        // Text Input 3
-        const textInput3 = document.getElementById('textInput3');
-        const inputPopup3 = document.getElementById('inputPopup3');
-        const confirmButton3 = document.getElementById('confirmButton3');
-        const buttons3 = document.querySelectorAll('#inputPopup3 button[data-value]');
-        const clear3 = document.getElementById('clear3');
-
-        textInput3.addEventListener('click', () => {
-            inputPopup3.style.display = 'block';
-        });
-
-        confirmButton3.addEventListener('click', () => {
-            if (textInput3.value) {
-                textInput3.value = textInput3.value;
-            }
-            inputPopup3.style.display = 'none';
-        });
-
-        buttons3.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput3.value += dataValue;
-            });
-        });
-
-        clear3.addEventListener('click', () => {
-            textInput3.value = "";
-        });
-
-        // Text Input 4
-        const textInput4 = document.getElementById('textInput4');
-        const inputPopup4 = document.getElementById('inputPopup4');
-        const confirmButton4 = document.getElementById('confirmButton4');
-        const buttons4 = document.querySelectorAll('#inputPopup4 button[data-value]');
-        const clear4 = document.getElementById('clear4');
-
-        textInput4.addEventListener('click', () => {
-            inputPopup4.style.display = 'block';
-        });
-
-        confirmButton4.addEventListener('click', () => {
-            if (textInput4.value) {
-                textInput4.value = textInput4.value;
-            }
-            inputPopup4.style.display = 'none';
-        });
-
-        buttons4.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput4.value += dataValue;
-            });
-        });
-
-        clear4.addEventListener('click', () => {
-            textInput4.value = "";
-        });
-
-        // Text Input 5
-        const textInput5 = document.getElementById('textInput5');
-        const inputPopup5 = document.getElementById('inputPopup5');
-        const confirmButton5 = document.getElementById('confirmButton5');
-        const buttons5 = document.querySelectorAll('#inputPopup5 button[data-value]');
-        const clear5 = document.getElementById('clear5');
-
-        textInput5.addEventListener('click', () => {
-            inputPopup5.style.display = 'block';
-        });
-
-        confirmButton5.addEventListener('click', () => {
-            if (textInput5.value) {
-                textInput5.value = textInput5.value;
-            }
-            inputPopup5.style.display = 'none';
-        });
-
-        buttons5.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput5.value += dataValue;
-            });
-        });
-
-        clear5.addEventListener('click', () => {
-            textInput5.value = "";
-        });
-
-        // Text Input 6
-        const textInput6 = document.getElementById('textInput6');
-        const inputPopup6 = document.getElementById('inputPopup6');
-        const confirmButton6 = document.getElementById('confirmButton6');
-        const buttons6 = document.querySelectorAll('#inputPopup6 button[data-value]');
-        const clear6 = document.getElementById('clear6');
-
-        textInput6.addEventListener('click', () => {
-            inputPopup6.style.display = 'block';
-        });
-
-        confirmButton6.addEventListener('click', () => {
-            if (textInput6.value) {
-                textInput6.value = textInput6.value;
-            }
-            inputPopup6.style.display = 'none';
-        });
-
-        buttons6.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput6.value += dataValue;
-            });
-        });
-
-        clear6.addEventListener('click', () => {
-            textInput6.value = "";
-        });
-
-        // Text Input 7
-        const textInput7 = document.getElementById('textInput7');
-        const inputPopup7 = document.getElementById('inputPopup7');
-        const confirmButton7 = document.getElementById('confirmButton7');
-        const buttons7 = document.querySelectorAll('#inputPopup7 button[data-value]');
-        const clear7 = document.getElementById('clear7');
-
-        textInput7.addEventListener('click', () => {
-            inputPopup7.style.display = 'block';
-        });
-
-        confirmButton7.addEventListener('click', () => {
-            if (textInput7.value) {
-                textInput7.value = textInput7.value;
-            }
-            inputPopup7.style.display = 'none';
-        });
-
-        buttons7.forEach(button => {
-            button.addEventListener('click', () => {
-                const dataValue = button.getAttribute('data-value');
-                textInput7.value += dataValue;
-            });
-        });
-
-        clear7.addEventListener('click', () => {
-            textInput7.value = "";
-        });
-    </script>
-    <script type="text/javascript">
-        var sig = $('#sig').signature({
-            syncField: '#signature64',
-            syncFormat: 'PNG'
-        });
-        $('#clear_signature1').click(function(e) {
-            e.preventDefault();
-            sig.signature('clear');
-            $("#signature64").val('');
-
-        });
-
-        var sig1 = $('#sig1').signature({
-            syncField: '#signature641',
-            syncFormat: 'PNG'
-        });
-        $('#clear_signature2').click(function(e) {
-            e.preventDefault();
-            sig1.signature('clear');
-            $("#signature641").val('');
-
-        });
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
-    @foreach($key as $property => $value)
-        @php
-            $skipProperties = [
-                'detail_motor',
-                'detail_cooler',
-                'detail_topup',
-                'detail_topup_liters',
-                'detail_replace',
-                'detail_replace_brand',
-                'detail_overhaul_air',
-                'detail_overhaul_motor',
-                'detail_rewind',
-                'detail_3000',
-                'detail_6000',
-                'detail_12000',
-                'detail_other',
-                'service_content',
-                'service_id'
-            ];
-        @endphp
-     
-            @if(!in_array($property, $skipProperties) && !empty($value))
-                $(`input[name="{{ $property }}"]`).val('{{ $key->$property }}')
-            @endif
-        @endforeach
-        $(`#service-content-dropdown`).val('{{ $key->service_content }}')
-        $(`input[name="site_ventilation"]`).val("{{$key->site_ventilation}}").prop('checked', true);
-        $(`input[name="service_id"]`).val("{{$key->service_id}}").prop('checked', true);
-        
-        
-        function Checkbox(prefix, value) {
+    function printPDF(machineId, id) {
+
+        const url = `/generate-pdf/${machineId}/${id}`;
+
+        // Open a new window or tab with the constructed URL
+        window.open(url, '_blank');
+
+
+    }
+
+    function Checkbox(prefix, value) {
         if (value == 1 ) {
             $(`#${prefix}`).prop("checked", true);
          
@@ -4080,21 +3075,21 @@
         var value7    = '{{$key->maint_oil ?? ''}}';
         var value8    = '{{$key->maint_drainseparator ?? ''}}';
         var value9    = '{{$key->maint_motorgrease ?? ''}}';
-        var value10   = '{{$key->maint_autoblowoff ?? ''}}';
-        var value11   = '{{$key->maint_capacityvav ?? ''}}';
-        var value12   = '{{$key->maint_presscontvav ?? ''}}';
-        var value13   = '{{$key->maint_presskeepvav ?? ''}}';
+        var value10   = '{{$key->maint_solenoid ?? ''}}';
+        var value11   = '{{$key->maint_shuttle ?? ''}}';
+        var value12   = '{{$key->maint_capacityvav ?? ''}}';
+        var value13   = '{{$key->maint_discharge_silenser ?? ''}}';
         var value14   = '{{$key->maint_thermovav ?? ''}}';
         var value15   = '{{$key->maint_oillevel ?? ''}}';
-        var value16   = '{{$key->maint_oilrecovery ?? ''}}';
-        var value17   = '{{$key->maint_belt ?? ''}}';
-        var value18   = '{{$key->maint_aftercooler ?? ''}}';
-        var value19   = '{{$key->maint_oilcooler ?? ''}}';
-        var value20   = '{{$key->maint_mainmotor ?? ''}}';
-        var value21   = '{{$key->maint_oilseal ?? ''}}';
-        var value22   = '{{$key->maint_fanmotor ?? ''}}';
-        var value23   = '{{$key->maint_airend  ?? ''}}';
-        var value24   = '{{$key->maint_bearingair ?? ''}}';
+        var value16   = '{{$key->maint_intercooler ?? ''}}';
+        var value17   = '{{$key->maint_aftercooler ?? ''}}';
+        var value18   = '{{$key->maint_oilcooler ?? ''}}';
+        var value19   = '{{$key->maint_mainmotor ?? ''}}';
+        var value20   = '{{$key->maint_oilseal ?? ''}}';
+        var value21   = '{{$key->maint_fanmotor ?? ''}}';
+        var value22   = '{{$key->maint_oilpump ?? ''}}';
+        var value23   = '{{$key->maint_1st_air  ?? ''}}';
+        var value24   = '{{$key->maint_2nd_air?? ''}}';
         var value25   = '{{$key->maint_bearingmotor ?? ''}}';
         var value26   = '{{$key->maint_gauge ?? ''}}';
         var value27   = '{{$key->maint_magnetic ?? ''}}';
@@ -4134,21 +3129,21 @@
         setCheckboxValues("maint_oil_", value7);
         setCheckboxValues("maint_drainseparator_", value8);
         setCheckboxValues("maint_motorgrease_", value9);
-        setCheckboxValues("maint_autoblowoff_", value10);
-        setCheckboxValues("maint_capacityvav_", value11);
-        setCheckboxValues("maint_presscontvav_", value12);
-        setCheckboxValues("maint_presskeepvav_", value13);
+        setCheckboxValues("maint_solenoid_", value10);
+        setCheckboxValues("maint_shuttle_", value11);
+        setCheckboxValues("maint_capacityvav_", value12);
+        setCheckboxValues("maint_discharge_silenser_", value13);
         setCheckboxValues("maint_thermovav_", value14);
         setCheckboxValues("maint_oillevel_", value15);
-        setCheckboxValues("maint_oilrecovery_", value16);
-        setCheckboxValues("maint_belt_", value17);
-        setCheckboxValues("maint_aftercooler_", value18);
-        setCheckboxValues("maint_oilcooler_", value19);
-        setCheckboxValues("maint_mainmotor_", value20);
+        setCheckboxValues("maint_intercooler_", value16);
+        setCheckboxValues("maint_aftercooler_", value17);
+        setCheckboxValues("maint_oilcooler_", value18);
+        setCheckboxValues("maint_mainmotor_", value19);
         setCheckboxValues("maint_oilseal_", value20);
-        setCheckboxValues("maint_fanmotor_", value22);
-        setCheckboxValues("maint_airend_", value23);
-        setCheckboxValues("maint_bearingair_", value24);
+        setCheckboxValues("maint_fanmotor_", value21);
+        setCheckboxValues("maint_oilpump_", value22);
+        setCheckboxValues("maint_1st_air_", value23);
+        setCheckboxValues("maint_2nd_air_", value24);
         setCheckboxValues("maint_bearingmotor_", value25);
         setCheckboxValues("maint_gauge_", value26);
         setCheckboxValues("maint_magnetic_", value27);

@@ -4022,9 +4022,14 @@
                     </div>
                 </div>
             </div>
-
-            <a href="{{ route('show') }}" class="btn btn-primary btn-sm float-start"><i
-                    class="fa-solid fa-backward"></i>&nbsp;Cencle</a>
+            
+            @if (request()->get('url') == 'Result')
+                <a href="{{ route('show') }}" class="btn btn-primary btn-sm float-start"><i class="fa-solid fa-backward"></i>&nbsp;Cancel</a>
+            @elseif   (request()->get('url') == 'History')
+                <a href="{{ route('history', ['machine_id' => $machines_id]) }}" class="btn btn-primary btn-sm float-start"><i class="fa-solid fa-backward"></i>&nbsp;Cancel</a>
+            @endif
+                
+          
             <button type="submit" class="btn btn-success btn-sm float-end"><i
                     class="fa-solid fa-floppy-disk"></i>&nbsp;Save</button>
         </form>
