@@ -231,14 +231,17 @@ class UserMasterController extends Controller
             ]);
             $user->password = Hash::make($validatedData['password']);
             $user->save();
+            $passwordMessage = '(Updated to the new password)';
+        } else {
+            $passwordMessage = '(Same as before)';
         }
-        
+
         $input = $request->except(['password', 'password_confirmation']);     
         $input['updated_by'] = auth()->user()->id;  
         $user->update($input);
         
         
-        return redirect()->route('mypage_result')->with('success', 'User updated successfully !');
+        return redirect()->route('mypage_result')->with('success', 'User updated successfully !')->with('password_message', $passwordMessage);
     }
 
 

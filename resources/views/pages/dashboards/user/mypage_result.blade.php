@@ -115,7 +115,8 @@
                                     </label>
                                 </div>
                                 <div class="py-3 pb-5 col-lg-3 text-lg-start col-md-3 text-md-start col-12">
-                                    (Same as before)
+                                    {{-- (Same as before) --}}
+                                    {{ session('password_message') }}
                                 </div>
                             </div>
                         </div>
