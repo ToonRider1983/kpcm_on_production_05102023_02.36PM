@@ -38,7 +38,7 @@
                 <div class="text-end h4">
                     <label class="pe-10" style="color: red;z-index: 1040;" for=""><b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b>&nbsp;=&nbsp;Mandatory Field</label>
                 </div>
-                <form method="POST" action="{{ route('user.update', $users->id) }}">
+                <form method="POST" action="{{ route('user.update2', $users->id) }}">
                     @csrf
                     @method('PUT')        
                     <div class="card shadow my-4">

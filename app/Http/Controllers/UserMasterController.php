@@ -147,7 +147,6 @@ class UserMasterController extends Controller
         }
     }
 
-
     public function edit($id)
     {
             
@@ -193,7 +192,7 @@ class UserMasterController extends Controller
             return redirect('dashboard');
         }
         $input = $request->all();
-        
+        session(['user' => $user]);
         $user->user_privilege_project = $request->has('user_privilege_project');
         $user->user_privilege_service = $request->has('user_privilege_service');
         $user->user_privilege_maintain = $request->has('user_privilege_maintain');
@@ -207,12 +206,39 @@ class UserMasterController extends Controller
             $user->password = Hash::make($validatedData['password']);
             $user->save();
         }
+        
         $input = $request->except(['password', 'password_confirmation']);     
         $input['updated_by'] = auth()->user()->id;  
         $user->update($input);
         
-        session(['user' => $user]);
+        
         return redirect()->route('user_result')->with('success', 'User updated successfully !');
+    }
+
+    public function mypage_update2(Request $request, $id)
+    {
+        $user = User::where('id', $id)->firstOrFail();
+        if (!auth()->check()) {
+            return redirect('dashboard');
+        }
+        $input = $request->all();
+        session(['user' => $user]);
+
+
+        if (!empty($request->password)) {
+            $validatedData = $request->validate([
+                'password' => 'required|confirmed',
+            ]);
+            $user->password = Hash::make($validatedData['password']);
+            $user->save();
+        }
+        
+        $input = $request->except(['password', 'password_confirmation']);     
+        $input['updated_by'] = auth()->user()->id;  
+        $user->update($input);
+        
+        
+        return redirect()->route('mypage_result')->with('success', 'User updated successfully !');
     }
 
 

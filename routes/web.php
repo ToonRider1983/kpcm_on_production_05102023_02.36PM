@@ -98,7 +98,7 @@ Route::resource('/user', UserMasterController::class);
 Route::get('/user/create', [UserMasterController::class, 'createNew'])->name('user.create');
 Route::get('/user/{id}/show', 'UserMasterController@show')->name('pages.dashboards.user.show');
 Route::get('/user/{id}/edit', 'UserMasterController@edit')-> name ('pages.user.edit');
-Route::put('/user/{id}', 'UserMasterController@update')-> name ('pages.dashboards.user.update');
+Route::put('/user/{id}',[UserMasterController::class, 'update1'])-> name ('pages.dashboards.user.update');
 Route::get('/exportuser/csv', [UserMasterController::class, 'exportCSV'])->name('user.export');
 Route::get('/user/{id}/delete', [UserMasterController::class, 'user_delete'])->name('user_delete');
 Route::get('/user_result', [UserMasterController::class, 'user_result'])->name('user_result');
@@ -183,6 +183,7 @@ Route::resource('/untouchedmachines', UntouchedMachinesController::class);
 Route::resource('/testlogin', testlogin::class);
 
 Route::get('/mypage_result', [UserMasterController::class, 'mypage_result'])->name('mypage_result');
+Route::put('/user2/{id}',[UserMasterController::class, 'mypage_update2'])-> name ('user.update2');
 
 Route::get('/unmaintainedmachine', [UnmaintainedMachineController::class, 'index'])->name('unmaintainedmachine');
 Route::get('/exportunmaintained/csv', [UnmaintainedMachineController::class, 'exportCSV'])->name('unmaintainedmachine.export');
