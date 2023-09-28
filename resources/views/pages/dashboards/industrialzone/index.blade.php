@@ -34,11 +34,15 @@
                                                 <span class="col-lg-6 text-lg-end col-md-6 text-md-end col-sm-12 text-sm-start">
                                                     <div>
                                                         <select class="form-select" name="country" id="country">
-                                                            <option value=""></option>
-                                                            @if (!@empty($country))
-                                                                @foreach ($country as $country)
-                                                                    <option value="{{ $country->country_name }}">
-                                                                        {{ $country->country_name }}
+                                                            <option ></option>
+                                                            @if (!empty($country))
+                                                                @foreach ($country as $countryItem)
+                                                                    <option value="{{ $countryItem->country_name }}"
+                                                                        @if (request('country') == $countryItem->country_name)
+                                                                            selected
+                                                                        @endif
+                                                                    >
+                                                                        {{ $countryItem->country_name }}
                                                                     </option>
                                                                 @endforeach
                                                             @endif

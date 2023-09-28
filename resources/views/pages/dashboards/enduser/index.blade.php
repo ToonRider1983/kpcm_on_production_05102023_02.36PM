@@ -37,10 +37,12 @@
                                             <div class="d-flex align-content-center flex-wrap row">
                                                 <span class="col-lg-6 text-lg-end col-md-6 text-md-end col-sm-12 text-sm-start">
                                                     <div>
-                                                        <select class="form-select country_id " name="country" id="country" aria-label="Select example" >
-                                                            <option value="{{ Request::get('country_name') }}">Select Country</option>
+                                                        <select class="form-select country_id" name="country" id="country" aria-label="Select example">
+                                                            <option value="">Select Country</option>
                                                             @foreach ($country as $row)
-                                                                <option value="{{$row->id}}"  @if(Request::get('country_name') == $row->id) selected @endif> {{$row->country_name}}</option>
+                                                                <option value="{{$row->id}}" @if(Request::get('country') == $row->id) selected @endif>
+                                                                    {{$row->country_name}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
