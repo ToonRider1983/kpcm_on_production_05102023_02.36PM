@@ -12,9 +12,6 @@ use Kyslik\ColumnSortable\Sortable;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Sortable;
-    public $sortable = ['id','company_id','updated_at'];
-
-
     /**
     * Get the user_detail record associated with the user.
     */
@@ -60,5 +57,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+    public $sortable = [
+        'id','company_id','updated_at'
+    ];
 }

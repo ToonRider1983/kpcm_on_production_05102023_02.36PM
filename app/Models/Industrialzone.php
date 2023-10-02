@@ -18,7 +18,10 @@ class Industrialzone extends Model
     'created_by',
     'updated_by' ,
     ];
-    public $sortable = ['id','updated_at'];
+    public $sortable = 
+    [
+      'id','updated_at'
+    ];
 
    
     public function setKeyName($value)

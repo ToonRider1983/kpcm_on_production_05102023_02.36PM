@@ -9,7 +9,7 @@ use Kyslik\ColumnSortable\Sortable;
 class Customer extends Model
 {
     use HasFactory, Sortable;
-    public $sortable = ['customer_cd','customer_name1','customer_name2'];
+
     protected $table = 'customers';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -28,6 +28,12 @@ class Customer extends Model
 			// 'factory_cd',
             'created_by',
             'updated_by',
+    ];
+    public $sortable = 
+    [
+        'customer_cd',
+        'customer_name1',
+        'customer_name2'
     ];
     public function setKeyName($value)
     {

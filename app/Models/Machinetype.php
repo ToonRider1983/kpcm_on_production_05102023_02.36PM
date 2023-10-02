@@ -9,7 +9,6 @@ use Kyslik\ColumnSortable\Sortable;
 class Machinetype extends Model
 {
     use HasFactory, Sortable;
-    public $sortable = ['id','updated_at'];
     protected $table = 'machinetype1s';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -20,7 +19,10 @@ class Machinetype extends Model
         
 		 	
     ];
-
+    public $sortable = 
+    [
+        'id','updated_at'
+    ];
     
     public function setKeyName($value)
     {

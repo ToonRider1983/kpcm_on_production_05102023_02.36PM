@@ -9,7 +9,10 @@ use Kyslik\ColumnSortable\Sortable;
 class Machinemodel extends Model
 {
         use HasFactory, Sortable;
-        public $sortable = ['id','updated_at'];
+        public $sortable = 
+        [
+            'id','updated_at'
+        ];
         protected $table = 'machinemodels';
         protected $primaryKey = 'id';
         protected $fillable = 

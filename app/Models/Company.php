@@ -13,8 +13,6 @@ class Company extends Model
 
 
     protected $dates = ['deleted_at'];
-    public $sortable = ['id','company_name','updated_at'];
-
     protected $table = 'companies';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -31,7 +29,10 @@ class Company extends Model
         'created_by',
         'updated_by' ,
     ];
-
+    public $sortable = 
+    [
+        'id','company_name','updated_at'
+    ];
     public function country()
     {
         return $this -> hasMany (MstCountries::class, 'countrycode' , 'countrycode');
@@ -41,6 +42,5 @@ class Company extends Model
         $this->primaryKey = $value;
         return $this;
     }
-
 
 }

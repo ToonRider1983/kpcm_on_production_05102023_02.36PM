@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use App\Models\Customer;
-use App\Models\Country;
-use App\Models\Provinces;
-use App\Models\Industrialzone;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Cache;
 use App\Exports\CustomerExport;
 use CSV;
 
@@ -593,10 +587,22 @@ class CustomerMasterController extends Controller
             'Created.' => $customer->Created,
             'Updated.' => $customer->Updated,
         ];
+    } 
+    // สร้างไฟล์ CSV และดาวน์โหลด
+    $userTimezone = '';
+    if(isset($_SERVER['HTTP_TIMEZONE'])) {
+        $userTimezone = $_SERVER['HTTP_TIMEZONE'];
+    } else {
+        $userTimezone = 'Asia/Bangkok'; // ตั้งค่าไทม์โซนเริ่มต้นที่นี่
     }
 
-    // สร้างไฟล์ CSV และดาวน์โหลด
-    return CSV::download(new CustomerExport($customerData), 'customers.csv');
+    $now = Carbon::now($userTimezone);
+    $date = $now->format('YmdHis');
+
+    $filename = "enduserMaster_$date.csv";
+
+    return CSV::download(new CustomerExport($customerData), $filename);
+
 }
 
 

@@ -9,8 +9,6 @@ use Kyslik\ColumnSortable\Sortable;
 class Email extends Model
 {
     use HasFactory , Sortable;
-    public $sortable = ['updated_at'];
-
     protected $table = 'emails';
     protected $primaryKey = 'id';
     protected $fillable = [
@@ -28,7 +26,10 @@ class Email extends Model
         'updated_by' ,
         // เพิ่มฟิลด์ที่ต้องการเพิ่มข้อมูลเพิ่มเติมตรงนี้
     ];
-    
+    public $sortable = 
+    [
+        'updated_at'
+    ];
 
     public function setKeyName($value)
     {
