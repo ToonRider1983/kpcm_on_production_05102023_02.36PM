@@ -31,7 +31,7 @@ class Machinetype1MasterController extends Controller
 
     public function exportCSV(Request $request)
     {
-        $query = DB::table('machinetype1s');
+        $query = DB::table('machinetype1s')->orderBy('updated_at', 'desc')->whereNull('machinetype1s.deleted_at');
         
         if ($request->keyword != null) {
             $query->orWhere('machinetype1s.machinetype1_name', 'like', '%' . $request->keyword . '%');
@@ -44,8 +44,9 @@ class Machinetype1MasterController extends Controller
         foreach ($machinetype as $type) {
             $machinetypeData[] = [
                 'ID' => $type->id,
-                'Machine Type Name' => $type->machinetype1_name,
-                'Update' => $type->updated_at,
+                'Machine Type1 Name' => $type->machinetype1_name,
+                'Created' => $type->created_at,
+                'Updated' => $type->updated_at,
                 // เพิ่มส่วนอื่น ๆ ที่คุณต้องการส่งออก
             ];
         }
@@ -71,7 +72,7 @@ class Machinetype1MasterController extends Controller
     public function edit($id)
     {   
         $machinetype = DB::table('machinetype1s')
-            ->select('machinetype1s.*', 'users.user_name as created_by_name', 'users2.user_name as updated_by_name')
+            ->select('machinetype1s.*', 'users.user_name as created_by', 'users2.user_name as updated_by')
             ->whereNull('machinetype1s.deleted_at')
             ->leftJoin('users', 'machinetype1s.created_by', '=', 'users.id')
             ->leftJoin('users as users2', 'machinetype1s.updated_by', '=', 'users2.id')

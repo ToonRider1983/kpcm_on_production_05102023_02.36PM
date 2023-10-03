@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -165,7 +166,7 @@ class UnmaintainedMachineController extends Controller
             }
 
             $unmaintainedData[] = [
-                'Index' => $unmain->Index,
+                'ID' => $unmain->Index,
                 'Serial#' => $unmain->SerialMachine,
                 'Type Code' => $unmain->TypeCode,
                 'Customer Machine#' => $unmain->CustomerMachine,
@@ -184,7 +185,20 @@ class UnmaintainedMachineController extends Controller
             ];
         }
         // สร้างไฟล์ CSV และดาวน์โหลด
-        return CSV::download(new UnmaintainedMachineExport($unmaintainedData), 'UnmaintainedMachine.csv');
+        $ummainTimezone = '';
+        if(isset($_SERVER['HTTP_TIMEZONE'])) {
+            $ummainTimezone = $_SERVER['HTTP_TIMEZONE'];
+        } else {
+            $ummainTimezone = 'Asia/Bangkok'; // ตั้งค่าไทม์โซนเริ่มต้นที่นี่
+        }
+
+        $now = Carbon::now($ummainTimezone);
+        $date = $now->format('YmdHis');
+
+        $filename = "UnmaintainedMachine_$date.csv";
+
+        return CSV::download(new UnmaintainedMachineExport($unmaintainedData), $filename);
+
     }
 }
 

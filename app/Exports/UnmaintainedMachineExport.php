@@ -22,7 +22,7 @@ class UnmaintainedMachineExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return [
-            'Index',
+            'ID',
             'Serial#',
             'Type Code',
             'Customer Machine#',

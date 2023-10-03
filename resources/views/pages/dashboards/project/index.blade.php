@@ -28,22 +28,19 @@
     </style>
 
     <div class="container">
-        <div class="row" style="margin: 20px">
+        <div class="row" style="margin:20px">
             <div class="col-12">
                 <label class="h1 mb-5 fw-bold">Project - Search</label>
                 <div class="row">
                     <div class="col-lg-10 col-md-12 col-12">
-                        <div class="card mb-3">
+                        <div class="card mb-2">
                             <div class="card-body object">
                                 <form action="{{ route('result') }}" method="get">
                                     <div class="row">
-                                        <div
-                                            class="d-flex justify-content-lg-between col-lg-12 justify-content-md-between col-md-12 justify-content-between col-12">
-                                            <a type="button" id="clear-session-button" class="btn btn-danger classz">
-                                                <i class="fa-solid fa-trash-can "></i>&nbsp;Clear
-                                            </a>
+                                        <div class="col-lg-10 col-md-8 col-4"></div>
+                                        <div class="col-lg-2 col-md-4 col-8 ">
                                             <button  target="_blank" type="submit"
-                                                class="btn btn-primary">
+                                                class="btn btn-primary ">
                                                 <i class="fa-solid fa-magnifying-glass"></i>&nbsp;Search
                                             </button >
                                         </div>
@@ -397,11 +394,16 @@
                                                         </div>
                                                         <div
                                                             class="col-lg-8 text-lg-start col-md-8 text-md-start col-12 text-start">
-                                                            <input type="date" class="form-control"
-                                                                name="from_datec"
-                                                                value="{{ $request->input('from_datec') }}"
-                                                                placeholder="" aria-label=""
-                                                                aria-describedby="basic-addon1" />
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control"
+                                                                    name="from_datec" id="from_datec"
+                                                                    value="{{ $request->input('from_datec') }}"
+                                                                    placeholder="" aria-label=""
+                                                                    aria-describedby="basic-addon1" />
+                                                                    <span class="input-group-text">
+                                                                        <i class="bi bi-calendar"></i>
+                                                                    </span>
+                                                            </div>   
                                                         </div>
                                                     </div>
                                                 </div>
@@ -414,11 +416,16 @@
                                                         </div>
                                                         <div
                                                             class="col-lg-11 text-lg-start col-md-11 text-md-start col-12 text-start">
-                                                            <input type="date" class="form-control"
-                                                                name="to_datec"
-                                                                value="{{ $request->input('to_datec') }}"
-                                                                placeholder="" aria-label=""
-                                                                aria-describedby="basic-addon1" />
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control"
+                                                                        name="to_datec" id="to_datec"
+                                                                        value="{{ $request->input('to_datec') }}"
+                                                                        placeholder="" aria-label=""
+                                                                        aria-describedby="basic-addon1" />
+                                                                        <span class="input-group-text">
+                                                                            <i class="bi bi-calendar"></i>
+                                                                        </span>
+                                                                </div>  
                                                         </div>
                                                     </div>
                                                 </div>
@@ -433,11 +440,16 @@
                                                         </div>
                                                         <div
                                                             class="col-lg-8 text-lg-start col-md-8 text-md-start col-12 text-start">
-                                                            <input type="date" class="form-control"
-                                                                name="from_dateu"
-                                                                value="{{ $request->input('from_dateu') }}"
-                                                                placeholder="" aria-label=""
-                                                                aria-describedby="basic-addon1" />
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control"
+                                                                        name="from_dateu" id="from_dateu"
+                                                                        value="{{ $request->input('from_dateu') }}"
+                                                                        placeholder="" aria-label=""
+                                                                        aria-describedby="basic-addon1" />
+                                                                        <span class="input-group-text">
+                                                                            <i class="bi bi-calendar"></i>
+                                                                        </span>
+                                                                </div>  
                                                         </div>
                                                     </div>
                                                 </div>
@@ -450,11 +462,16 @@
                                                         </div>
                                                         <div
                                                             class="col-lg-11 text-lg-start col-md-11 text-md-start col-12 text-start">
-                                                            <input type="date" class="form-control"
-                                                                name="to_dateu"
-                                                                value="{{ $request->input('to_dateu') }}"
-                                                                placeholder="" aria-label=""
-                                                                aria-describedby="basic-addon1" />
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control"
+                                                                        name="to_dateu" id="to_dateu"
+                                                                        value="{{ $request->input('to_dateu') }}"
+                                                                        placeholder="" aria-label=""
+                                                                        aria-describedby="basic-addon1" />
+                                                                        <span class="input-group-text">
+                                                                            <i class="bi bi-calendar"></i>
+                                                                        </span>
+                                                                </div>  
                                                         </div>
                                                     </div>
                                                 </div>
@@ -482,8 +499,9 @@
     </div>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/clearSession.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="{{ asset('assets/js/dropdown3.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/date.js') }}"></script>
     @csrf
 </x-default-layout>

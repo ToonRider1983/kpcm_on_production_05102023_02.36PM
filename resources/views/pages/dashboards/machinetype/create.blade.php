@@ -18,7 +18,7 @@
 
     <div class="container">
         <div class="text-start">
-            <label class="mb-2 h1 fw-bold">Machine Type Master - Add</label>
+            <label class="mb-2 h1 fw-bold">Machine Type1 Master - Add</label>
         </div>
         <div class="text-end h4">
             <label class="pe-10" style="color: red;z-index: 1040;" for=""><b class="h1 pt-4" style="color: red;z-index: 1040;">&#42;</b>&nbsp;=&nbsp;Mandatory Field</label>
@@ -43,7 +43,7 @@
                             ID :
                         </div>
                         <div class="col-lg-5 text-lg-start py-3 col-md-5 text-md-start col-10 text-start pb-5">
-                            <label id="id">{{ $newId }}</label>
+                            <label id="id">(New)</label>
                         </div>
                     </div>
                 </div>

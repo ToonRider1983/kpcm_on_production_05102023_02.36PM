@@ -44,7 +44,7 @@ class IndustrialzoneMasterController extends Controller
     public function exportCSV(Request $request)
 {
     $industrialzoneData = [];
-    $industrialzone = DB::table('industrialzones');
+    $industrialzone = DB::table('industrialzones')->orderby('updated_at', 'desc');
     
     if ($request->keyword != null) {
         $industrialzone = $industrialzone->orWhere('industrialzones.industrialzone_name', 'like', '%' . $request->keyword . '%');
@@ -54,7 +54,7 @@ class IndustrialzoneMasterController extends Controller
     }
     
     $industrialzones = $industrialzone
-        ->select('industrialzones.id', 'industrialzones.industrialzone_name', 'countries.country_name as CountryName', 'industrialzones.updated_at')
+        ->select('industrialzones.id', 'industrialzones.industrialzone_name', 'countries.country_name as CountryName','industrialzones.created_at', 'industrialzones.updated_at')
         ->whereNull('industrialzones.deleted_at')
         ->leftjoin('countries', 'industrialzones.country_id', '=', 'countries.id')
         ->get();
@@ -63,7 +63,8 @@ class IndustrialzoneMasterController extends Controller
         $industrialzoneData[] = [
             'ID' => $industrialzone->id,
             'Industrial Zone Name' => $industrialzone->industrialzone_name,
-            'Country' => $industrialzone->CountryName,
+            'Country Name' => $industrialzone->CountryName,
+            'Created' => $industrialzone->created_at,
             'Updated' => $industrialzone->updated_at,
         ];
     }

@@ -89,7 +89,7 @@ class MachineMasterController extends Controller
         ->leftJoin('countries', 'customers.country_id', '=', 'countries.id')
         ->leftJoin('companies', 'machines.service_factory_id', '=', 'companies.id')
         ->leftJoin('machinemodels', 'machines.machinemodel_id', '=', 'machinemodels.id')
-        ->leftJoin('machinetype1s', 'machinemodels.machinetype1_id', '=', 'machinetype1s.id') // แก้ไขต
+        ->leftJoin('machinetype1s', 'machinemodels.machinetype1_id', '=', 'machinetype1s.id') //
 
         ->paginate(10);
         return view('pages.dashboards.machine.index', [

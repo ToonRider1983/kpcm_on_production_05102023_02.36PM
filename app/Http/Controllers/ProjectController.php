@@ -3,14 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Project;
-use App\Models\Company;
-use App\Models\Country;
-use App\Models\User;
-use App\Models\Machinemodel;
-use App\Models\Industrialzone;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
-use Illuminate\Support\Facades\Session;
 class ProjectController extends Controller
 {
     public function index(Request $request)
@@ -45,7 +38,9 @@ class ProjectController extends Controller
             // 'oitm3.oil_type as oiltype_name3',
             'pj.status as status_name',
             'pj.possibility as possibility_name',
-            'pj.result as result_name'
+            'pj.result as result_name',
+            'pj.created_at',
+            'pj.updated_at'
              )
             ->leftJoin('companies', 'pj.distributor_id', '=', 'companies.id')
             ->leftJoin('customers', 'pj.customer_id', '=', 'customers.id')
@@ -187,6 +182,8 @@ class ProjectController extends Controller
             'projects.route3 as routename3',
             'projects.possibility as possibility_name',
             'projects.result as result_name',
+            'projects.created_at',
+            'projects.updated_at'
              )
             ->whereNull('projects.deleted_at') 
             ->leftJoin('projects as prentid','projects.parent_id','=','prentid.id')

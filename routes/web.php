@@ -67,7 +67,7 @@ Route::get('/companies/{id}/delete', [CompanyMasterController::class, 'company_d
 Route::get('/companies_result', [CompanyMasterController::class, 'company_result'])->name('companies_result');
 
 Route::resource('/machinetype', Machinetype1MasterController::class);
-Route::get('/machinetype/create', [Machinetype1MasterController::class, 'createNew'])->name('machinetype.create');
+Route::get('/machinetype1/add', [Machinetype1MasterController::class, 'createNew'])->name('machinetype.create');
 Route::get('/machinetype/{id}/show', 'Machinetype1MasterController@show')->name('pages.dashboards.machinetype.show');
 Route::get('/machinetype/{id}/edit', 'Machinetype1MasterController@edit')-> name ('pages.dashboards.machinetype.edit');
 Route::put('/machinetype/{id}', 'Machinetype1MasterController@update')-> name ('pages.dashboards.machinetype.update');

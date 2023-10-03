@@ -24,7 +24,8 @@ class IndustrialzoneExport implements FromCollection, WithHeadings
         return [
             'ID',
             'Industrial Zone Name',
-            'Country',
+            'Country Name',
+            'Created',
             'Updated',
         ];
     }

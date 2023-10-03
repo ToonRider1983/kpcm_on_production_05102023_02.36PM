@@ -23,8 +23,9 @@ class Machinetype1Export implements FromCollection, WithHeadings
     {
         return [
             'ID',
-            'MachineTypeName',
-            'Update',
+            'Machine Type1 Name',
+            'Created',
+            'Updated',
         ];
     }
 }
