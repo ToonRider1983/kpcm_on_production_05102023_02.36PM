@@ -1,26 +1,36 @@
-var fetchIndustrialUrl = "/dropdowncompa/fetchIndustrial";
+$(document).ready(function() {
+    var fetchUrl = "/dropdowncompa/fetch";
+    var fetchIndustrialUrl = "/dropdowncompa/fetchIndustrial";
 
-// เมื่อเลือกประเทศ
-$('#country').change(function() {
-    if ($(this).val() != '') {
-        var country = $(this).val();
+    function fetchData(select, targetElement) {
         var _token = $('input[name="_token"]').val();
-        
-        // ค้นหาประเทศที่เลือกและบันทึกค่า "Distributor" ที่ถูกเลือกไว้
-        var selectedCountry = $('#company').val();
-
-        // ส่ง AJAX request ไปยังเซิร์ฟเวอร์เพื่อโหลด industrial zones ของประเทศที่เลือก
+    
         $.ajax({
-            url: fetchIndustrialUrl,
+            url: (targetElement == 'companies') ? fetchUrl : fetchIndustrialUrl,
             method: "POST",
-            data: { country: country, company: selectedCountry, _token: _token },
+            data: { select: select, _token: _token },
             success: function(result) {
-                // เปลี่ยนค่าใน dropdown ของ industrial zones
-                $('#company').html(result.companies);
+                var dropdown = $('.' + targetElement);
+                var selectedOption = dropdown.val();
 
-                // ตั้งค่าค่า "Distributor" ใหม่หลังจากโหลดข้อมูลเสร็จสมบูรณ์
-                selectedCompany = selectedCountry;
+                dropdown.html(result[targetElement]);
+
+                if (selectedOption) {
+                    dropdown.val(selectedOption);
+                }
             }
         });
     }
+
+    var selectedCountryId = $('.country').val();
+    if (selectedCountryId != '') {
+        fetchData(selectedCountryId, 'companies');
+    }
+
+    $('.country').change(function() {
+        var select = $(this).val();
+        if (select != '') {
+            fetchData(select, 'companies');
+        }
+    });
 });

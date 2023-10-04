@@ -54,8 +54,8 @@ class MachineMasterController extends Controller
         $this->applySearchCondition($machine, $request, 'serial', 'machines.serial');
         $this->applySearchCondition($machine, $request, 'factory_type', 'machines.factory_type');
         $this->applySearchCondition($machine, $request, 'compressor_type', 'machines.compressor_type');
-        $this->applySearchCondition($machine, $request, 'country', 'countries.country_name');
-        $this->applySearchCondition($machine, $request, 'company', 'companies.company_short_name');
+        $this->applySearchCondition($machine, $request, 'country', 'countries.id');
+        $this->applySearchCondition($machine, $request, 'company', 'companies.id');
         $this->applySearchCondition($machine, $request, 'remarks', 'machines.remarks');
         
         // ใช้ applyDateRange เพื่อค้นหาตามช่วงวันที่
@@ -187,25 +187,22 @@ class MachineMasterController extends Controller
         }
 
 
-        public function fetch(Request $request)
+    public function fetch(Request $request)
     {
-        $countryName = $request->get('country'); // รับค่าประเทศ
-        $country = DB::table('countries')->whereNull('countries.deleted_at')->where('country_name', $countryName)->first();
-        
-        // รับค่า 'company' จาก AJAX request
-        $selectedCountry = $request->get('company');
+        $id = $request->get('select'); // รับค่าประเทศ
 
-        $companies = DB::table('companies')
+        $companies = DB::table('countries')
             ->whereNull('companies.deleted_at')
-            ->where('country_id', $country->id)
-            ->select('id', 'company_short_name')
+            ->join('companies', 'countries.id', '=', 'companies.country_id')
+            ->select('companies.id', 'companies.company_short_name')
+            ->where('countries.id', $id)
+            ->groupBy('companies.id', 'companies.company_short_name')
             ->get();
 
         // ในส่วนการแสดงผลใน dropdown
-        $outputcompanies = '<option value="">Select Distributor</option>';
-        foreach ($companies as $company) {
-            $selected = ($selectedCountry == $company->company_short_name) ? 'selected' : '';
-            $outputcompanies .= '<option value="' . $company->company_short_name . '" ' . $selected . '>' . $company->company_short_name . '</option>';
+        $outputcompanies = '<option value="">Distributor</option>';
+        foreach ($companies as $companie) {
+            $outputcompanies .= '<option value="'.$companie->id.'">'.$companie->company_short_name.'</option>';
         }
 
         // ส่งค่ากลับเป็น JSON
@@ -213,6 +210,7 @@ class MachineMasterController extends Controller
             'companies' => $outputcompanies,
         ]);
     }
+    
 
     public function show($id)
     {

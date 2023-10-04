@@ -114,6 +114,7 @@ Route::get('/machinemodel_result', [MachinemodelMasterController::class, 'machin
 
 Route::resource('/machine', MachineMasterController::class);
 Route::get('/machine/create', [MachineMasterController::class, 'createNew'])->name('machine.create');
+Route::post('/dropdowncompa/fetch', [MachineMasterController::class, 'fetch'])->name('dropdowncompa.fetch'); //ในส่วนของJs
 Route::post('/dropdowncompa/fetchIndustrial', [MachineMasterController::class, 'fetch'])->name('dropdowncompa.fetchIndustrial');
 Route::get('/searchcustomer', [MachineMasterController::class, 'searchcustomer'])->name('searchcustomer');
 Route::get('/machine/{id}/show', 'MachineMasterController@show')->name('pages.dashboards.machine.show');

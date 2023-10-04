@@ -77,36 +77,38 @@
                                                     </select> --}}
                                                     <select class="form-select" name="factory_type" id="factory_type" placeholder="Factory type">
                                                         <option value="">Factory type</option>
-                                                        <option value="1" >KCMS</option>
-                                                        <option value="2" >KSL</option>
-                                                        <option value="3" >ETC</option>
+                                                        <option value="1" {{ Request::get('factory_type') == '1' ? 'selected' : '' }}>KCMS</option>
+                                                        <option value="2" {{ Request::get('factory_type') == '2' ? 'selected' : '' }}>KSL</option>
+                                                        <option value="3" {{ Request::get('factory_type') == '3' ? 'selected' : '' }}>ETC</option>
                                                     </select>
+                                                    
+                                                    
             
                                                 </span>
                                                 <span class="col-lg-6 col-md-6 col-sm-12 py-3">
                                                    <select class="form-select" name="compressor_type" id="compressor_type" placeholder="Compressor Type">
                                                         <option value="">Compressor Type</option>
-                                                        <option value="1" >Oil Flooded</option>
-                                                        <option value="2" >Oil Free</option>
+                                                        <option value="1"{{ Request::get('compressor_type') == '1' ? 'selected' : '' }} >Oil Flooded</option>
+                                                        <option value="2"{{ Request::get('compressor_type') == '2' ? 'selected' : '' }} >Oil Free</option>
                                                     </select>
                                                                               
                                                 </span>
                                             </div>
                                             <div class="d-flex align-content-center flex-wrap row">
                                                 <span class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                                    <select class="form-select" name="country" id="country" placeholder="country">
+                                                    <select class="form-select country" name="country" id="country" placeholder="country">
                                                         <option value="">Country</option>
                                                         @if (!empty($country))
                                                             @foreach ($country as $c)
-                                                                <option value="{{ $c->country_name }}"{{ Request::get('country') == $c->country_name ? 'selected' : '' }}> {{ $c->country_name }}            
+                                                                <option value="{{ $c->id }}"{{ Request::get('country') == $c->id ? 'selected' : '' }}> {{ $c->country_name }}            
                                                                 </option>
                                                             @endforeach
                                                         @endif
                                                     </select>
                                                 </span>
                                                 <span class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                                    <select class="form-select" name="company" id="company">
-                                                        <option value="{{ Request::get('company_short_name') }}">Select IndustrialZone</option>
+                                                    <select class="form-select companies" name="company" id="company">
+                                                        <option value="{{ Request::get('company') }}">Distributor</option>
                                                     </select>
                                                 </span>
                                             </div>
@@ -118,13 +120,16 @@
                                                             Comm' Date :
                                                         </span>
                                                         <span class="col-lg-9 text-lg-end col-md-8 col-8 text-start">
-                                                            <div>
-                                                                <input type="date" class="form-control" name="start_date"
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="start_date" id="start_date"
                                                                     value="{{ $request->has('start_date') ? $request->input('start_date') : old('start_date') }}"
-                                                                    placeholder="Start Date" aria-label="start_date"
+                                                                    placeholder="" aria-label="start_date"
                                                                     aria-describedby="basic-addon1" />
+                                                                    <span class="input-group-text">
+                                                                        <i class="bi bi-calendar"></i>
+                                                                    </span>
                                                             </div>
-                                                        </span>
+                                                        </span>                                                  
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12 py-3">
@@ -135,11 +140,14 @@
                                                             ~
                                                         </span>
                                                         <span class="col-lg-11 text-lg-end col-md-11 col-11 text-start">
-                                                            <div>
-                                                                <input type="date" class="form-control" name="end_date"
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" name="end_date" id="end_date"
                                                                     value="{{ $request->has('end_date') ? $request->input('end_date') : old('end_date') }}"
-                                                                    placeholder="End Date" aria-label="end_date"
+                                                                    placeholder="" aria-label="end_date"
                                                                     aria-describedby="basic-addon1" />
+                                                                    <span class="input-group-text">
+                                                                        <i class="bi bi-calendar"></i>
+                                                                    </span>
                                                             </div>
                                                         </span>
                                                     </div>
@@ -266,7 +274,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script type="text/javascript" src="{{ asset('assets/js/dropdowncompa.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/date.js') }}"></script>
     @csrf
 </x-default-layout>
 
