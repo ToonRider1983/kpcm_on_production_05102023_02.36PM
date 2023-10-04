@@ -157,7 +157,6 @@ class ProjectController extends Controller
             $projects = $projects->whereBetween('projects.updated_at', [$request->from_dateu, $request->to_dateu]);//อาจต้องเช็คจาก old_project
         }
 
-    
         $projects = $projects->select(
             'projects.*',
             'prentid.parent_id as parent_id',
@@ -313,7 +312,7 @@ class ProjectController extends Controller
     }
 
 
-   
+
     public function resultUp(Request $request, $id)
     {
         $project = Project::where('id', $id)->firstOrFail();
@@ -741,6 +740,12 @@ public function updateData(Request $request, $id)
     $project->admin_remarks1 = $validatedData['admin_remarks1'];
     $project->admin_remarks2 = $validatedData['admin_remarks2'];
 
+    if (auth()->check()) {
+        $project->created_by = auth()->user()->id; // เพิ่มชื่อผู้ล็อกอินที่สร้างรายการ
+        $project->updated_by = auth()->user()->id;  // เพิ่มชื่อผู้ล็อกอินเป็น updated_by
+    } else {
+        return redirect()->route('dashboard'); // ส่งผู้ใช้ไปยังหน้า login หรือหน้าที่คุณต้องการ
+    }
     $project->save();
 
     return redirect()->route('project.index')->with('success', 'User created successfully.');
