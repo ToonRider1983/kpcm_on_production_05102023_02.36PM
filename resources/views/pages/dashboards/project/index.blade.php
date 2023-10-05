@@ -503,5 +503,8 @@
     <script type="text/javascript" src="{{ asset('assets/js/dropdown3.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script type="text/javascript" src="{{ asset('assets/js/date.js') }}"></script>
+    {{-- เรียก include --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    
     @csrf
 </x-default-layout>

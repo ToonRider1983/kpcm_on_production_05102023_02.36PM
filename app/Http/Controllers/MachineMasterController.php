@@ -60,7 +60,7 @@ class MachineMasterController extends Controller
         
         // ใช้ applyDateRange เพื่อค้นหาตามช่วงวันที่
         $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'machines.testrun_dt');
-        $this->applyDateRange($machine, $request, 'start_date', 'end_date', 'machines.dispatch_dt');
+        $this->applyDateRange($machine, $request, 'start_dispatch_dt', 'end_dispatch_dt', 'machines.dispatch_dt');
         
         //Show LIST
         $machine = $machine

@@ -110,14 +110,15 @@ document.addEventListener('DOMContentLoaded', function () {
         instance.calendarContainer.appendChild(clearButton);
     }
 
+    //ฟังก์ชั่นสำหรับแสดง วันเดือนปี
     function initializeFlatpickr(inputSelector, name) {
         flatpickr(inputSelector, {
-            dateFormat: "d/m/Y",
+            dateFormat: "Y/m/d",
             enableTime: false,
             altFormat: "d/m/Y",
             altInput: true,
             onChange: function(selectedDates, dateStr, instance) {
-                addHiddenInput(instance, name, instance.formatDate(selectedDates[0], "d/m/Y"));
+                addHiddenInput(instance, name, instance.formatDate(selectedDates[0], "Y/m/d"));
                 if (!instance.calendarContainer.querySelector(".clear-button")) {
                     addClearButton(instance);
                 }

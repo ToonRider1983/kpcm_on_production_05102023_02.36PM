@@ -183,7 +183,7 @@
                             Commisioning Date :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            <label for="">{{ ($machine->testrun_dt) }}</label>
+                            <label for="">{{  \Carbon\Carbon::parse($machine->testrun_dt)->format('d/m/Y')  }}</label>
                         </div>
                     </div>
                     <div class="row">
@@ -192,7 +192,7 @@
                             Factory C/R Date :
                         </div>
                         <div class="col-lg-5 text-lg-start col-md-5 text-md-start col-12 text-start pb-5">
-                            <label for="">{{ ($machine->dispatch_dt) }}</label>
+                            <label for="">{{ \Carbon\Carbon::parse($machine->dispatch_dt)->format('d/m/Y') }}</label>
                         </div>
                     </div>
                     <div class="row">
