@@ -81,7 +81,7 @@
         </div>
 
         <div class="footer_auth" style="background-color: #033c73;">
-            <label for="" class="text-white fs-3 fw-bold">Copyright &copy; 2016, Kobelcp Compressors (Thailand) Limited. ALL RIGHT RESERVED.</label>
+            <label for="" class="text-white fs-3 fw-bold">Copyright &copy; 2016, Kobelco Compressors (Thailand) Limited. ALL RIGHT RESERVED.</label>
         </div>
 
        
