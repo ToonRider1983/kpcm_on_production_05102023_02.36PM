@@ -39,7 +39,7 @@ class MachineMasterController extends Controller
     public function index(Request $request)
     {
         // $machine = DB::table('machines as m')->orderBy('id');
-        $machine = Machine::sortable()->orderBy('id');
+        $machine = Machine::sortable()->orderBy('updated_at','desc');
 
         $machinemodels = DB::table('machinemodels');
         $machinetype1s = DB::table('machinetype1s');

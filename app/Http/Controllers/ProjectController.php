@@ -10,7 +10,7 @@ class ProjectController extends Controller
     {
         //Search TextBox
         $projects = DB::table('projects as pj')->orderBy('id');
-        $company = DB::table('companies')->whereNull('companies.deleted_at')->get();
+        $company = DB::table('companies')->whereNull('companies.deleted_at')->orderBy('company_short_name', 'asc')->get();
         $customer = DB::table('customers')->whereNull('customers.deleted_at')->get();
         $country = DB::table('countries')->whereNull('countries.deleted_at')->get();
         $machinetype = DB::table('machinetype1s')->whereNull('machinetype1s.deleted_at')->get();

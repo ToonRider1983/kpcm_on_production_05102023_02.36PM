@@ -73,7 +73,7 @@
                                                     class="col-lg-6 text-lg-end col-md-6 text-md-end col-6 text-start d-flex flex-wrap">
                                                     <div class="form-check form-check-inline pb-2">
                                                         <input class="form-check-input" name="company_type[]"
-                                                            id="company_type" type="checkbox" value="1">
+                                                            id="company_type" type="checkbox" value="1" checked>
                                                         <label for="companytype">
                                                             Distributor
                                                         </label>
@@ -81,7 +81,7 @@
 
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" name="company_type[]"
-                                                            id="company_type" type="checkbox" value="2">
+                                                            id="company_type" type="checkbox" value="2" checked>
                                                         <label for="companytype">
                                                             Administrator
                                                         </label>

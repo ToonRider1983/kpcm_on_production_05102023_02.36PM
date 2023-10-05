@@ -183,7 +183,7 @@
                             Username :
                         </div>
                         <div class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-5">
-                            <input type="text" class="form-control" value="{{ $user->user_name }}">
+                            <input type="text" class="form-control" name="user_name" value="{{ $user->user_name }}">
                         </div>
                     </div>
                     <div class="row">
@@ -192,7 +192,7 @@
                             Email :
                         </div>
                         <div class="col-lg-5 text-lg-end col-md-5 text-md-end col-sm-12 text-sm-start pb-5">
-                            <input type="text" class="form-control" value="{{ $user->email }}">
+                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
                         </div>
                     </div>
                     <div class="row">

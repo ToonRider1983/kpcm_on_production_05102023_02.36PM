@@ -732,7 +732,7 @@ class CustomerMasterController extends Controller
         'customer_name2' => 'nullable',
         'country_id' => 'required',
         'province_id' => 'required',
-        'zip' => 'required',
+        'zip' => 'nullable',
         'address1' => 'required',
         'address2' => 'nullable',
         'industrialzone_id' => 'nullable',
@@ -746,7 +746,6 @@ class CustomerMasterController extends Controller
         'address1.required' => 'Please Enter Address1.',
         'customer_name1.required' => 'Please Enter Company Full Name.',
         'company_name.unique' => 'The Company Name Already Exists In The System.',
-        'zip.required' => 'Please Enter The Zip.',
         'province_id.required' => 'Please Select the Province/Prefecture.',
     ]);
     $enduser = new Customer();
